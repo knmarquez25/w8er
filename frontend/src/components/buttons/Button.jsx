@@ -33,6 +33,7 @@ const ButtonContainer = styled.button`
 
   display: flex;
   /* flex-direction: column; */
+  justify-content: center;
 
   .btn-text {
     height: 100%;

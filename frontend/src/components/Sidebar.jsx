@@ -12,6 +12,7 @@ import { themeState } from "../recoil/ThemeState";
 // custom components:
 import Button from "./buttons/Button";
 import ToggleButton from "./buttons/ToggleButton";
+import Example from "./Example";
 
 // icons:
 import { MdChevronRight } from "react-icons/md";
@@ -72,6 +73,19 @@ const SidebarContainer = styled.div`
   padding: 2rem;
 `;
 
+const pointLeft = css`
+  transform: rotate(-180deg);
+`;
+const pointRight = css`
+  transform: rotate(0deg);
+`;
+const pointUp = css`
+  transform: rotate(-90deg);
+`;
+const pointDown = css`
+  transform: rotate(90deg);
+`;
+
 const SidebarNav = styled.div`
   background-color: pink;
   background-color: ${({ theme }) => theme.colors.primary};
@@ -84,43 +98,31 @@ const SidebarNav = styled.div`
   display: flex;
   flex-direction: column;
 
-  /* justify-content: center; */
   align-items: center;
 `;
 
 const MainContent = styled.main`
   background-color: ${({ theme }) => theme.colors.background};
-
   width: 100%;
 `;
 
-const iconResize = css`
+const toggleSidebarButtonStyles = (sidebarOpen) => css`
   .btn-icon {
     svg {
       width: 1.8rem;
       height: 1.8rem;
-    }
-  }
 
-  .arrow-left {
-    .btn-icon {
-      svg {
-        background-color: red;
-        transform: rotate(-180deg);
-      }
-    }
-  }
+      transition: transform 250ms ease-out;
 
-  .arrow-right {
-    .btn-icon {
-      svg {
-        transform: rotate(0deg);
+      ${sidebarOpen ? pointLeft : pointRight}
+      @media (max-width: 500px) {
+        ${sidebarOpen ? pointUp : pointDown}
       }
     }
   }
 `;
 
-const Sidebar = ({ children }) => {
+const Sidebar = ({ children, ...props }) => {
   const [themeToggle, toggleTheme] = useRecoilState(themeState);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mQuery, setMQuery] = useState({
@@ -148,15 +150,11 @@ const Sidebar = ({ children }) => {
         <Button
           type="circle"
           icon={MdChevronRight}
-          css={iconResize}
+          css={toggleSidebarButtonStyles(sidebarOpen)}
           onClick={toggleSidebar}
-          className={`${sidebarOpen ? "arrow-right" : "arrow-left"}`}
         />
 
         <ToggleButton
-          // orientation={`${
-          //   window.innerWidth <= 501 ? "horizontal" : "vertical"
-          // }`}
           orientation={`${mQuery.matches ? "horizontal" : "vertical"}`}
           label="theme"
           value={themeToggle}
@@ -166,7 +164,9 @@ const Sidebar = ({ children }) => {
       <SidebarContainer
         className="sb-container"
         css={sidebarOpen ? sbOpened : sbClosed}
-      ></SidebarContainer>
+      >
+        <Example />
+      </SidebarContainer>
       <MainContent className="sb-main">{children}</MainContent>
     </SidebarWrapper>
   );
