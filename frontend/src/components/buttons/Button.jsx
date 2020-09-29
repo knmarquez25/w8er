@@ -82,7 +82,9 @@ const Button = ({ type, text, icon, ...props }) => {
           {text}
         </span>
       ) : null}
-      {icon ? <span className="btn-icon">{icon}</span> : null}
+      {icon ? (
+        <span className="btn-icon">{React.createElement(icon)}</span>
+      ) : null}
     </ButtonContainer>
   );
 };
