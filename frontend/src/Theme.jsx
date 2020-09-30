@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 // state management:
 import { useRecoilValue } from "recoil";
@@ -171,7 +172,9 @@ const ThemedApp = () => {
   return (
     <ThemeProvider theme={darkTheme ? themeDark : themeLight}>
       <GlobalReset />
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </ThemeProvider>
   );
 };

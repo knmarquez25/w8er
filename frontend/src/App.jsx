@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
-// state management:
-import { useRecoilState } from "recoil";
-import { themeState } from "./recoil/ThemeState";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 // styling:
 /** @jsx jsx */
@@ -45,15 +42,8 @@ const AppContainer = styled.section`
   }
 `;
 
-const inputFieldSpacing = css`
-  margin-bottom: 1rem;
-  margin-top: 0.5rem;
-`;
-
 const App = ({ ...props }) => {
-  const [themeToggle, toggleTheme] = useRecoilState(themeState);
   const theme = useTheme();
-  const [test, setTest] = useState("");
 
   useEffect(() => {
     console.log("UE1");
@@ -64,16 +54,6 @@ const App = ({ ...props }) => {
       <Helmet>
         <meta name="theme-color" content={theme.colors.primary} />
       </Helmet>
-
-      {/* <header className="App-header">
-        <span className="theme-toggle-label">Theme</span>
-        <ToggleButton
-          // test=""
-          label="theme"
-          value={themeToggle}
-          onClick={() => toggleTheme(!themeToggle)}
-        />
-      </header> */}
 
       <BrowserRouter>
         <Sidebar>
