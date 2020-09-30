@@ -15,12 +15,6 @@ import styled from "@emotion/styled";
 //   // label: String;
 // }
 
-// const on = ({ orientation }) => css`
-//   /* transform: ${orientation === "vertical"
-//     ? "translateY(0)"
-//     : "translateX(100%)"}; */
-//   transform: translateX(100%);
-// `;
 const verticalOn = css`
   transform: translateY(0);
 `;

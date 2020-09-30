@@ -28,7 +28,7 @@ const FormInputContainer = styled.div`
   padding-top: 1.7rem;
 
   /* height: 2.2rem; */
-  min-width: 10rem;
+  /* min-width: 10rem; */
 
   input[type="password"] {
     letter-spacing: 0.15rem;
@@ -153,6 +153,8 @@ const FormInput = ({
   ...props
 }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  useEffect(() => {}, []);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);

@@ -106,7 +106,7 @@ const MainContent = styled.main`
   width: 100%;
 `;
 
-const toggleSidebarButtonStyles = (sidebarOpen) => css`
+const ToggleSidebarButton = styled(Button)`
   .btn-icon {
     svg {
       width: 1.8rem;
@@ -114,9 +114,9 @@ const toggleSidebarButtonStyles = (sidebarOpen) => css`
 
       transition: transform 250ms ease-out;
 
-      ${sidebarOpen ? pointLeft : pointRight}
+      ${({ sidebarOpen }) => (sidebarOpen ? pointLeft : pointRight)}
       @media (max-width: 500px) {
-        ${sidebarOpen ? pointUp : pointDown}
+        ${({ sidebarOpen }) => (sidebarOpen ? pointUp : pointDown)}
       }
     }
   }
@@ -147,11 +147,11 @@ const Sidebar = ({ children, ...props }) => {
   return (
     <SidebarWrapper className="sb-wrapper">
       <SidebarNav className="sb-nav">
-        <Button
+        <ToggleSidebarButton
           type="circle"
           icon={MdChevronRight}
-          css={toggleSidebarButtonStyles(sidebarOpen)}
           onClick={toggleSidebar}
+          sidebarOpen={sidebarOpen}
         />
 
         <ToggleButton

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // styling:
 /** @jsx jsx */
@@ -12,27 +12,21 @@ import FormInput from "./inputs/FormInput";
 // icons:
 import { MdAdd } from "react-icons/md";
 
-const inputSpacing = (theme) => css`
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-
-  input {
-    /* background-color: "red"; */
-    background-color: ${theme.colors.onSurface};
-  }
-
-  ${(() => {
-    console.log("green", theme);
-  })()}
-`;
 const ExampleContainer = styled.div`
   width: 100%;
 `;
 
-const buttonStyles = (props) => css`
-  width: 100%;
+const inputStyles = (theme) => css`
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  input {
+    background-color: ${theme.colors.onSurface};
+  }
+`;
 
-  ${inputSpacing}
+const buttonStyles = (theme) => css`
+  ${inputStyles(theme)}
+  width: 100%;
 
   .btn-icon {
     svg {
@@ -48,17 +42,19 @@ const Example = (props) => {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
+  useEffect(() => {}, [name, email, password, password2]);
+
   return (
-    <ExampleContainer {...props}>
+    <ExampleContainer>
       <FormInput
-        type="text"
+        type="password"
         htmlFor="name"
         label="name"
         value={name}
         handleChange={(e) => {
           setName(e.target.value);
         }}
-        css={inputSpacing}
+        css={inputStyles}
       />
 
       <FormInput
@@ -70,7 +66,7 @@ const Example = (props) => {
         handleChange={(e) => {
           setEmail(e.target.value);
         }}
-        css={inputSpacing}
+        css={inputStyles}
       />
 
       <FormInput
@@ -83,7 +79,7 @@ const Example = (props) => {
           setPassword(e.target.value);
         }}
         additionalInfo="(8 characters minimum)"
-        css={inputSpacing}
+        css={inputStyles}
       />
 
       <FormInput
@@ -95,7 +91,7 @@ const Example = (props) => {
         handleChange={(e) => {
           setPassword2(e.target.value);
         }}
-        css={inputSpacing}
+        css={inputStyles}
       />
 
       <Button text="waitlist" icon={MdAdd} css={buttonStyles} />
