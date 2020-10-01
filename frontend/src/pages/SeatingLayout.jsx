@@ -1,7 +1,7 @@
 import React from "react";
 
 const SeatingLayout = () => {
-  return <div></div>;
+  return <div>Seating layout</div>;
 };
 
 export default SeatingLayout;

@@ -48,7 +48,7 @@ const ToggleContainer = styled.div`
   padding: 0.15rem;
   border-radius: 5rem;
   /* margin: 0.25rem; */
-  margin: 0.25rem 0;
+  /* margin: 0.25rem 0; */
 
   .on {
     ${({ orientation }) =>
@@ -80,7 +80,7 @@ const ToggleButton = styled.button`
 
 const ToggleInput = ({ orientation, value, onClick, label, ...props }) => {
   return (
-    <ToggleContainer orientation={orientation}>
+    <ToggleContainer {...props} orientation={orientation}>
       <ToggleButton
         type="button"
         aria-pressed={value}

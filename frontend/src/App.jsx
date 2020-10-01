@@ -17,6 +17,7 @@ import Sidebar from "./components/Sidebar";
 
 // page components:
 import SeatingLayout from "./pages/SeatingLayout";
+import Settings from "./pages/Settings";
 
 // icons:
 import { MdBrightnessLow } from "react-icons/md";
@@ -59,6 +60,8 @@ const App = ({ ...props }) => {
         <Sidebar>
           <Switch>
             <Route exact path="/" component={SeatingLayout} />
+            <Route exact path="/seating-layout" component={SeatingLayout} />
+            <Route exact path="/settings" component={Settings} />
           </Switch>
         </Sidebar>
       </BrowserRouter>
