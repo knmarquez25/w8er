@@ -16,7 +16,7 @@ import Button from "./buttons/Button";
 import ToggleButton from "./buttons/ToggleButton";
 import Example from "./Example";
 import GuestList from "./GuestList";
-import FloorMap from "./FloorMap";
+import FloorMapTools from "./FloorMapTools";
 
 // icons:
 import { MdChevronRight } from "react-icons/md";
@@ -232,10 +232,10 @@ const Slider = styled.div`
   right: 0;
   position: absolute;
 
-  transition-property: height, width, transform;
+  /* transition-property: height, width, transform;
   transition-duration: 200ms;
-  transition-timing-function: ease-in;
-  /* transition: transform ease-in 200ms; */
+  transition-timing-function: ease-in; */
+  transition: transform ease-out 200ms;
 
   transform: translateY(
     ${({ itemSelected }) => `${4 * (itemSelected + 1)}rem`}

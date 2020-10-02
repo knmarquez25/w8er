@@ -9,6 +9,7 @@ import { rgba } from "emotion-rgba";
 // custom components:
 import Button from "./buttons/Button";
 import DetailBit from "./DetailBit";
+import AddGuest from "./AddGuest";
 
 // icon:
 import { IoMdAddCircle } from "react-icons/io";
@@ -17,12 +18,45 @@ import { MdAddBox } from "react-icons/md";
 import { FaCaretSquareDown } from "react-icons/fa";
 import { AiOutlineCaretDown } from "react-icons/ai";
 import { BsCaretDownFill } from "react-icons/bs";
+import { GoPlus } from "react-icons/go";
 
 const GUESTLIST = [
-  { name: "Joane Sparks", phone: "310 420 6969", party: 5, reserve: false },
-  { name: "Ash Ketchum", phone: "589 420 9811", party: 2, reserve: false },
-  { name: "Brock Lesnar", phone: "566 444 5466", party: 3, reserve: true },
-  { name: "Rip Harambe", phone: "568 111 5688", party: 4, reserve: false },
+  {
+    name: "Benjamin Franks",
+    party: "6",
+    phone: "",
+    time: new Date(),
+    table: "",
+    notes: "",
+    reserveTime: "",
+  },
+  {
+    name: "Bob Dole",
+    party: "1",
+    phone: "",
+    time: new Date(),
+    table: "",
+    notes: "",
+    reserveTime: new Date(),
+  },
+  {
+    name: "Rip Harambe",
+    party: "0",
+    phone: "",
+    time: new Date(),
+    table: "",
+    notes: "",
+    reserveTime: "",
+  },
+  {
+    name: "Bee Dull",
+    party: "3",
+    phone: "",
+    time: new Date(),
+    table: "",
+    notes: "",
+    reserveTime: "",
+  },
 ];
 
 const GuestListContainer = styled.div`
@@ -206,6 +240,20 @@ const ExtrasDropdownButton = styled(HeaderButton)`
   }
 `;
 
+const AddGuestButton = styled(HeaderButton)`
+  .btn-icon {
+    svg {
+      transition: transform 200ms ease-out;
+      transform: ${({ addGuestOpen }) =>
+        addGuestOpen ? css`rotate(-135deg)` : css`rotate(0)`};
+      path {
+        fill: ${({ addGuestOpen, theme }) =>
+          !addGuestOpen ? theme.colors.onBackground : theme.colors.error};
+      }
+    }
+  }
+`;
+
 const SeatedCheckButton = styled(Button)`
   background-color: #5aa979;
 
@@ -219,16 +267,23 @@ const SeatedCheckButton = styled(Button)`
 `;
 
 const GuestList = () => {
-  const [guestList, setGuestList] = useState([]);
-  const [glExtrasOpen, setGlExtrasOpen] = useState(true);
+  const [guestList, setGuestList] = useState(GUESTLIST);
+  const [glExtrasOpen, setGlExtrasOpen] = useState(false);
+  const [addGuestOpen, setAddGuestOpen] = useState(false);
+
+  useEffect(() => {}, [guestList]);
 
   const toggleGLextras = () => {
     setGlExtrasOpen(!glExtrasOpen);
   };
 
-  useEffect(() => {
-    setGuestList(GUESTLIST);
-  }, [guestList]);
+  const toggleAddGuest = () => {
+    setAddGuestOpen(!addGuestOpen);
+  };
+
+  const addGuestItem = (guestItem) => {
+    setGuestList([...guestList, guestItem]);
+  };
 
   return (
     <GuestListContainer>
@@ -246,12 +301,23 @@ const GuestList = () => {
                 }
               }
             `}
-            onClick={toggleGLextras}
+            onClick={() => {
+              setAddGuestOpen(false);
+              toggleGLextras();
+            }}
           />
         </div>
         <h1>Guest List</h1>
         <div className="btn-container">
-          <HeaderButton type="circle" icon={MdAddBox} />
+          <AddGuestButton
+            type="circle"
+            addGuestOpen={addGuestOpen}
+            icon={GoPlus}
+            onClick={() => {
+              setGlExtrasOpen(false);
+              toggleAddGuest();
+            }}
+          />
         </div>
       </HeaderContainer>
 
@@ -259,10 +325,18 @@ const GuestList = () => {
         filter, sort, other extra features here
       </GLExtras>
 
+      <AddGuest
+        handleChange={(guestItem) => {
+          addGuestItem(guestItem);
+          setAddGuestOpen(false);
+        }}
+        addGuestOpen={addGuestOpen}
+      ></AddGuest>
+
       <ListContainer className="guest-list">
         {guestList.map((guest, i) => (
           <GuestItem key={i}>
-            <GuestTypeBit text={guest.reserve ? "r" : "w"} />
+            <GuestTypeBit text={guest.reserveTime ? "r" : "w"} />
             <PartySizeBit text={guest.party} />
             {/* {guest.reserve? <ReserveIcon/>: <WaitListIcon/>} */}
             <p className="guest-name">{guest.name}</p>
