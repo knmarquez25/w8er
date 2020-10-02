@@ -79,7 +79,7 @@ const InputLabel = styled.label`
   position: absolute;
   pointer-events: none;
   left: 0.6rem;
-  top: 2rem;
+  top: 2.1rem;
 
   transition-property: top, left, font-size, font-weight, color, letter-spacing;
   transition-duration: 200ms;

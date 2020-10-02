@@ -1,5 +1,6 @@
 import React from "react";
 import { MdBrightnessLow } from "react-icons/md";
+import { rgba } from "emotion-rgba";
 
 // styling:
 /** @jsx jsx */
@@ -26,6 +27,7 @@ const verticalOff = css`
 const horizontalOn = css`
   transform: translateX(0);
 `;
+
 const horizontalOff = css`
   transform: translateX(100%);
 `;
@@ -41,7 +43,9 @@ const vertical = css`
 `;
 
 const ToggleContainer = styled.div`
-  background-color: ${(props) => props.theme.colors.surface};
+  background-color: ${(props) => props.theme.colors.onBackground};
+  /* border: 1px solid ${({ theme }) =>
+    rgba(theme.colors.onBackground, 0.05)}; */
 
   ${({ orientation }) => (orientation === "vertical" ? vertical : horizontal)}
 
@@ -65,7 +69,7 @@ const ToggleButton = styled.button`
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background-color: ${(props) => props.theme.colors.primary};
+  background-color: ${(props) => props.theme.colors.background};
 
   font-size: 0px;
 
@@ -74,7 +78,7 @@ const ToggleButton = styled.button`
   transition-duration: 250ms;
 
   &:hover {
-    background-color: ${(props) => props.theme.colors.secondary};
+    background-color: ${(props) => props.theme.colors.primary};
   }
 `;
 

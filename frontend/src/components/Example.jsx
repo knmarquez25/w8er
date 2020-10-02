@@ -47,7 +47,7 @@ const Example = (props) => {
   return (
     <ExampleContainer>
       <FormInput
-        type="password"
+        type="text"
         htmlFor="name"
         label="name"
         value={name}

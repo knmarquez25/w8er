@@ -68,14 +68,17 @@ const themeLight = {
     primary: "#e87b9b",
     secondary: "#afb9f1",
 
-    background: "#e5e5e5",
+    // background: "#e5e5e5",
+    background: "#f1f3f4",
+
     surface: "white",
 
     onPrimary: "white",
     onSecondary: "black",
 
-    onBackground: "black",
-    onSurface: "#e5e5e5",
+    onBackground: "#3e3e3e",
+    // onSurface: "#e5e5e5",
+    onSurface: "#f1f3f4",
 
     error: "#e85359",
   },

@@ -6,8 +6,9 @@ import styled from "@emotion/styled";
 
 const btnSize = "2.5rem";
 
-const textIconSeparator = css`
+const textIconSeparator = (props) => css`
   margin-right: 0.5rem;
+  ${console.log("propssss", props)}
 `;
 
 const circleBtn = css`
@@ -33,6 +34,7 @@ const ButtonContainer = styled.button`
 
   display: flex;
   /* flex-direction: column; */
+  flex-direction: ${({ reverse }) => (reverse ? "row-reverse" : "row")};
   justify-content: center;
 
   .btn-text {
@@ -69,16 +71,23 @@ const ButtonContainer = styled.button`
   }
 `;
 
-const Button = ({ type, text, icon, ...props }) => {
+const Button = ({ type, text, icon, reverse, ...props }) => {
   return (
     <ButtonContainer
       {...props}
+      reverse={reverse}
       css={type === "circle" ? circleBtn : regularBtn}
     >
       {text ? (
         <span
           className="btn-text"
-          css={icon && text ? textIconSeparator : null}
+          css={
+            icon && text
+              ? css`
+                  margin: ${reverse ? "0 0 0 0.5rem" : "0 0.5rem 0 0"};
+                `
+              : null
+          }
         >
           {text}
         </span>

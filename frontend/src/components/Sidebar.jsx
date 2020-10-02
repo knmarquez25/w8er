@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 // styling:
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
+import { rgba } from "emotion-rgba";
 
 // state management:
 import { useRecoilState } from "recoil";
@@ -14,6 +15,8 @@ import { themeState } from "../recoil/ThemeState";
 import Button from "./buttons/Button";
 import ToggleButton from "./buttons/ToggleButton";
 import Example from "./Example";
+import GuestList from "./GuestList";
+import FloorMap from "./FloorMap";
 
 // icons:
 import { MdChevronRight } from "react-icons/md";
@@ -25,6 +28,13 @@ const sbClosed = css`
   opacity: 0;
   min-width: 0;
   max-width: 0;
+
+  @media (max-width: 500px) {
+    min-height: 0;
+    max-height: 0;
+    min-width: 100%;
+    max-width: 100%;
+  }
 `;
 
 const sbOpened = css`
@@ -47,13 +57,16 @@ const pointDown = css`
 `;
 
 const sidebarItemStyles = css`
-  margin-bottom: 1rem;
+  margin-top: 1rem;
   @media (max-width: 500px) {
-    margin-bottom: 0;
+    margin-top: 0;
+    margin-left: 1rem;
   }
 `;
 
 const SidebarWrapper = styled.div`
+  background-color: ${({ theme }) => theme.colors.surface};
+
   position: relative;
   overflow: hidden;
 
@@ -65,7 +78,7 @@ const SidebarWrapper = styled.div`
 
     font-size: 50px;
 
-    .sb-nav,
+    /* .sb-nav, */
     .sb-container,
     .sb-main {
       width: 100%;
@@ -74,11 +87,16 @@ const SidebarWrapper = styled.div`
     }
 
     .sb-nav {
-      padding: 0 1rem;
       height: 4rem;
+      min-height: 4rem;
+
+      /* width: 100%; */
 
       flex-direction: row;
-      justify-content: space-evenly;
+      /* justify-content: space-evenly; */
+
+      margin: 0 auto;
+      border-right: none;
     }
 
     .sb-main {
@@ -87,11 +105,36 @@ const SidebarWrapper = styled.div`
   }
 `;
 
+const SidebarNav = styled.div`
+  position: relative;
+  background-color: ${({ theme }) => theme.colors.surface};
+  /* background-color: red; */
+
+  z-index: 3;
+
+  border-right: 1px solid ${({ theme }) => rgba(theme.colors.onBackground, 0.1)};
+
+  /* min-width: 4rem;
+  max-width: 4rem; */
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+`;
+
 const SidebarContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.surface};
 
-  transition-property: max-width, min-width, opacity, padding;
-  transition-duration: $sidebar_timing;
+  z-index: 2;
+
+  /* border-right: 1px solid ${({ theme }) =>
+    rgba(theme.colors.onBackground, 0.1)}; */
+
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.1);
+
+  transition-property: max-width, min-width, max-height, min-height, opacity,
+    padding;
+  transition-duration: 250ms;
   transition-timing-function: ease-out;
 
   /* padding: 2rem; */
@@ -99,31 +142,23 @@ const SidebarContainer = styled.div`
   overflow-x: hidden;
   overflow-y: hidden;
 
-  padding: ${({ sidebarOpen }) => (sidebarOpen ? "2rem" : "0")};
-`;
-
-const SidebarNav = styled.div`
-  background-color: pink;
-  background-color: ${({ theme }) => theme.colors.primary};
-
-  min-width: 4rem;
-  max-width: 4rem;
-
-  padding: 1rem 0;
-
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
+  /* padding: ${({ sidebarOpen }) => (sidebarOpen ? "1rem" : "0")}; */
 `;
 
 const MainContent = styled.main`
   background-color: ${({ theme }) => theme.colors.background};
+  z-index: 1;
+
   width: 100%;
+  padding: 0.5rem;
+
+  & > * {
+    color: ${({ theme }) => theme.colors.onBackground};
+  }
 `;
 
 const navItemSelected = (props) => css`
-  background-color: ${props.theme.colors.surface};
+  background-color: ${props.theme.colors.background};
   .btn-icon {
     svg {
       path {
@@ -133,7 +168,24 @@ const navItemSelected = (props) => css`
   }
 `;
 
+const navBtnSize = ({ theme }) => css`
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0;
+  background-color: transparent;
+
+  .btn-icon {
+    svg {
+      path {
+        fill: ${theme.colors.onBackground};
+      }
+    }
+  }
+`;
+
 const ToggleSidebarButton = styled(Button)`
+  ${navBtnSize}
+
   &:hover {
     ${navItemSelected}
   }
@@ -154,7 +206,9 @@ const ToggleSidebarButton = styled(Button)`
 `;
 
 const NavItemButton = styled(Button)`
-  ${sidebarItemStyles}
+  ${navBtnSize}
+
+  /* ${sidebarItemStyles} */
 
   ${({ itemSelected, index }) =>
     itemSelected === index ? navItemSelected : null}
@@ -171,28 +225,54 @@ const NavItemButton = styled(Button)`
   }
 `;
 
+const Slider = styled.div`
+  background-color: ${({ theme }) => theme.colors.primary};
+  height: 4rem;
+  width: 3px;
+  right: 0;
+  position: absolute;
+
+  transition-property: height, width, transform;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in;
+  /* transition: transform ease-in 200ms; */
+
+  transform: translateY(
+    ${({ itemSelected }) => `${4 * (itemSelected + 1)}rem`}
+  );
+
+  @media (max-width: 500px) {
+    height: 3px;
+    width: 4rem;
+    bottom: 0;
+    left: 0;
+    right: none;
+
+    transform: translateX(
+      ${({ itemSelected }) => `${4 * (itemSelected + 1)}rem`}
+    );
+  }
+`;
+
 const navItems = [
   {
-    component: <Example />,
-    componentHeader: "<FriendslistSidebarHeader />",
-    title: "Friends List",
+    component: <GuestList />,
+    // componentHeader: <FloorMapHeader />,
     icon: IoMdListBox,
     link: "",
   },
 
   {
-    component: <Button text="hello" />,
-    componentHeader: "<FriendslistSidebarHeader />",
-    title: "Friends List",
+    component: <Example />,
+    // componentHeader: <FloorMapHeader />,
     icon: BiCustomize,
     link: "/seating-layout",
   },
   {
     // component: <Button text="hello" />,
-    componentHeader: "<FriendslistSidebarHeader />",
-    title: "Friends List",
+    // componentHeader: "<FriendslistSidebarHeader />",
     icon: MdSettings,
-    link: "settings",
+    link: "/settings",
   },
 ];
 
@@ -229,6 +309,7 @@ const Sidebar = ({ children, ...props }) => {
   return (
     <SidebarWrapper className="sb-wrapper">
       <SidebarNav className="sb-nav">
+        <Slider itemSelected={itemSelected} />
         <ToggleSidebarButton
           type="circle"
           icon={MdChevronRight}
@@ -239,9 +320,7 @@ const Sidebar = ({ children, ...props }) => {
             toggleSidebar();
           }}
           sidebarOpen={sidebarOpen}
-          css={sidebarItemStyles}
         />
-
         {navItems.map((item, i) => (
           <div key={i}>
             <NavItemButton
@@ -265,7 +344,6 @@ const Sidebar = ({ children, ...props }) => {
             />
           </div>
         ))}
-
         <ToggleButton
           orientation={`${mQuery.matches ? "horizontal" : "vertical"}`}
           label="theme"
