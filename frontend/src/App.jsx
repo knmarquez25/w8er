@@ -14,6 +14,7 @@ import ToggleButton from "./components/buttons/ToggleButton";
 import Button from "./components/buttons/Button";
 import FormInput from "./components/inputs/FormInput";
 import Sidebar from "./components/Sidebar";
+import Main from "./components/Main";
 
 // page components:
 import SeatingLayout from "./pages/SeatingLayout";
@@ -43,6 +44,20 @@ const AppContainer = styled.section`
   }
 `;
 
+const FlexWrapper = styled.div`
+  background-color: ${({ theme }) => theme.colors.surface};
+
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
+`;
+
 const App = ({ ...props }) => {
   const theme = useTheme();
 
@@ -57,13 +72,16 @@ const App = ({ ...props }) => {
       </Helmet>
 
       <BrowserRouter>
-        <Sidebar>
-          <Switch>
-            <Route exact path="/" component={SeatingLayout} />
-            <Route exact path="/seating-layout" component={SeatingLayout} />
-            <Route exact path="/settings" component={Settings} />
-          </Switch>
-        </Sidebar>
+        <FlexWrapper>
+          <Sidebar></Sidebar>
+          <Main>
+            <Switch>
+              <Route exact path="/" component={SeatingLayout} />
+              <Route exact path="/seating-layout" component={SeatingLayout} />
+              <Route exact path="/settings" component={Settings} />
+            </Switch>
+          </Main>
+        </FlexWrapper>
       </BrowserRouter>
     </AppContainer>
   );

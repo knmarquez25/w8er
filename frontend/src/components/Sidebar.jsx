@@ -64,45 +64,10 @@ const sidebarItemStyles = css`
   }
 `;
 
-const SidebarWrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.surface};
-
-  position: relative;
-  overflow: hidden;
-
-  display: flex;
-  flex-direction: row;
-
-  @media (max-width: 500px) {
-    flex-direction: column;
-
-    font-size: 50px;
-
-    /* .sb-nav, */
-    .sb-container,
-    .sb-main {
-      width: 100%;
-      min-width: 100%;
-      max-width: 100%;
-    }
-
-    .sb-nav {
-      height: 4rem;
-      min-height: 4rem;
-
-      /* width: 100%; */
-
-      flex-direction: row;
-      /* justify-content: space-evenly; */
-
-      margin: 0 auto;
-      border-right: none;
-    }
-
-    .sb-main {
-      flex: 1;
-    }
-  }
+const mobileMode = css`
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
 `;
 
 const SidebarNav = styled.div`
@@ -118,16 +83,26 @@ const SidebarNav = styled.div`
   flex-direction: column;
 
   align-items: center;
+
+  @media (max-width: 500px) {
+    height: 4rem;
+    min-height: 4rem;
+
+    flex-direction: row;
+
+    margin: 0 auto;
+    border-right: none;
+  }
 `;
 
 const SidebarContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.surface};
-
   border-left: 1px solid ${({ theme }) => theme.colors.outline};
 
   @media (max-width: 500px) {
     border-left: 0;
     border-top: 1px solid ${({ theme }) => theme.colors.outline};
+    ${mobileMode}
   }
 
   z-index: 2;
@@ -145,20 +120,7 @@ const SidebarContainer = styled.div`
 
   overflow-x: hidden;
   /* overflow-y: hidden; */
-
   /* padding: ${({ sidebarOpen }) => (sidebarOpen ? "1rem" : "0")}; */
-`;
-
-const MainContent = styled.main`
-  background-color: ${({ theme }) => theme.colors.background};
-  z-index: 1;
-
-  width: 100%;
-  padding: 0.5rem;
-
-  & > * {
-    color: ${({ theme }) => theme.colors.onBackground};
-  }
 `;
 
 const navItemSelected = (props) => css`
@@ -311,7 +273,7 @@ const Sidebar = ({ children, ...props }) => {
   };
 
   return (
-    <SidebarWrapper className="sb-wrapper">
+    <React.Fragment>
       <SidebarNav className="sb-nav">
         <Slider itemSelected={itemSelected} />
         <ToggleSidebarButton
@@ -363,8 +325,7 @@ const Sidebar = ({ children, ...props }) => {
       >
         {navItems[itemSelected].component}
       </SidebarContainer>
-      <MainContent className="sb-main">{children}</MainContent>
-    </SidebarWrapper>
+    </React.Fragment>
   );
 };
 
