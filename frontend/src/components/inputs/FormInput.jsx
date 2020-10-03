@@ -35,6 +35,15 @@ const FormInputContainer = styled.div`
     font-size: 1.5rem;
   }
 
+  input[type="datetime-local"] {
+    color: ${({ theme, value }) => (value ? "#111" : theme.colors.onSurface)};
+
+    &:focus-within,
+    &:focus {
+      color: #111;
+    }
+  }
+
   &:focus-within,
   &:focus {
     label {
@@ -44,6 +53,7 @@ const FormInputContainer = styled.div`
 `;
 
 const InputField = styled.input`
+  background-color: ${({ theme }) => theme.colors.onSurface};
   height: 2.2rem;
 
   width: 100%;
@@ -167,7 +177,7 @@ const FormInput = ({
   };
 
   return (
-    <FormInputContainer id={id} className={className}>
+    <FormInputContainer id={id} className={className} value={value}>
       {label ? (
         <InputLabel htmlFor={htmlFor} className={`${value ? "shrink" : ""}`}>
           <React.Fragment>

@@ -112,8 +112,6 @@ const SidebarNav = styled.div`
 
   z-index: 3;
 
-  border-right: 1px solid ${({ theme }) => rgba(theme.colors.onBackground, 0.1)};
-
   /* min-width: 4rem;
   max-width: 4rem; */
   display: flex;
@@ -125,10 +123,16 @@ const SidebarNav = styled.div`
 const SidebarContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.surface};
 
+  border-left: 1px solid ${({ theme }) => theme.colors.outline};
+
+  @media (max-width: 500px) {
+    border-left: 0;
+    border-top: 1px solid ${({ theme }) => theme.colors.outline};
+  }
+
   z-index: 2;
 
-  /* border-right: 1px solid ${({ theme }) =>
-    rgba(theme.colors.onBackground, 0.1)}; */
+  /* border-right: 1px solid ${({ theme }) => theme.colors.outline}; */
 
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.1);
 
@@ -140,7 +144,7 @@ const SidebarContainer = styled.div`
   /* padding: 2rem; */
 
   overflow-x: hidden;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 
   /* padding: ${({ sidebarOpen }) => (sidebarOpen ? "1rem" : "0")}; */
 `;

@@ -60,6 +60,7 @@ const GUESTLIST = [
 ];
 
 const GuestListContainer = styled.div`
+  position: relative;
   /* margin: 1rem; */
   width: 100%;
   height: 100%;
@@ -80,8 +81,14 @@ const GuestListContainer = styled.div`
 `;
 
 const HeaderContainer = styled.div`
+  z-index: 3;
   background-color: ${({ theme }) => theme.colors.background};
-  /* background-color: ${({ theme }) => theme.colors.primary}; */
+
+  /* border-bottom: 1px solid red; */
+
+  box-shadow: inset 0px -1px 0px 0px ${({ theme }) => theme.colors.outline};
+  /* box-shadow: 0px 1px 0px 0px
+    ${({ theme }) => theme.colors.outline}; */
 
   width: 100%;
 
@@ -178,7 +185,7 @@ const GLExtras = styled.div`
   width: 100%;
   /* margin: 0 1rem; */
 
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.surface};
 
   transition: height 200ms ease-out;
 
@@ -196,9 +203,10 @@ const GLExtras = styled.div`
 
 const HeaderButton = styled(Button)`
   /* margin-right: 0.75rem; */
+  background-color: ${({ theme, buttonOpen }) =>
+    buttonOpen ? theme.colors.surface : "transparent"};
 
   border-radius: 0;
-  background-color: transparent;
 
   width: 4rem;
   min-width: 4rem;
@@ -217,6 +225,8 @@ const HeaderButton = styled(Button)`
 
   &:hover {
     background-color: ${({ theme }) => rgba("black", 0.05)};
+
+    border: 0;
 
     .btn-icon {
       svg {
@@ -269,7 +279,7 @@ const SeatedCheckButton = styled(Button)`
 const GuestList = () => {
   const [guestList, setGuestList] = useState(GUESTLIST);
   const [glExtrasOpen, setGlExtrasOpen] = useState(false);
-  const [addGuestOpen, setAddGuestOpen] = useState(false);
+  const [addGuestOpen, setAddGuestOpen] = useState(true);
 
   useEffect(() => {}, [guestList]);
 
@@ -292,6 +302,7 @@ const GuestList = () => {
           <ExtrasDropdownButton
             type="circle"
             glExtrasOpen={glExtrasOpen}
+            buttonOpen={glExtrasOpen}
             icon={BsCaretDownFill}
             css={css`
               .btn-icon {
@@ -312,6 +323,7 @@ const GuestList = () => {
           <AddGuestButton
             type="circle"
             addGuestOpen={addGuestOpen}
+            buttonOpen={addGuestOpen}
             icon={GoPlus}
             onClick={() => {
               setGlExtrasOpen(false);

@@ -58,6 +58,8 @@ const themeDark = {
     onBackground: "white",
     onSurface: "white",
 
+    outline: "#575e70",
+
     error: "#e85359",
   },
   font: baseFont,
@@ -79,6 +81,8 @@ const themeLight = {
     onBackground: "#3e3e3e",
     // onSurface: "#e5e5e5",
     onSurface: "#f1f3f4",
+
+    outline: "#ebebeb",
 
     error: "#e85359",
   },
