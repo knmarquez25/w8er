@@ -36,14 +36,20 @@ const AddGuestContainer = styled.form`
 `;
 
 const AddGuestButton = styled(Button)`
-  width: 100%;
-  /* margin: 0 1rem; */
-
   background-color: ${({ theme }) => theme.colors.primary};
+  width: 100%;
+
+  margin-top: 3rem;
+
+  color: ${({ theme }) => theme.colors.onBackground};
 
   transition: height 200ms ease-out;
 
-  color: ${({ theme }) => theme.colors.onBackground};
+  &:hover {
+    .btn-text {
+      color: white;
+    }
+  }
 `;
 
 const INITIAL_GUEST = {

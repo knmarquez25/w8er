@@ -40,12 +40,15 @@ const ButtonContainer = styled.button`
   .btn-text {
     height: 100%;
     /* background-color: #fff; */
+
+    font-weight: bold;
+    text-transform: capitalize;
+    font-style: italic;
+    letter-spacing: 0px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0px;
   }
 
   .btn-icon {
