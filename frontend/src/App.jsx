@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
@@ -66,24 +68,26 @@ const App = ({ ...props }) => {
   }, [theme]);
 
   return (
-    <AppContainer>
-      <Helmet>
-        <meta name="theme-color" content={theme.colors.primary} />
-      </Helmet>
+    <DndProvider backend={HTML5Backend}>
+      <AppContainer>
+        <Helmet>
+          <meta name="theme-color" content={theme.colors.primary} />
+        </Helmet>
 
-      <BrowserRouter>
-        <FlexWrapper>
-          <Sidebar></Sidebar>
-          <Main>
-            <Switch>
-              <Route exact path="/" component={SeatingLayout} />
-              <Route exact path="/seating-layout" component={SeatingLayout} />
-              <Route exact path="/settings" component={Settings} />
-            </Switch>
-          </Main>
-        </FlexWrapper>
-      </BrowserRouter>
-    </AppContainer>
+        <BrowserRouter>
+          <FlexWrapper>
+            <Sidebar></Sidebar>
+            <Main>
+              <Switch>
+                <Route exact path="/" component={SeatingLayout} />
+                <Route exact path="/seating-layout" component={SeatingLayout} />
+                <Route exact path="/settings" component={Settings} />
+              </Switch>
+            </Main>
+          </FlexWrapper>
+        </BrowserRouter>
+      </AppContainer>
+    </DndProvider>
   );
 };
 

@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 import { rgba } from "emotion-rgba";
 
 const SelectSliderContainer = styled.div`
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
 
   width: 100%;
   display: flex;

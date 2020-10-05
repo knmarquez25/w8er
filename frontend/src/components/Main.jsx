@@ -10,7 +10,12 @@ const MainContent = styled.main`
   z-index: 1;
 
   width: 100%;
-  padding: 0.5rem;
+  height: 100%;
+  padding: 1rem;
+  /* margin: 1rem; */
+
+  overflow: auto;
+  position: relative;
 
   & > * {
     color: ${({ theme }) => theme.colors.onBackground};
@@ -23,6 +28,10 @@ const MainContent = styled.main`
 
     flex: 1;
   }
+
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 `;
 
 const Main = ({ children, ...props }) => {

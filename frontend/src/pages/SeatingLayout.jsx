@@ -1,7 +1,13 @@
 import React from "react";
 
+import FloorMap from "../components/layout-tools/FloorMap";
+
 const SeatingLayout = () => {
-  return <div>Seating layout</div>;
+  return (
+    // <div>
+    <FloorMap />
+    // </div>
+  );
 };
 
 export default SeatingLayout;

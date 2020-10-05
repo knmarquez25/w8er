@@ -18,12 +18,19 @@ const spacing = css`
 const AddGuestContainer = styled.form`
   background-color: ${({ theme }) => theme.colors.surface};
   width: 100%;
-  height: ${({ addGuestOpen }) => (addGuestOpen ? "40rem" : "0")};
-  padding: ${({ addGuestOpen }) => (addGuestOpen ? "0.5rem" : "0")};
+  ${({ addGuestOpen }) =>
+    addGuestOpen
+      ? null
+      : css`
+          height: 0;
+        `}
+
+  /* min-height: ${({ addGuestOpen }) => (addGuestOpen ? "35rem" : "0")}; */
+  padding: ${({ addGuestOpen }) => (addGuestOpen ? "0.5rem 2rem" : "0")};
   border-bottom: ${({ addGuestOpen, theme }) =>
     addGuestOpen ? `1px solid ${rgba(theme.colors.onBackground, 0.1)}` : "0"};
 
-  overflow: auto;
+  overflow: hidden;
 
   color: ${({ theme }) => theme.colors.onBackground};
 
@@ -39,7 +46,8 @@ const AddGuestButton = styled(Button)`
   background-color: ${({ theme }) => theme.colors.primary};
   width: 100%;
 
-  margin-top: 3rem;
+  margin-top: 2.5rem;
+  margin-bottom: 2rem;
 
   color: ${({ theme }) => theme.colors.onBackground};
 

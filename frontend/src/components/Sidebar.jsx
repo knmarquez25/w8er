@@ -16,13 +16,16 @@ import Button from "./buttons/Button";
 import ToggleButton from "./buttons/ToggleButton";
 import Example from "./Example";
 import GuestList from "./GuestList";
+import FloorMapToolsDemo from "./FloorMapToolsDemo";
 import FloorMapTools from "./FloorMapTools";
+import Tool from "./layout-tools/Tool";
 
 // icons:
 import { MdChevronRight } from "react-icons/md";
 import { MdSettings } from "react-icons/md";
 import { IoMdListBox } from "react-icons/io";
 import { BiCustomize } from "react-icons/bi";
+import { CgDebug } from "react-icons/cg";
 
 const sbClosed = css`
   opacity: 0;
@@ -119,6 +122,8 @@ const SidebarContainer = styled.div`
   /* padding: 2rem; */
 
   overflow-x: hidden;
+
+  height: 100%;
   /* overflow-y: hidden; */
   /* padding: ${({ sidebarOpen }) => (sidebarOpen ? "1rem" : "0")}; */
 `;
@@ -229,7 +234,11 @@ const navItems = [
   },
 
   {
-    component: <Example />,
+    component: (
+      <Tool
+        info={{ id: "", data: {}, dropped: false, coordinates: { x: 0, y: 0 } }}
+      />
+    ),
     // componentHeader: <FloorMapHeader />,
     icon: BiCustomize,
     link: "/seating-layout",
@@ -239,6 +248,11 @@ const navItems = [
     // componentHeader: "<FriendslistSidebarHeader />",
     icon: MdSettings,
     link: "/settings",
+  },
+  {
+    component: <FloorMapToolsDemo />,
+    // componentHeader: "<FriendslistSidebarHeader />",
+    icon: CgDebug,
   },
 ];
 

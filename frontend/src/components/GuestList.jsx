@@ -68,6 +68,7 @@ const GuestListContainer = styled.div`
 
   /* background-color: ${({ theme }) => theme.colors.background}; */
   /* border-radius: 4px; */
+  overflow-y: auto;
 
   display: flex;
   flex-direction: column;
@@ -203,8 +204,10 @@ const GLExtras = styled.div`
 
 const HeaderButton = styled(Button)`
   /* margin-right: 0.75rem; */
-  background-color: ${({ theme, buttonOpen }) =>
-    buttonOpen ? theme.colors.surface : "transparent"};
+  /* background-color: ${({ theme, buttonOpen }) =>
+    buttonOpen ? theme.colors.surface : "transparent"}; */
+
+  background-color: transparent;
 
   border-radius: 0;
 
@@ -245,6 +248,8 @@ const ExtrasDropdownButton = styled(HeaderButton)`
       transform: ${({ glExtrasOpen }) =>
         glExtrasOpen ? css`rotate(-180deg)` : css`rotate(0)`};
       path {
+        fill: ${({ glExtrasOpen, theme }) =>
+          !glExtrasOpen ? theme.colors.onBackground : theme.colors.error};
       }
     }
   }
@@ -279,7 +284,7 @@ const SeatedCheckButton = styled(Button)`
 const GuestList = () => {
   const [guestList, setGuestList] = useState(GUESTLIST);
   const [glExtrasOpen, setGlExtrasOpen] = useState(false);
-  const [addGuestOpen, setAddGuestOpen] = useState(true);
+  const [addGuestOpen, setAddGuestOpen] = useState(false);
 
   useEffect(() => {}, [guestList]);
 
