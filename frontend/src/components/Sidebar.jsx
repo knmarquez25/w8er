@@ -232,13 +232,14 @@ const navItems = [
     icon: IoMdListBox,
     link: "",
   },
-
   {
-    component: (
-      <Tool
-        info={{ id: "", data: {}, dropped: false, coordinates: { x: 0, y: 0 } }}
-      />
-    ),
+    // component: (
+    //   <Tool
+    //     info={{ id: "", data: {}, dropped: false, coordinates: { x: 0, y: 0 } }}
+    //   />
+    // ),
+
+    component: <FloorMapTools />,
     // componentHeader: <FloorMapHeader />,
     icon: BiCustomize,
     link: "/seating-layout",

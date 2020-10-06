@@ -74,32 +74,35 @@ const ButtonContainer = styled.button`
   }
 `;
 
-const Button = ({ type, text, icon, reverse, ...props }) => {
-  return (
-    <ButtonContainer
-      {...props}
-      reverse={reverse}
-      css={type === "circle" ? circleBtn : regularBtn}
-    >
-      {text ? (
-        <span
-          className="btn-text"
-          css={
-            icon && text
-              ? css`
-                  margin: ${reverse ? "0 0 0 0.5rem" : "0 0.5rem 0 0"};
-                `
-              : null
-          }
-        >
-          {text}
-        </span>
-      ) : null}
-      {icon ? (
-        <span className="btn-icon">{React.createElement(icon)}</span>
-      ) : null}
-    </ButtonContainer>
-  );
-};
+const Button = React.forwardRef(
+  ({ type, text, icon, reverse, ...props }, ref) => {
+    return (
+      <ButtonContainer
+        ref={ref}
+        {...props}
+        reverse={reverse}
+        css={type === "circle" ? circleBtn : regularBtn}
+      >
+        {text ? (
+          <span
+            className="btn-text"
+            css={
+              icon && text
+                ? css`
+                    margin: ${reverse ? "0 0 0 0.5rem" : "0 0.5rem 0 0"};
+                  `
+                : null
+            }
+          >
+            {text}
+          </span>
+        ) : null}
+        {icon ? (
+          <span className="btn-icon">{React.createElement(icon)}</span>
+        ) : null}
+      </ButtonContainer>
+    );
+  }
+);
 
 export default Button;
