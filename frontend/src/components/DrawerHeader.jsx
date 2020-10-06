@@ -56,6 +56,8 @@ const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  overflow: hidden;
 `;
 
 const HeaderContainer = styled.div`
@@ -67,6 +69,7 @@ const HeaderContainer = styled.div`
   box-shadow: inset 0px -1px 0px 0px ${({ theme }) => theme.colors.outline};
   /* box-shadow: 0px 1px 0px 0px
     ${({ theme }) => theme.colors.outline}; */
+  /* overflow: hidden; */
 
   width: 100%;
 
@@ -96,6 +99,8 @@ const HeaderContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex: 1;
+
+    white-space: nowrap;
   }
 
   .btn-container {

@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
+import ReactFlow, { Background, MiniMap } from "react-flow-renderer";
+import { useTheme } from "emotion-theming";
+import { rgba } from "emotion-rgba";
 
 // styling:
 /** @jsx jsx */
@@ -8,11 +11,18 @@ import { useDrop } from "react-dnd";
 import { ItemTypes } from "../../utils/draggables";
 import Tool from "./Tool";
 
+const elements = [
+  { id: "1", data: { label: "Node 1" }, position: { x: 240, y: 0 } },
+  // you can also pass a React component as a label
+  { id: "2", data: { label: <div>Node 2</div> }, position: { x: 100, y: 100 } },
+  { id: "e1-2", source: "1", target: "2", animated: true },
+];
+
 const FloorMapContainer = styled.div`
-  width: 100rem;
-  height: 100rem;
-  /* background-color: ${({ theme }) => theme.colors.primary}; */
-  background-color: red;
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.background};
+  /* background-color: red; */
 
   /* VERY IMPORTANT LINE: */
   /* ensures that the right margin is accounted for it overflows */
@@ -101,6 +111,7 @@ const Board = ({ offset = { x: 0, y: 0 }, ...props }) => {
 const FloorMap = () => {
   const fmRef = useRef();
   const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const theme = useTheme();
 
   useEffect(() => {
     if (fmRef) {
@@ -111,7 +122,39 @@ const FloorMap = () => {
   }, [fmRef]);
   return (
     <FloorMapContainer ref={fmRef}>
-      <Board offset={offset}></Board>
+      {/* <Board offset={offset}></Board> */}
+      <ReactFlow
+        elements={elements}
+        snapToGrid
+        snapGrid={[20, 20]}
+        // translateExtent={[
+        //   [0, 0],
+        //   [500, 500],
+        // ]}
+      >
+        <Background
+          variant="dots"
+          gap={20}
+          size={4}
+          color={rgba(theme.colors.onBackground, 0.3)}
+          size={1}
+        />
+
+        <MiniMap
+          nodeColor={(node) => {
+            switch (node.type) {
+              case "input":
+                return "red";
+              case "default":
+                return "#00ff00";
+              case "output":
+                return "rgb(0,0,255)";
+              default:
+                return "#eee";
+            }
+          }}
+        />
+      </ReactFlow>
     </FloorMapContainer>
   );
 };

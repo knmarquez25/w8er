@@ -113,6 +113,8 @@ const GuestItem = styled.li`
     color: ${({ theme }) => theme.colors.onBackground};
     font-style: italic;
     flex: 1;
+
+    white-space: nowrap;
   }
 `;
 

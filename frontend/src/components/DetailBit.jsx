@@ -8,6 +8,8 @@ import styled from "@emotion/styled";
 const DetailBitContainer = styled.div`
   width: 1.7rem;
   height: 1.7rem;
+  min-width: 1.7rem;
+  min-height: 1.7rem;
   border-radius: 50%;
 
   background-color: ${({ theme }) => theme.colors.onSurface};
