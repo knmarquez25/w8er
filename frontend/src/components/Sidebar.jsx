@@ -33,10 +33,10 @@ const sbClosed = css`
   max-width: 0;
 
   @media (max-width: 500px) {
-    min-height: 0;
-    max-height: 0;
     min-width: 100%;
     max-width: 100%;
+
+    max-height: 0;
   }
 `;
 
@@ -71,6 +71,9 @@ const mobileMode = css`
   width: 100%;
   min-width: 100%;
   max-width: 100%;
+
+  min-height: 0;
+  max-height: 60%;
 `;
 
 const SidebarNav = styled.div`
@@ -109,6 +112,7 @@ const SidebarContainer = styled.div`
   }
 
   z-index: 2;
+  /* padding-bottom: 0.5rem; */
 
   /* border-right: 1px solid ${({ theme }) => theme.colors.outline}; */
 
@@ -123,7 +127,7 @@ const SidebarContainer = styled.div`
 
   overflow-x: hidden;
 
-  height: 100%;
+  /* height: 100%; */
   /* overflow-y: hidden; */
   /* padding: ${({ sidebarOpen }) => (sidebarOpen ? "1rem" : "0")}; */
 `;

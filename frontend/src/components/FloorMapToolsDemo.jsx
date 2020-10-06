@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./mycss.scss";
 
 // styling:
 /** @jsx jsx */

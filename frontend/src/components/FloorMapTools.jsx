@@ -69,15 +69,6 @@ const GLExtras = styled.div`
 `;
 
 const FloorMapTools = () => {
-  // const [glExtrasOpen, setGlExtrasOpen] = useState(false);
-  // const [addGuestOpen, setAddGuestOpen] = useState(false);
-  // const cr1 = useRef();
-  // const cr2 = useRef();
-
-  // useEffect(() => {
-  //   console.log("arnodl", cr2.current.clientHeight);
-  // }, [cr2]);
-
   return (
     <FMTContainer>
       <DrawerHeader

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 // styling:
 /** @jsx jsx */
@@ -18,25 +18,28 @@ const spacing = css`
 const AddGuestContainer = styled.form`
   background-color: ${({ theme }) => theme.colors.surface};
   width: 100%;
-  ${({ addGuestOpen }) =>
+
+  /* ${({ addGuestOpen }) =>
     addGuestOpen
       ? null
       : css`
           height: 0;
-        `}
+        `} */
 
   /* min-height: ${({ addGuestOpen }) => (addGuestOpen ? "35rem" : "0")}; */
-  padding: ${({ addGuestOpen }) => (addGuestOpen ? "0.5rem 2rem" : "0")};
-  border-bottom: ${({ addGuestOpen, theme }) =>
-    addGuestOpen ? `1px solid ${rgba(theme.colors.onBackground, 0.1)}` : "0"};
+  /* padding: ${({ addGuestOpen }) => (addGuestOpen ? "0.5rem 2rem" : "0")}; */
+  /* border-bottom: ${({ addGuestOpen, theme }) =>
+    addGuestOpen
+      ? `1px solid ${rgba(theme.colors.onBackground, 0.1)}`
+      : "0"}; */
 
-  overflow: hidden;
+  /* overflow: hidden; */
 
   color: ${({ theme }) => theme.colors.onBackground};
 
-  transition-property: height, padding;
+  /* transition-property: height, padding;
   transition-duration: 200ms;
-  transition-timing-function: ease-out;
+  transition-timing-function: ease-out; */
 
   /* border-bottom: 1px solid
     ${({ theme }) => rgba(theme.colors.onBackground, 0.1)}; */
@@ -47,7 +50,7 @@ const AddGuestButton = styled(Button)`
   width: 100%;
 
   margin-top: 2.5rem;
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
 
   color: ${({ theme }) => theme.colors.onBackground};
 
@@ -89,18 +92,25 @@ const TABLE_ARRAY = (() => {
   return array;
 })();
 
-const AddGuest = ({ handleChange, addGuestOpen, ...props }) => {
+const AddGuest = React.forwardRef(({ handleChange, ...props }, ref) => {
   const [guest, setGuest] = useState(INITIAL_GUEST);
+  // const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    console.log("rerendered");
+  }, [guest.reserveTime]);
 
   return (
     <AddGuestContainer
       {...props}
-      addGuestOpen={addGuestOpen}
+      ref={ref}
+      className="add-guest-container"
       onSubmit={(e) => {
         e.preventDefault();
         handleChange(guest);
         console.log("guest", guest);
         setGuest(INITIAL_GUEST);
+        if (props.toggleDrawer) props.toggleDrawer();
       }}
     >
       <FormInput
@@ -172,17 +182,9 @@ const AddGuest = ({ handleChange, addGuestOpen, ...props }) => {
         />
       )}
 
-      <AddGuestButton
-        text="confirm guest"
-        // onClick={(e) => {
-        //   e.preventDefault();
-        //   handleChange(guest);
-        //   console.log("guest", guest);
-        //   setGuest(INITIAL_GUEST);
-        // }}
-      />
+      <AddGuestButton text="confirm guest" />
     </AddGuestContainer>
   );
-};
+});
 
 export default AddGuest;

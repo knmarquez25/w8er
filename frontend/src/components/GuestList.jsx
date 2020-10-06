@@ -10,6 +10,7 @@ import { rgba } from "emotion-rgba";
 import Button from "./buttons/Button";
 import DetailBit from "./DetailBit";
 import AddGuest from "./AddGuest";
+import DrawerHeader from "./DrawerHeader";
 
 // icon:
 import { IoMdAddCircle } from "react-icons/io";
@@ -69,6 +70,7 @@ const GuestListContainer = styled.div`
   /* background-color: ${({ theme }) => theme.colors.background}; */
   /* border-radius: 4px; */
   overflow-y: auto;
+  /* overflow-y: hidden; */
 
   display: flex;
   flex-direction: column;
@@ -78,50 +80,6 @@ const GuestListContainer = styled.div`
   .add-btn-container {
     width: 100%;
     display: flex;
-  }
-`;
-
-const HeaderContainer = styled.div`
-  z-index: 3;
-  background-color: ${({ theme }) => theme.colors.background};
-
-  /* border-bottom: 1px solid red; */
-
-  box-shadow: inset 0px -1px 0px 0px ${({ theme }) => theme.colors.outline};
-  /* box-shadow: 0px 1px 0px 0px
-    ${({ theme }) => theme.colors.outline}; */
-
-  width: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* min-height: 3rem; */
-  /* margin-bottom: 1rem; */
-  /* margin: 1rem; */
-
-  box-sizing: border-box;
-
-  h1 {
-    /* background-color: ${({ theme }) => theme.colors.background}; */
-
-    /* border-bottom: 2px solid ${({ theme }) => theme.colors.primary}; */
-
-    color: ${({ theme }) => theme.colors.onBackground};
-    font-size: 1.2rem;
-    text-transform: uppercase;
-
-    /* font-style: italic; */
-    letter-spacing: 2px;
-    font-weight: bold;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-  }
-
-  .btn-container {
   }
 `;
 
@@ -188,85 +146,12 @@ const GLExtras = styled.div`
 
   background-color: ${({ theme }) => theme.colors.surface};
 
-  transition: height 200ms ease-out;
-
-  height: ${({ glExtrasOpen }) => (glExtrasOpen ? "5rem" : "0")};
-
-  overflow: hidden;
-
   color: ${({ theme }) => theme.colors.onBackground};
 
   display: flex;
   justify-content: center;
   align-items: center;
   /* margin-top: ${({ glExtrasOpen }) => (glExtrasOpen ? "1rem" : "0")}; */
-`;
-
-const HeaderButton = styled(Button)`
-  /* margin-right: 0.75rem; */
-  /* background-color: ${({ theme, buttonOpen }) =>
-    buttonOpen ? theme.colors.surface : "transparent"}; */
-
-  background-color: transparent;
-
-  border-radius: 0;
-
-  width: 4rem;
-  min-width: 4rem;
-  height: 4rem;
-  min-height: 4rem;
-
-  .btn-icon {
-    svg {
-      width: 1.5rem;
-      height: 1.5rem;
-      path {
-        fill: ${({ theme }) => theme.colors.onBackground};
-      }
-    }
-  }
-
-  &:hover {
-    background-color: ${({ theme }) => rgba("black", 0.05)};
-
-    border: 0;
-
-    .btn-icon {
-      svg {
-        path {
-          fill: ${({ theme }) => theme.colors.primary};
-        }
-      }
-    }
-  }
-`;
-
-const ExtrasDropdownButton = styled(HeaderButton)`
-  .btn-icon {
-    svg {
-      transition: transform 200ms ease-out;
-      transform: ${({ glExtrasOpen }) =>
-        glExtrasOpen ? css`rotate(-180deg)` : css`rotate(0)`};
-      path {
-        fill: ${({ glExtrasOpen, theme }) =>
-          !glExtrasOpen ? theme.colors.onBackground : theme.colors.error};
-      }
-    }
-  }
-`;
-
-const AddGuestButton = styled(HeaderButton)`
-  .btn-icon {
-    svg {
-      transition: transform 200ms ease-out;
-      transform: ${({ addGuestOpen }) =>
-        addGuestOpen ? css`rotate(-135deg)` : css`rotate(0)`};
-      path {
-        fill: ${({ addGuestOpen, theme }) =>
-          !addGuestOpen ? theme.colors.onBackground : theme.colors.error};
-      }
-    }
-  }
 `;
 
 const SeatedCheckButton = styled(Button)`
@@ -283,18 +168,7 @@ const SeatedCheckButton = styled(Button)`
 
 const GuestList = () => {
   const [guestList, setGuestList] = useState(GUESTLIST);
-  const [glExtrasOpen, setGlExtrasOpen] = useState(false);
-  const [addGuestOpen, setAddGuestOpen] = useState(false);
-
   useEffect(() => {}, [guestList]);
-
-  const toggleGLextras = () => {
-    setGlExtrasOpen(!glExtrasOpen);
-  };
-
-  const toggleAddGuest = () => {
-    setAddGuestOpen(!addGuestOpen);
-  };
 
   const addGuestItem = (guestItem) => {
     setGuestList([...guestList, guestItem]);
@@ -302,53 +176,23 @@ const GuestList = () => {
 
   return (
     <GuestListContainer>
-      <HeaderContainer>
-        <div className="btn-container">
-          <ExtrasDropdownButton
-            type="circle"
-            glExtrasOpen={glExtrasOpen}
-            buttonOpen={glExtrasOpen}
-            icon={BsCaretDownFill}
-            css={css`
-              .btn-icon {
-                svg {
-                  width: 1.2rem;
-                  height: 1.2rem;
-                }
-              }
-            `}
-            onClick={() => {
-              setAddGuestOpen(false);
-              toggleGLextras();
+      <DrawerHeader
+        headerTitle="Guest list"
+        drawerComponent1={
+          <GLExtras>filter, sort, other extra features here</GLExtras>
+        }
+        drawerComponent2={
+          <AddGuest
+            handleChange={(guestItem) => {
+              addGuestItem(guestItem);
+              // setAddGuestOpen(false);
             }}
+            // addGuestOpen={addGuestOpen}
           />
-        </div>
-        <h1>Guest List</h1>
-        <div className="btn-container">
-          <AddGuestButton
-            type="circle"
-            addGuestOpen={addGuestOpen}
-            buttonOpen={addGuestOpen}
-            icon={GoPlus}
-            onClick={() => {
-              setGlExtrasOpen(false);
-              toggleAddGuest();
-            }}
-          />
-        </div>
-      </HeaderContainer>
-
-      <GLExtras glExtrasOpen={glExtrasOpen}>
-        filter, sort, other extra features here
-      </GLExtras>
-
-      <AddGuest
-        handleChange={(guestItem) => {
-          addGuestItem(guestItem);
-          setAddGuestOpen(false);
-        }}
-        addGuestOpen={addGuestOpen}
-      ></AddGuest>
+        }
+        // handleChange1={(state) => setGlExtrasOpen(state)}
+        // handleChange2={(state) => setAddGuestOpen(state)}
+      />
 
       <ListContainer className="guest-list">
         {guestList.map((guest, i) => (
@@ -361,18 +205,6 @@ const GuestList = () => {
           </GuestItem>
         ))}
       </ListContainer>
-
-      <div className="add-btn-container">
-        {/* <AddToGuestListButton
-          text="reservation"
-          icon={IoMdAddCircle}
-          reverse
-          css={css`
-            margin-right: 1rem;
-          `}
-        />
-        <AddToGuestListButton text="waitlist" icon={IoMdAddCircle} reverse /> */}
-      </div>
     </GuestListContainer>
   );
 };
