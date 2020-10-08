@@ -11,6 +11,7 @@ import Button from "./buttons/Button";
 import DetailBit from "./DetailBit";
 import AddGuest from "./AddGuest";
 import DrawerHeader from "./DrawerHeader";
+import Tool from "./layout-tools/Tool";
 
 // icon:
 import { IoMdAddCircle } from "react-icons/io";
@@ -86,6 +87,9 @@ const FloorMapTools = () => {
         }
         // handleChange1={(state) => setGlExtrasOpen(state)}
         // handleChange2={(state) => setAddGuestOpen(state)}
+      />
+      <Tool
+        info={{ id: "", data: {}, dropped: false, position: { x: 0, y: 0 } }}
       />
 
       <FMTContent className="floor-map-tools-content"></FMTContent>

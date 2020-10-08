@@ -22,6 +22,7 @@
     "react-scripts": "3.4.3",
     "recoil": "0.0.10",
     "resize-observer-polyfill": "^1.5.1",
+    "shortid": "^2.2.15",
     "use-resize-observer": "^6.1.0"
   },
   "scripts": {

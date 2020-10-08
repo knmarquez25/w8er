@@ -72,6 +72,8 @@ const SelectSliderLabel = styled.label`
 
   margin-left: 0.4rem;
 
+  white-space: nowrap;
+
   span {
     font-weight: bold;
 

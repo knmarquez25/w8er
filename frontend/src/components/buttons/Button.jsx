@@ -45,6 +45,7 @@ const ButtonContainer = styled.button`
     text-transform: capitalize;
     font-style: italic;
     letter-spacing: 0px;
+    white-space: nowrap;
 
     display: flex;
     flex-direction: column;

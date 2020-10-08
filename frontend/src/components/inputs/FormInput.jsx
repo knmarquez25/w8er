@@ -64,6 +64,8 @@ const InputField = styled.input`
   font-size: 1rem;
   letter-spacing: 1px;
 
+  white-space: nowrap;
+
   &:focus,
   &:focus-within,
   &:hover {
@@ -78,13 +80,11 @@ const InputField = styled.input`
 
 const InputLabel = styled.label`
   text-transform: uppercase;
-
   color: black;
-
   font-size: 1rem;
-
   font-weight: normal;
   letter-spacing: 0.05rem;
+  white-space: nowrap;
 
   position: absolute;
   pointer-events: none;

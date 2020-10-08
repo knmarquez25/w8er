@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
+import { ReactFlowProvider } from "react-flow-renderer";
 
 // styling:
 /** @jsx jsx */
@@ -112,7 +113,8 @@ const SidebarContainer = styled.div`
   }
 
   z-index: 2;
-  /* padding-bottom: 0.5rem; */
+
+  padding-bottom: ${({ sidebarOpen }) => (sidebarOpen ? "0.5rem" : 0)};
 
   /* border-right: 1px solid ${({ theme }) => theme.colors.outline}; */
 
@@ -293,57 +295,59 @@ const Sidebar = ({ children, ...props }) => {
 
   return (
     <React.Fragment>
-      <SidebarNav className="sb-nav">
-        <Slider itemSelected={itemSelected} />
-        <ToggleSidebarButton
-          type="circle"
-          icon={MdChevronRight}
-          onClick={() => {
-            if (itemSelected === 2) {
-              setItemSelected(0);
-            }
-            toggleSidebar();
-          }}
-          sidebarOpen={sidebarOpen}
-        />
-        {navItems.map((item, i) => (
-          <div key={i}>
-            <NavItemButton
-              itemSelected={itemSelected}
-              // settingsSelected={settingsSelected}
-              index={i}
-              type="circle"
-              icon={item.icon}
-              onClick={() => {
-                if (itemSelected === i && item.component) {
-                  toggleSidebar();
-                } else if (item.component) {
-                  openSidebar();
-                } else {
-                  closeSidebar();
-                }
-                setItemSelected(i);
+      <ReactFlowProvider>
+        <SidebarNav className="sb-nav">
+          <Slider itemSelected={itemSelected} />
+          <ToggleSidebarButton
+            type="circle"
+            icon={MdChevronRight}
+            onClick={() => {
+              if (itemSelected === 2) {
+                setItemSelected(0);
+              }
+              toggleSidebar();
+            }}
+            sidebarOpen={sidebarOpen}
+          />
+          {navItems.map((item, i) => (
+            <div key={i}>
+              <NavItemButton
+                itemSelected={itemSelected}
+                // settingsSelected={settingsSelected}
+                index={i}
+                type="circle"
+                icon={item.icon}
+                onClick={() => {
+                  if (itemSelected === i && item.component) {
+                    toggleSidebar();
+                  } else if (item.component) {
+                    openSidebar();
+                  } else {
+                    closeSidebar();
+                  }
+                  setItemSelected(i);
 
-                if (item.link || item.link !== "") history.push(item.link);
-              }}
-            />
-          </div>
-        ))}
-        <ToggleButton
-          orientation={`${mQuery.matches ? "horizontal" : "vertical"}`}
-          label="theme"
-          value={themeToggle}
-          onClick={() => toggleTheme(!themeToggle)}
-          css={sidebarItemStyles}
-        />
-      </SidebarNav>
-      <SidebarContainer
-        sidebarOpen={sidebarOpen}
-        className="sb-container"
-        css={sidebarOpen ? sbOpened : sbClosed}
-      >
-        {navItems[itemSelected].component}
-      </SidebarContainer>
+                  if (item.link || item.link !== "") history.push(item.link);
+                }}
+              />
+            </div>
+          ))}
+          <ToggleButton
+            orientation={`${mQuery.matches ? "horizontal" : "vertical"}`}
+            label="theme"
+            value={themeToggle}
+            onClick={() => toggleTheme(!themeToggle)}
+            css={sidebarItemStyles}
+          />
+        </SidebarNav>
+        <SidebarContainer
+          sidebarOpen={sidebarOpen}
+          className="sb-container"
+          css={sidebarOpen ? sbOpened : sbClosed}
+        >
+          {navItems[itemSelected].component}
+        </SidebarContainer>
+      </ReactFlowProvider>
     </React.Fragment>
   );
 };

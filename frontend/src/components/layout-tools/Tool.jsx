@@ -13,8 +13,8 @@ const ToolContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.primary};
 
   position: ${({ info }) => (info.dropped ? "absolute" : "relative")};
-  top: ${({ info }) => info.coordinates.y}px;
-  left: ${({ info }) => info.coordinates.x}px;
+  top: ${({ info }) => info.position.y}px;
+  left: ${({ info }) => info.position.x}px;
 `;
 
 const opacityStyle = css`
