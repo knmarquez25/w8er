@@ -49,10 +49,12 @@ const FMTContent = styled.ul`
   width: 100%;
   padding: 0.5rem;
 
-  flex: 1;
+  /* flex: 1; */
+  margin-top: 1.5rem;
 
   display: flex;
-  flex-direction: column;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 `;
 
 const GLExtras = styled.div`
@@ -69,30 +71,38 @@ const GLExtras = styled.div`
   /* margin-top: ${({ glExtrasOpen }) => (glExtrasOpen ? "1rem" : "0")}; */
 `;
 
+const margin = css`
+  margin: 1rem;
+`;
+
 const FloorMapTools = () => {
   return (
     <FMTContainer>
-      <DrawerHeader
-        headerTitle="Floor Map Tools"
-        drawerComponent1={<Button />}
-        drawerComponent2={
-          <GLExtras>
-            <div>lsdkjf</div>
-            <div>lsdkjf</div>
-            <div>lsdkjf</div>
-            <div>lsdkjf</div>
-            <div>lsdkjf</div>
-            <div>lsdkjf</div>
-          </GLExtras>
-        }
-        // handleChange1={(state) => setGlExtrasOpen(state)}
-        // handleChange2={(state) => setAddGuestOpen(state)}
-      />
-      <Tool
-        info={{ id: "", data: {}, dropped: false, position: { x: 0, y: 0 } }}
-      />
+      <DrawerHeader headerTitle="Floor Map Tools" />
 
-      <FMTContent className="floor-map-tools-content"></FMTContent>
+      <FMTContent className="floor-map-tools-content">
+        <Tool
+          type="square"
+          info={{ id: "", data: { type: "square" }, position: { x: 0, y: 0 } }}
+          css={margin}
+        />
+        <Tool
+          type="circle"
+          info={{ id: "", data: { type: "circle" }, position: { x: 0, y: 0 } }}
+          css={margin}
+        />
+        <Tool
+          type="diamond"
+          info={{ id: "", data: { type: "diamond" }, position: { x: 0, y: 0 } }}
+          css={margin}
+        />
+
+        <Tool
+          type="lshape"
+          info={{ id: "", data: { type: "lshape" }, position: { x: 0, y: 0 } }}
+          css={margin}
+        />
+      </FMTContent>
     </FMTContainer>
   );
 };

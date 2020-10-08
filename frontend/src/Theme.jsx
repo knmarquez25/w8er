@@ -44,6 +44,10 @@ const baseFont = {
   weight: "normal",
 };
 
+const dimensions = {
+  gridUnit: 20,
+};
+
 const themeDark = {
   colors: {
     primary: "#afb9f1",
@@ -63,6 +67,7 @@ const themeDark = {
     error: "#e85359",
   },
   font: baseFont,
+  dimensions: dimensions,
 };
 
 const themeLight = {
@@ -87,6 +92,7 @@ const themeLight = {
     error: "#e85359",
   },
   font: baseFont,
+  dimensions: dimensions,
 };
 
 const GlobalReset = () => {

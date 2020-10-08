@@ -6,40 +6,24 @@ import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import { useDrag } from "react-dnd";
 import { ItemTypes } from "../../utils/draggables";
+import { circle, diamond, ToolContainer, opacityStyle } from "./ToolStyles";
 
-const ToolContainer = styled.div`
-  width: 10rem;
-  height: 10rem;
-  background-color: ${({ theme }) => theme.colors.primary};
-
-  position: ${({ info }) => (info.dropped ? "absolute" : "relative")};
-  top: ${({ info }) => info.position.y}px;
-  left: ${({ info }) => info.position.x}px;
-`;
-
-const opacityStyle = css`
-  /* opacity: 0.5; */
-  background-color: red;
-`;
-
-const Tool = ({ info }) => {
-  const [{ isDragging, end, coords, ...props }, drag] = useDrag({
+const Tool = ({ type = "square", info, ...props }) => {
+  const [{ isDragging, end, coords, ...dragProps }, drag] = useDrag({
     item: { type: ItemTypes.TOOL, data: info },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
       end: monitor.getDropResult(),
-      coords: monitor.getInitialClientOffset(),
     }),
   });
 
   return (
     <ToolContainer
+      {...props}
       info={info}
       ref={drag}
+      type={type}
       css={isDragging ? opacityStyle : null}
-      onClick={() => {
-        console.log("Tool", info);
-      }}
     ></ToolContainer>
   );
 };

@@ -72,6 +72,8 @@ const HeaderContainer = styled.div`
   /* overflow: hidden; */
 
   width: 100%;
+  height: 4rem;
+  min-height: 4rem;
 
   display: flex;
   justify-content: center;
@@ -244,59 +246,67 @@ const DrawerHeader = ({
       drawerStatus={drawerBtn1 || drawerBtn2}
     >
       <HeaderContainer ref={headerRef}>
-        <div className="btn-container">
-          <HeaderButton
-            type="circle"
-            openContent={drawerBtn1}
-            buttonOpen={drawerBtn1}
-            icon={BsCaretDownFill}
-            css={css`
-              .btn-icon {
-                svg {
-                  width: 1.2rem;
-                  height: 1.2rem;
+        {newDrawerComponent1 && (
+          <div className="btn-container">
+            <HeaderButton
+              type="circle"
+              openContent={drawerBtn1}
+              buttonOpen={drawerBtn1}
+              icon={BsCaretDownFill}
+              css={css`
+                .btn-icon {
+                  svg {
+                    width: 1.2rem;
+                    height: 1.2rem;
+                  }
                 }
-              }
-            `}
-            onClick={() => {
-              toggleButton1();
-              setDrawerBtn2(false);
-              // handleChange2(false);
-            }}
-          />
-        </div>
+              `}
+              onClick={() => {
+                toggleButton1();
+                setDrawerBtn2(false);
+                // handleChange2(false);
+              }}
+            />
+          </div>
+        )}
         <h1>{headerTitle}</h1>
-        <div className="btn-container">
-          <HeaderButton
-            type="circle"
-            addGuestOpen={drawerBtn2}
-            openContent={drawerBtn2}
-            rotation={-135}
-            icon={GoPlus}
-            onClick={() => {
-              toggleButton2();
-              setDrawerBtn1(false);
-              // handleChange1(false);
-            }}
-          />
-        </div>
+        {newDrawerComponent2 && (
+          <div className="btn-container">
+            <HeaderButton
+              type="circle"
+              addGuestOpen={drawerBtn2}
+              openContent={drawerBtn2}
+              rotation={-135}
+              icon={GoPlus}
+              onClick={() => {
+                toggleButton2();
+                setDrawerBtn1(false);
+                // handleChange1(false);
+              }}
+            />
+          </div>
+        )}
       </HeaderContainer>
 
-      <DrawerContent
-        className="drawer-content-1"
-        drawerStatus={drawerBtn1}
-        height={cr1.height}
-      >
-        {newDrawerComponent1}
-      </DrawerContent>
+      {newDrawerComponent1 && (
+        <DrawerContent
+          className="drawer-content-1"
+          drawerStatus={drawerBtn1}
+          height={cr1.height}
+        >
+          {newDrawerComponent1}
+        </DrawerContent>
+      )}
 
-      <DrawerContent
-        className="drawer-content-1"
-        drawerStatus={drawerBtn2}
-        height={cr2.height}
-      >
-        {newDrawerComponent2}
-      </DrawerContent>
+      {newDrawerComponent2 && (
+        <DrawerContent
+          className="drawer-content-1"
+          drawerStatus={drawerBtn2}
+          height={cr2.height}
+        >
+          {newDrawerComponent2}
+        </DrawerContent>
+      )}
     </HeaderWrapper>
   );
 };
