@@ -7,17 +7,13 @@ import styled from "@emotion/styled";
 
 const MainContent = styled.main`
   background-color: ${({ theme }) => theme.colors.background};
-  z-index: 1;
+  background-color: red;
+  /* z-index: 1; */
 
   width: 100%;
   height: 100%;
-  /* padding: 1rem; */
-  /* margin: 1rem; */
 
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  left: 4rem;
+  /* overflow: hidden; */
 
   & > * {
     color: ${({ theme }) => theme.colors.onBackground};

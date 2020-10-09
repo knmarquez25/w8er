@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import LandingPagesdfsdfsd from "./pages/LandingPage";
 
 // styling:
 /** @jsx jsx */
@@ -24,6 +25,8 @@ import Settings from "./pages/Settings";
 // icons:
 import { MdBrightnessLow } from "react-icons/md";
 import { SiGoogle as GoogleLogoIcon } from "react-icons/si";
+import WaitlistPage from "./pages/WaitlistPage";
+import FloorMap from "./components/layout-tools/FloorMap";
 
 const AppContainer = styled.section`
   background-color: ${(props) => props.theme.colors.background};
@@ -74,16 +77,18 @@ const App = ({ ...props }) => {
         </Helmet>
 
         <BrowserRouter>
-          <FlexWrapper>
-            <Sidebar />
-            <Main>
-              <Switch>
-                <Route exact path="/" component={SeatingLayout} />
-                <Route exact path="/seating-layout" component={SeatingLayout} />
-                <Route exact path="/settings" component={Settings} />
-              </Switch>
-            </Main>
-          </FlexWrapper>
+          {/* <FlexWrapper> */}
+          {/* <Sidebar /> */}
+          <Main>
+            <Switch>
+              <Route exact path="/" component={LandingPagesdfsdfsd} />
+              {/* <Route exact path="/seating-layout" component={SeatingLayout} /> */}
+              <Route exact path="/settings" component={Settings} />
+              <Route exact path="/waitlist" component={WaitlistPage} />
+              <Route exact path="/waitlist-complete" component={FloorMap} />
+            </Switch>
+          </Main>
+          {/* </FlexWrapper> */}
         </BrowserRouter>
       </AppContainer>
     </DndProvider>
