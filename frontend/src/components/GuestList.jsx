@@ -6,6 +6,10 @@ import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import { rgba } from "emotion-rgba";
 
+// state management:
+import { useRecoilValue } from "recoil";
+import { sidebarState } from "../recoil/SidebarState";
+
 // custom components:
 import Button from "./buttons/Button";
 import DetailBit from "./DetailBit";
@@ -70,7 +74,15 @@ const GuestListContainer = styled.div`
   /* background-color: ${({ theme }) => theme.colors.background}; */
   /* border-radius: 4px; */
   overflow-y: auto;
+
+  /* HIDE BASED OFF sidebarOpen */
   /* overflow-y: hidden; */
+  ${({ sidebarOpen }) =>
+    !sidebarOpen
+      ? css`
+          overflow-y: hidden;
+        `
+      : null}
 
   display: flex;
   flex-direction: column;
@@ -101,6 +113,7 @@ const GuestItem = styled.li`
   padding: 0.5rem;
   margin: 0.25rem 0;
   border-radius: 4px;
+
   /* box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.1); */
 
   /* border: 1px solid ${({ theme }) =>
@@ -110,11 +123,16 @@ const GuestItem = styled.li`
   align-items: center;
 
   .guest-name {
+    cursor: default;
+
     color: ${({ theme }) => theme.colors.onBackground};
     font-style: italic;
     flex: 1;
 
     white-space: nowrap;
+
+    display: flex;
+    justify-content: center;
   }
 `;
 
@@ -170,6 +188,9 @@ const SeatedCheckButton = styled(Button)`
 
 const GuestList = () => {
   const [guestList, setGuestList] = useState(GUESTLIST);
+
+  const sidebarOpen = useRecoilValue(sidebarState);
+
   useEffect(() => {}, [guestList]);
 
   const addGuestItem = (guestItem) => {
@@ -177,7 +198,7 @@ const GuestList = () => {
   };
 
   return (
-    <GuestListContainer>
+    <GuestListContainer sidebarOpen={sidebarOpen}>
       <DrawerHeader
         headerTitle="Guest list"
         drawerComponent1={

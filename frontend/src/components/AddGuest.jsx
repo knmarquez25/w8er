@@ -157,17 +157,19 @@ const AddGuest = React.forwardRef(({ handleChange, ...props }, ref) => {
           setGuest({ ...guest, notes: e.target.value });
         }}
         css={spacing}
+        additionalInfo="(optional)"
       />
 
       <FormInput
         type="datetime-local"
         htmlFor="reservation time"
-        label="reservation time"
+        label="reservation"
         value={guest.reserveTime}
         handleChange={(e) => {
           setGuest({ ...guest, reserveTime: e.target.value });
         }}
         css={spacing}
+        additionalInfo="(ignore if waitlist)"
       />
 
       {guest.reserveTime && (

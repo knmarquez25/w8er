@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 // styling:
@@ -76,7 +75,7 @@ const App = ({ ...props }) => {
 
         <BrowserRouter>
           <FlexWrapper>
-            <Sidebar></Sidebar>
+            <Sidebar />
             <Main>
               <Switch>
                 <Route exact path="/" component={SeatingLayout} />

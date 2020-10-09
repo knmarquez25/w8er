@@ -19,6 +19,7 @@ const DetailBitContainer = styled.div`
   align-items: center;
 
   p {
+    cursor: default;
     color: black;
     text-transform: uppercase;
     font-style: normal;

@@ -15,7 +15,9 @@ const MainContent = styled.main`
   /* margin: 1rem; */
 
   overflow: hidden;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 4rem;
 
   & > * {
     color: ${({ theme }) => theme.colors.onBackground};
@@ -27,6 +29,9 @@ const MainContent = styled.main`
     max-width: 100%;
 
     flex: 1;
+
+    top: 4rem;
+    left: 0;
   }
 
   /* display: flex;

@@ -11,6 +11,7 @@ import { rgba } from "emotion-rgba";
 // state management:
 import { useRecoilState } from "recoil";
 import { themeState } from "../recoil/ThemeState";
+import { sidebarState } from "../recoil/SidebarState";
 
 // custom components:
 import Button from "./buttons/Button";
@@ -29,7 +30,7 @@ import { BiCustomize } from "react-icons/bi";
 import { CgDebug } from "react-icons/cg";
 
 const sbClosed = css`
-  opacity: 0;
+  /* opacity: 0; */
   min-width: 0;
   max-width: 0;
 
@@ -42,7 +43,7 @@ const sbClosed = css`
 `;
 
 const sbOpened = css`
-  opacity: 1;
+  /* opacity: 1; */
   min-width: 25rem;
   max-width: 25rem;
 `;
@@ -120,14 +121,21 @@ const SidebarContainer = styled.div`
 
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.1);
 
-  transition-property: max-width, min-width, max-height, min-height, opacity,
-    padding;
+  transition-property: max-width, min-width, max-height, min-height, padding;
   transition-duration: 250ms;
   transition-timing-function: ease-out;
 
   /* padding: 2rem; */
 
   overflow-x: hidden;
+  /* overflow: hidden; */
+
+  /* ${({ sidebarOpen }) =>
+    !sidebarOpen
+      ? css`
+          overflow: hidden;
+        `
+      : null} */
 
   /* height: 100%; */
   /* overflow-y: hidden; */
@@ -264,7 +272,8 @@ const navItems = [
 ];
 
 const Sidebar = ({ children, ...props }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  // const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useRecoilState(sidebarState);
   const [itemSelected, setItemSelected] = useState(0);
 
   const history = useHistory();

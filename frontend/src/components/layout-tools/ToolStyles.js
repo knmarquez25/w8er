@@ -23,18 +23,32 @@ const rectangle = (theme, size) => css`
 const ToolContainer = styled.div``;
 
 const Shape = styled.div`
+  position: relative;
+
   width: ${({ theme, size }) =>
     size ? size.width : theme.dimensions.gridUnit * 3}px;
   height: ${({ theme, size }) =>
     size ? size.height : theme.dimensions.gridUnit * 3}px;
   background-color: ${({ theme }) => theme.colors.primary};
 
+  border: 3px solid ${({ theme }) => theme.colors.onBackground};
+  /* border: 1px solid red; */
+
   transform: rotate(${({ rotateAngle }) => rotateAngle}deg);
 
   transition-property: transform, width, height;
   transition-duration: 200ms;
   transition-timing-function: linear;
-  position: relative;
+
+  cursor: move;
+
+  &:active {
+    background-color: red;
+  }
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.secondary};
+  }
 
   ${({ type, theme, size }) => {
     switch (type) {
@@ -56,15 +70,10 @@ const Shape = styled.div`
 
 const overlayControls = (theme) => css`
   position: absolute;
+  background-color: transparent;
 
-  /* background-color: ${theme.colors.surface};
-  border-radius: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
   top: -3rem;
+  cursor: pointer;
 
   svg {
     width: 2rem;
@@ -75,26 +84,38 @@ const overlayControls = (theme) => css`
   }
 `;
 
-const RotateCCWControl = styled.div`
+const RotateCCWControl = styled.button`
   ${({ theme }) => overlayControls(theme)}
-
   left: 0;
 `;
 
-const RotateCWControl = styled.div`
+const RotateCWControl = styled.button`
   ${({ theme }) => overlayControls(theme)}
-
   left: 3rem;
 `;
 
-const IncreaseSize = styled.div`
+const DecreaseSize = styled.button`
   ${({ theme }) => overlayControls(theme)}
-  left: 6rem;
+  left:6rem;
 `;
 
-const DecreaseSize = styled.div`
+const IncreaseSize = styled.button`
   ${({ theme }) => overlayControls(theme)}
   left: 9rem;
+`;
+
+/* 
+  this hidden hack was made because using the prop "selected" to conditionally render
+  the four controls (+, -, cw, ccw) made it so that the controls did not fire onTouchStart
+  or any event on MOBILE; it still worked as normal on desktop or minimized desktop.
+*/
+const HiddenHack = styled.div`
+  ${({ selected }) =>
+    !selected
+      ? css`
+          display: none;
+        `
+      : null}
 `;
 
 const opacityStyle = css`
@@ -110,4 +131,5 @@ export {
   RotateCCWControl,
   IncreaseSize,
   DecreaseSize,
+  HiddenHack,
 };
