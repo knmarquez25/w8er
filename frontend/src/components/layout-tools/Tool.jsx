@@ -6,7 +6,7 @@ import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import { useDrag } from "react-dnd";
 import { ItemTypes } from "../../utils/draggables";
-import { circle, diamond, ToolContainer, opacityStyle } from "./ToolStyles";
+import { Shape, opacityStyle } from "./ToolStyles";
 
 const Tool = ({ type = "square", info, ...props }) => {
   const [{ isDragging, end, coords, ...dragProps }, drag] = useDrag({
@@ -18,13 +18,13 @@ const Tool = ({ type = "square", info, ...props }) => {
   });
 
   return (
-    <ToolContainer
+    <Shape
       {...props}
       info={info}
       ref={drag}
       type={type}
       css={isDragging ? opacityStyle : null}
-    ></ToolContainer>
+    ></Shape>
   );
 };
 

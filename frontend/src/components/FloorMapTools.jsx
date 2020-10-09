@@ -92,14 +92,28 @@ const FloorMapTools = () => {
           css={margin}
         />
         <Tool
-          type="diamond"
-          info={{ id: "", data: { type: "diamond" }, position: { x: 0, y: 0 } }}
+          type="halfCircle"
+          info={{
+            id: "",
+            data: { type: "halfCircle" },
+            position: { x: 0, y: 0 },
+          }}
           css={margin}
         />
 
         <Tool
           type="lshape"
           info={{ id: "", data: { type: "lshape" }, position: { x: 0, y: 0 } }}
+          css={margin}
+        />
+
+        <Tool
+          type="rectangle"
+          info={{
+            id: "",
+            data: { type: "rectangle" },
+            position: { x: 0, y: 0 },
+          }}
           css={margin}
         />
       </FMTContent>

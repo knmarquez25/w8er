@@ -16,15 +16,16 @@ import Tool from "./Tool";
 import ToolNode, {
   Square,
   Circle,
-  Diamond,
+  HalfCircle,
   Lshape,
+  Rectangle,
 } from "../layout-tools/ToolNode";
 
 const shortid = require("shortid");
 
 const elements = [
   {
-    type: "diamond",
+    type: "halfCircle",
     id: shortid.generate(),
     data: { label: "3" },
     position: { x: 0, y: 0 },
@@ -83,9 +84,10 @@ const DropTarget = styled.div`
 const nodeTypes = {
   square: Square,
   circle: Circle,
-  diamond: Diamond,
+  halfCircle: HalfCircle,
   lshape: Lshape,
   test: HiUser,
+  rectangle: Rectangle,
 };
 
 const FloorMap = () => {
@@ -162,7 +164,7 @@ const FloorMap = () => {
         <ReactFlow
           onLoad={onLoad}
           elements={items}
-          snapToGrid
+          // snapToGrid
           nodeTypes={nodeTypes}
           snapGrid={[theme.dimensions.gridUnit, theme.dimensions.gridUnit]}
           // translateExtent={[
