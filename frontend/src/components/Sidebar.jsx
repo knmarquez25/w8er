@@ -104,6 +104,7 @@ const SidebarNav = styled.div`
 `;
 
 const SidebarContainer = styled.div`
+  position: relative;
   background-color: ${({ theme }) => theme.colors.surface};
   border-left: 1px solid ${({ theme }) => theme.colors.outline};
 
@@ -114,7 +115,6 @@ const SidebarContainer = styled.div`
   }
 
   z-index: 2;
-
   padding-bottom: ${({ sidebarOpen }) => (sidebarOpen ? "0.5rem" : 0)};
 
   /* border-right: 1px solid ${({ theme }) => theme.colors.outline}; */
@@ -125,21 +125,7 @@ const SidebarContainer = styled.div`
   transition-duration: 250ms;
   transition-timing-function: ease-out;
 
-  /* padding: 2rem; */
-
   overflow-x: hidden;
-  /* overflow: hidden; */
-
-  /* ${({ sidebarOpen }) =>
-    !sidebarOpen
-      ? css`
-          overflow: hidden;
-        `
-      : null} */
-
-  /* height: 100%; */
-  /* overflow-y: hidden; */
-  /* padding: ${({ sidebarOpen }) => (sidebarOpen ? "1rem" : "0")}; */
 `;
 
 const navItemSelected = (props) => css`
@@ -217,14 +203,11 @@ const Slider = styled.div`
   right: 0;
   position: absolute;
 
-  /* transition-property: height, width, transform;
-  transition-duration: 200ms;
-  transition-timing-function: ease-in; */
-  transition: transform ease-out 200ms;
-
   transform: translateY(
     ${({ itemSelected }) => `${4 * (itemSelected + 1)}rem`}
   );
+
+  transition: transform ease-out 200ms;
 
   @media (max-width: 500px) {
     height: 3px;

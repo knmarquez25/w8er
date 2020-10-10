@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 
 // styling:
 /** @jsx jsx */
@@ -19,30 +19,7 @@ const AddGuestContainer = styled.form`
   background-color: ${({ theme }) => theme.colors.surface};
   width: 100%;
 
-  /* ${({ addGuestOpen }) =>
-    addGuestOpen
-      ? null
-      : css`
-          height: 0;
-        `} */
-
-  /* min-height: ${({ addGuestOpen }) => (addGuestOpen ? "35rem" : "0")}; */
-  /* padding: ${({ addGuestOpen }) => (addGuestOpen ? "0.5rem 2rem" : "0")}; */
-  /* border-bottom: ${({ addGuestOpen, theme }) =>
-    addGuestOpen
-      ? `1px solid ${rgba(theme.colors.onBackground, 0.1)}`
-      : "0"}; */
-
-  /* overflow: hidden; */
-
   color: ${({ theme }) => theme.colors.onBackground};
-
-  /* transition-property: height, padding;
-  transition-duration: 200ms;
-  transition-timing-function: ease-out; */
-
-  /* border-bottom: 1px solid
-    ${({ theme }) => rgba(theme.colors.onBackground, 0.1)}; */
 `;
 
 const AddGuestButton = styled(Button)`
@@ -50,7 +27,6 @@ const AddGuestButton = styled(Button)`
   width: 100%;
 
   margin-top: 2.5rem;
-  /* margin-bottom: 2rem; */
 
   color: ${({ theme }) => theme.colors.onBackground};
 
@@ -180,7 +156,7 @@ const AddGuest = React.forwardRef(({ handleChange, ...props }, ref) => {
           handleChange={(val) => {
             setGuest({ ...guest, tableAssigned: val });
           }}
-          css={spacing}
+          // css={spacing}
         />
       )}
 

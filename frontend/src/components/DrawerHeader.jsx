@@ -1,13 +1,6 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  useLayoutEffect,
-} from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import useResizeObserver from "use-resize-observer";
-// import useResizeObserver from "../hooks/useResizeObserver"
 
 // styling:
 /** @jsx jsx */
@@ -19,57 +12,19 @@ import { rgba } from "emotion-rgba";
 import Button from "./buttons/Button";
 
 // icon:
-import { IoMdAddCircle } from "react-icons/io";
-import { ImCheckmark } from "react-icons/im";
-import { MdAddBox } from "react-icons/md";
-import { FaCaretSquareDown } from "react-icons/fa";
-import { AiOutlineCaretDown } from "react-icons/ai";
 import { BsCaretDownFill } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
 
 const contentPadding = 28;
 
-const HeaderWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  ${({ drawerStatus, headerHeight, cHeight1, cHeight2 }) =>
-    drawerStatus
-      ? css`
-          height: ${headerHeight +
-          (cHeight1 ? cHeight1 : cHeight2) +
-          contentPadding}px;
-          min-height: ${headerHeight +
-          (cHeight1 ? cHeight1 : cHeight2) +
-          contentPadding}px;
-        `
-      : css`
-          height: ${headerHeight}px;
-          min-height: ${headerHeight}px;
-        `}
-
-  overflow-y: hidden;
-
-  transition-property: min-height, height;
-  transition-duration: 200ms;
-  transition-timing-function: ease-out;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  overflow: hidden;
-`;
-
 const HeaderContainer = styled.div`
-  z-index: 3;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 100; // must be higher than everything else
   background-color: ${({ theme }) => theme.colors.background};
 
-  /* border-bottom: 1px solid red; */
-
   box-shadow: inset 0px -1px 0px 0px ${({ theme }) => theme.colors.outline};
-  /* box-shadow: 0px 1px 0px 0px
-    ${({ theme }) => theme.colors.outline}; */
-  /* overflow: hidden; */
 
   width: 100%;
   height: 4rem;
@@ -78,17 +33,10 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* min-height: 3rem; */
-  /* margin-bottom: 1rem; */
-  /* margin: 1rem; */
 
   box-sizing: border-box;
 
   h1 {
-    /* background-color: ${({ theme }) => theme.colors.background}; */
-
-    /* border-bottom: 2px solid ${({ theme }) => theme.colors.primary}; */
-
     color: ${({ theme }) => theme.colors.onBackground};
     font-size: 1.2rem;
     text-transform: uppercase;
@@ -146,24 +94,29 @@ const HeaderButton = styled(Button)`
   }
 `;
 
+const getDynamicPadding = () => {
+  const paddingTop = contentPadding / 2;
+  const paddingRight = contentPadding;
+  const paddingBottom = contentPadding;
+  const paddingLeft = contentPadding;
+
+  const extraHeight = paddingTop + paddingBottom;
+  const padding = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
+
+  return { extraHeight, padding };
+};
+
 const DrawerContent = styled.div`
+  z-index: 0;
   background-color: ${({ theme }) => theme.colors.surface};
-  /* 
-  padding: ${({ drawerStatus }) =>
-    drawerStatus ? `${contentPadding}px` : "0"}; */
-
   width: 100%;
-  /* height: ${({ drawerStatus, height }) =>
-    drawerStatus ? `${height + contentPadding * 2}px` : "0"};
-  min-height: ${({ drawerStatus, height }) =>
-    drawerStatus ? `${height + contentPadding * 2}px` : "0"}; */
 
-  ${({ drawerStatus, height }) =>
+  ${({ drawerStatus, headerHeight, height }) =>
     drawerStatus
       ? css`
-          height: ${height + contentPadding}px;
-          min-height: ${height + contentPadding}px;
-          padding: ${contentPadding / 2}px ${contentPadding}px;
+          height: ${height + getDynamicPadding().extraHeight}px;
+          min-height: ${height + getDynamicPadding().extraHeight}px;
+          padding: ${getDynamicPadding().padding};
         `
       : css`
           height: 0;
@@ -182,10 +135,7 @@ const DrawerContent = styled.div`
   transition-duration: 200ms;
   transition-timing-function: ease-out;
 
-  /* transition: min-height 200ms ease-out; */
-
   overflow: hidden;
-  /* overflow-y: auto; */
 `;
 
 const DrawerHeader = ({
@@ -238,13 +188,7 @@ const DrawerHeader = ({
     });
   }
   return (
-    <HeaderWrapper
-      className="header-wrapper"
-      headerHeight={headerHeight}
-      cHeight1={drawerBtn1 ? cr1.height : null}
-      cHeight2={drawerBtn2 ? cr2.height : null}
-      drawerStatus={drawerBtn1 || drawerBtn2}
-    >
+    <React.Fragment>
       <HeaderContainer ref={headerRef}>
         {newDrawerComponent1 && (
           <div className="btn-container">
@@ -290,7 +234,7 @@ const DrawerHeader = ({
 
       {newDrawerComponent1 && (
         <DrawerContent
-          className="drawer-content-1"
+          headerHeight={headerHeight}
           drawerStatus={drawerBtn1}
           height={cr1.height}
         >
@@ -300,14 +244,14 @@ const DrawerHeader = ({
 
       {newDrawerComponent2 && (
         <DrawerContent
-          className="drawer-content-1"
+          headerHeight={headerHeight}
           drawerStatus={drawerBtn2}
           height={cr2.height}
         >
           {newDrawerComponent2}
         </DrawerContent>
       )}
-    </HeaderWrapper>
+    </React.Fragment>
   );
 };
 
