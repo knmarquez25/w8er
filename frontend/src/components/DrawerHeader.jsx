@@ -27,14 +27,14 @@ const HeaderContainer = styled.div`
   box-shadow: inset 0px -1px 0px 0px ${({ theme }) => theme.colors.outline};
 
   width: 100%;
-  height: 4rem;
-  min-height: 4rem;
+  height: 4.5rem;
+  min-height: 4.5rem;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  box-sizing: border-box;
+  border-bottom: 0.5rem solid ${({ theme }) => theme.colors.surface};
 
   h1 {
     color: ${({ theme }) => theme.colors.onBackground};
@@ -51,9 +51,6 @@ const HeaderContainer = styled.div`
     flex: 1;
 
     white-space: nowrap;
-  }
-
-  .btn-container {
   }
 `;
 

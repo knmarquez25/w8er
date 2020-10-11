@@ -15,6 +15,7 @@ import Button from "./buttons/Button";
 import DetailBit from "./DetailBit";
 import AddGuest from "./AddGuest";
 import DrawerHeader from "./DrawerHeader";
+import GuestItem from "./GuestItem";
 
 // icon:
 import { IoMdAddCircle } from "react-icons/io";
@@ -25,42 +26,85 @@ import { AiOutlineCaretDown } from "react-icons/ai";
 import { BsCaretDownFill } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
 
+const shortid = require("shortid");
+
 const GUESTLIST = [
   {
-    name: "Benjamin Franks",
-    party: "6",
-    phone: "",
-    time: new Date(),
+    test: new Date("2020-10-10T03:32:00").getTime(),
+    waitTime: new Date("2020-10-10T03:32:00"),
+    id: shortid.generate(),
+    seated: false,
+    name: "ricky  bobby",
+    party: "2",
+    phone: "555-555-4352",
     table: "",
-    notes: "",
+    notes: "bring food",
+    tableAssigned: "",
     reserveTime: "",
+    seatedTime: "",
+    departureTime: "",
   },
   {
-    name: "Bob Dole",
-    party: "1",
-    phone: "",
-    time: new Date(),
+    test: new Date("2020-10-10T03:36:00").getTime(),
+    waitTime: new Date("2020-10-10T03:36:00"),
+    id: shortid.generate(),
+    seated: false,
+    name: "michael jackson",
+    party: "4",
+    phone: "123-565-5685",
     table: "",
     notes: "",
+    tableAssigned: "",
+    reserveTime: "",
+    seatedTime: "",
+    departureTime: "",
+  },
+  {
+    test: new Date("2020-10-10T03:14:00").getTime(),
+    waitTime: new Date("2020-10-10T03:14:00"),
+    id: shortid.generate(),
+    seated: false,
+    name: "john cena",
+    party: "10",
+    phone: "565-565-7894",
+    table: "2A",
+    notes: "",
+    tableAssigned: "",
     reserveTime: new Date(),
+    seatedTime: "",
+    departureTime: "",
   },
   {
-    name: "Rip Harambe",
-    party: "0",
-    phone: "",
-    time: new Date(),
+    test: new Date("2020-10-10T03:26:00").getTime(),
+    waitTime: new Date("2020-10-10T03:26:00"),
+    id: shortid.generate(),
+    seated: false,
+    name: "t pain",
+    party: "1",
+    phone: "456-789-1238",
     table: "",
     notes: "",
+    tableAssigned: "",
     reserveTime: "",
+
+    seatedTime: "",
+    departureTime: "",
   },
   {
-    name: "Bee Dull",
-    party: "3",
-    phone: "",
-    time: new Date(),
+    test: new Date("2020-10-10T03:25:00").getTime(),
+    waitTime: new Date("2020-10-10T03:25:00"),
+    id: shortid.generate(),
+    seated: true,
+    name: "t pain",
+    party: "1",
+    phone: "456-789-1238",
     table: "",
     notes: "",
+    tableAssigned: "",
     reserveTime: "",
+
+    seatedTime: "",
+    departureTime: "",
   },
 ];
 
@@ -88,76 +132,16 @@ const GuestListContainer = styled.div`
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-
-  .add-btn-container {
-    width: 100%;
-    display: flex;
-  }
 `;
 
 const ListContainer = styled.ul`
   width: 100%;
   padding: 0.5rem;
 
-  flex: 1;
+  /* flex: 1; */
 
   display: flex;
   flex-direction: column;
-`;
-
-const GuestItem = styled.li`
-  background-color: ${({ theme }) => theme.colors.background};
-  /* background-color: ${({ theme }) => rgba("white", 0.05)}; */
-
-  width: 100%;
-  padding: 0.5rem;
-  margin: 0.25rem 0;
-  border-radius: 4px;
-
-  /* box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.1); */
-
-  /* border: 1px solid ${({ theme }) =>
-    rgba(theme.colors.onBackground, 0.15)}; */
-
-  display: flex;
-  align-items: center;
-
-  .guest-name {
-    cursor: default;
-
-    color: ${({ theme }) => theme.colors.onBackground};
-    font-style: italic;
-    flex: 1;
-
-    white-space: nowrap;
-
-    display: flex;
-    justify-content: center;
-  }
-`;
-
-const bitSpacing = css`
-  margin-right: 0.5rem;
-`;
-
-const GuestTypeBit = styled(DetailBit)`
-  ${bitSpacing}
-
-  background-color: ${({ theme, text }) =>
-    text === "r" ? theme.colors.error : "#5aa979"};
-
-  p {
-    color: white;
-  }
-`;
-
-const PartySizeBit = styled(DetailBit)`
-  ${bitSpacing}
-  background-color: ${({ theme }) => rgba(theme.colors.onBackground, 0.9)};
-
-  p {
-    color: ${({ theme }) => theme.colors.onPrimary};
-  }
 `;
 
 const GLExtras = styled.div`
@@ -174,27 +158,46 @@ const GLExtras = styled.div`
   /* margin-top: ${({ glExtrasOpen }) => (glExtrasOpen ? "1rem" : "0")}; */
 `;
 
-const SeatedCheckButton = styled(Button)`
-  background-color: #5aa979;
-
-  .btn-icon {
-    svg {
-      path {
-        fill: ${({ theme }) => "white"};
-      }
-    }
-  }
-`;
-
 const GuestList = () => {
   const [guestList, setGuestList] = useState(GUESTLIST);
-
+  const [currentTime, setCurrentTime] = useState(false);
   const sidebarOpen = useRecoilValue(sidebarState);
 
-  useEffect(() => {}, [guestList]);
+  useEffect(() => {
+    let timer = null;
+
+    timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   const addGuestItem = (guestItem) => {
     setGuestList([...guestList, guestItem]);
+  };
+
+  const updateGuestItem = (guestItem) => {
+    const deleteIndex = guestList.findIndex(
+      (guest, i) => guest.id === guestItem.id
+    );
+
+    const updatedItems = [
+      ...guestList.slice(0, deleteIndex),
+      ...guestList.slice(deleteIndex + 1, guestList.length),
+      guestItem,
+    ].sort((a, b) => {
+      const wtA = a.waitTime.getTime();
+      const wtB = b.waitTime.getTime();
+
+      if (wtA > wtB) return 1;
+      else if (wtA < wtB) return -1;
+      else return 0;
+    });
+
+    setGuestList(updatedItems);
   };
 
   return (
@@ -218,15 +221,29 @@ const GuestList = () => {
       />
 
       <ListContainer className="guest-list">
-        {guestList.map((guest, i) => (
-          <GuestItem key={i}>
-            <GuestTypeBit text={guest.reserveTime ? "r" : "w"} />
-            <PartySizeBit text={guest.party} />
-            {/* {guest.reserve? <ReserveIcon/>: <WaitListIcon/>} */}
-            <p className="guest-name">{guest.name}</p>
-            <SeatedCheckButton type="circle" icon={ImCheckmark} />
-          </GuestItem>
-        ))}
+        {guestList
+          .filter((guest) => !guest.seated)
+          .map((guest, i) => (
+            <GuestItem
+              key={guest.id}
+              guestInfo={guest}
+              currentTime={currentTime}
+              handleChange={updateGuestItem}
+            />
+          ))}
+      </ListContainer>
+
+      <ListContainer className="guest-list">
+        {guestList
+          .filter((guest) => guest.seated)
+          .map((guest, i) => (
+            <GuestItem
+              key={guest.id}
+              guestInfo={guest}
+              currentTime={currentTime}
+              handleChange={updateGuestItem}
+            />
+          ))}
       </ListContainer>
     </GuestListContainer>
   );

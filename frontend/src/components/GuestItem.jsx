@@ -111,7 +111,7 @@ const SeatedCheckButton = styled(Button)`
   background-color: #37d7b2;
 
   margin-right: 0.75rem;
-  box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.20);
+  box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.2);
 
   /* border-radius: 0; */
   height: 2rem;
