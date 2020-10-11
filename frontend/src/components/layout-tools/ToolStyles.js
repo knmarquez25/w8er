@@ -31,7 +31,7 @@ const Shape = styled.div`
     size ? size.height : theme.dimensions.gridUnit * 3}px;
   background-color: ${({ theme }) => theme.colors.primary};
 
-  border: 3px solid ${({ theme }) => theme.colors.onBackground};
+  border: 1px solid ${({ theme }) => theme.colors.onBackground};
   /* border: 1px solid red; */
 
   transform: rotate(${({ rotateAngle }) => rotateAngle}deg);

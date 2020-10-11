@@ -99,11 +99,11 @@ const ItemDetails = styled.div`
     }
   }
 
-  p:nth-child(2n) {
+  p:nth-of-type(2n) {
     background-color: ${({ theme }) => theme.colors.background};
   }
 
-  p:nth-child(2n + 1) {
+  p:nth-of-type(2n + 1) {
     background-color: ${({ theme }) => theme.colors.surface};
   }
 `;
