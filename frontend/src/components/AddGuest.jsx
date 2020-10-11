@@ -47,9 +47,9 @@ const INITIAL_GUEST = {
   notes: "", // text area easy
   tableAssigned: "",
   reserveTime: "", // time that the guest reserves (use this variable to check if waitlist or reservation)
-  waitTime: new Date(), // time that the guest STARTS waiting (when the entry is confirmed)
+  waitTime: "", // time that the guest STARTS waiting (when the entry is confirmed)
   seatedTime: "", // time that the guest is seated
-  departureTime: "", // time that the guest finishes eating and leaves
+  departureTime: new Date(), // time that the guest finishes eating and leaves
 };
 
 const PARTY_ARRAY = [...Array(50).keys()];
@@ -70,7 +70,6 @@ const TABLE_ARRAY = (() => {
 
 const AddGuest = React.forwardRef(({ handleChange, ...props }, ref) => {
   const [guest, setGuest] = useState(INITIAL_GUEST);
-  // const [height, setHeight] = useState(0);
 
   useEffect(() => {
     console.log("rerendered");
@@ -83,11 +82,17 @@ const AddGuest = React.forwardRef(({ handleChange, ...props }, ref) => {
       className="add-guest-container"
       onSubmit={(e) => {
         e.preventDefault();
-        handleChange(guest);
+        handleChange({
+          ...guest,
+          waitTime: new Date(),
+          reserveTime: new Date(guest.reserveTime),
+        });
         console.log("guest", guest);
+
         setGuest(INITIAL_GUEST);
         if (props.toggleDrawer) props.toggleDrawer();
       }}
+      onClick={() => {}}
     >
       <FormInput
         required

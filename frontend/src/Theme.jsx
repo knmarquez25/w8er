@@ -50,13 +50,15 @@ const dimensions = {
 
 const themeDark = {
   colors: {
-    primary: "#afb9f1",
+    // primary: "#afb9f1",
+    primary: "#54a0ff",
     secondary: "#e87b9b",
 
     background: "#373e4d",
     surface: "#444c60",
 
-    onPrimary: "#373e4d",
+    // onPrimary: "#373e4d",
+    onPrimary: "white",
     onSecondary: "white",
 
     onBackground: "white",
@@ -64,7 +66,8 @@ const themeDark = {
 
     outline: "#575e70",
 
-    error: "#e85359",
+    error: "#ff6b6b",
+    correct: "#37d7b2",
   },
   font: baseFont,
   dimensions: dimensions,
@@ -72,7 +75,8 @@ const themeDark = {
 
 const themeLight = {
   colors: {
-    primary: "#e87b9b",
+    // primary: "#e87b9b",
+    primary: "#54a0ff",
     secondary: "#afb9f1",
 
     // background: "#e5e5e5",
@@ -89,7 +93,8 @@ const themeLight = {
 
     outline: "#ebebeb",
 
-    error: "#e85359",
+    error: "#ff6b6b",
+    correct: "#37d7b2",
   },
   font: baseFont,
   dimensions: dimensions,
@@ -180,10 +185,11 @@ const GlobalReset = () => {
 };
 
 const ThemedApp = () => {
-  const darkTheme = useRecoilValue(themeState);
+  // const darkTheme = useRecoilValue(themeState);
+  const lightTheme = useRecoilValue(themeState);
 
   return (
-    <ThemeProvider theme={darkTheme ? themeDark : themeLight}>
+    <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
       <GlobalReset />
       <HelmetProvider>
         <App />

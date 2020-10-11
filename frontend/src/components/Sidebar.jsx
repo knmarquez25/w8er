@@ -30,22 +30,34 @@ import { BiCustomize } from "react-icons/bi";
 import { CgDebug } from "react-icons/cg";
 
 const sbClosed = css`
-  /* opacity: 0; */
+  width: 0;
   min-width: 0;
   max-width: 0;
 
   @media (max-width: 500px) {
+    width: 100%;
     min-width: 100%;
     max-width: 100%;
 
+    height: 0;
+    min-height: 0;
     max-height: 0;
   }
 `;
 
 const sbOpened = css`
-  /* opacity: 1; */
+  width: 25rem;
   min-width: 25rem;
   max-width: 25rem;
+
+  @media (max-width: 500px) {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+
+    min-height: 0;
+    max-height: 65%; // needed for transition to take effect
+  }
 `;
 
 const pointLeft = css`
@@ -67,15 +79,6 @@ const sidebarItemStyles = css`
     margin-top: 0;
     margin-left: 1rem;
   }
-`;
-
-const mobileMode = css`
-  width: 100%;
-  min-width: 100%;
-  max-width: 100%;
-
-  min-height: 0;
-  max-height: 60%;
 `;
 
 const SidebarNav = styled.div`
@@ -104,28 +107,25 @@ const SidebarNav = styled.div`
 `;
 
 const SidebarContainer = styled.div`
+  z-index: 2;
   position: relative;
   background-color: ${({ theme }) => theme.colors.surface};
-  border-left: 1px solid ${({ theme }) => theme.colors.outline};
 
+  border-left: 1px solid ${({ theme }) => theme.colors.outline};
   @media (max-width: 500px) {
     border-left: 0;
     border-top: 1px solid ${({ theme }) => theme.colors.outline};
-    ${mobileMode}
   }
 
-  z-index: 2;
+  ${({ sidebarOpen }) => (sidebarOpen ? sbOpened : sbClosed)}
+
   padding-bottom: ${({ sidebarOpen }) => (sidebarOpen ? "0.5rem" : 0)};
-
-  /* border-right: 1px solid ${({ theme }) => theme.colors.outline}; */
-
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
 
   transition-property: max-width, min-width, max-height, min-height, padding;
   transition-duration: 250ms;
   transition-timing-function: ease-out;
-
-  overflow-x: hidden;
 `;
 
 const navItemSelected = (props) => css`
