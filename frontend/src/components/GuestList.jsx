@@ -25,6 +25,7 @@ import { FaCaretSquareDown } from "react-icons/fa";
 import { AiOutlineCaretDown } from "react-icons/ai";
 import { BsCaretDownFill } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
+import GlowButton from "./buttons/GlowButton";
 
 const shortid = require("shortid");
 
@@ -39,6 +40,21 @@ const GUESTLIST = [
     phone: "555-555-4352",
     table: "",
     notes: "bring food",
+    tableAssigned: "",
+    reserveTime: "",
+    seatedTime: "",
+    departureTime: "",
+  },
+  {
+    test: new Date("2020-09-09T03:56:00").getTime(),
+    waitTime: new Date("2020-09-09T03:56:00"),
+    id: shortid.generate(),
+    seated: false,
+    name: "Lebron sucks",
+    party: "13",
+    phone: "310-135-4352",
+    table: "",
+    notes: "i'm thinking about dropping danny green for missing that last 3",
     tableAssigned: "",
     reserveTime: "",
     seatedTime: "",

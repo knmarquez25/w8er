@@ -63,7 +63,7 @@ const App = ({ ...props }) => {
   const theme = useTheme();
 
   useEffect(() => {
-    console.log("UE1");
+    // console.log("UE1");
   }, [theme]);
 
   return (

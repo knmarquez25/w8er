@@ -68,6 +68,7 @@ const themeDark = {
 
     error: "#ff6b6b",
     correct: "#37d7b2",
+    warning: "#fee257",
   },
   font: baseFont,
   dimensions: dimensions,
@@ -95,6 +96,7 @@ const themeLight = {
 
     error: "#ff6b6b",
     correct: "#37d7b2",
+    warning: "#fee257",
   },
   font: baseFont,
   dimensions: dimensions,

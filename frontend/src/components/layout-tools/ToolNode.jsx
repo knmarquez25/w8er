@@ -59,7 +59,7 @@ const ToolNode = ({
   const decreaseSizePressActions = useRepeatLongPress(decreaseSize, 200);
 
   useEffect(() => {
-    console.log("TOOL NODE", type);
+    // console.log("TOOL NODE", type);
   }, [rotateAngle, size]);
 
   return (

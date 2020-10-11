@@ -8,10 +8,12 @@ import { rgba } from "emotion-rgba";
 
 // custom components:
 import Button from "./buttons/Button";
+import GlowButton from "./buttons/GlowButton";
 import DetailBit from "./DetailBit";
 
 // icons:
 import { ImCheckmark } from "react-icons/im";
+import { useTheme } from "emotion-theming";
 
 const ItemWrapper = styled.li`
   width: 100%;
@@ -53,8 +55,8 @@ const GuestItemContainer = styled.div`
 
 const ItemDetails = styled.div`
   background-color: ${({ theme }) => theme.colors.outline};
-  height: ${({ itemExpand }) => (itemExpand ? "15rem" : 0)};
-  padding: ${({ itemExpand }) => (itemExpand ? "1rem" : 0)};
+  height: ${({ itemExpand }) => (itemExpand ? "20rem" : 0)};
+  /* padding: ${({ itemExpand }) => (itemExpand ? "1rem" : 0)}; */
 
   width: 100%;
 
@@ -68,15 +70,41 @@ const ItemDetails = styled.div`
   transition-timing-function: ease-out;
 
   p {
-    color: ${({ theme }) => theme.colors.primary};
+    padding: 0.5rem;
+    /* min-height: 2.5rem; */
+    color: ${({ theme }) => theme.colors.onBackground};
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    width: 100%;
 
+    display: flex;
+    align-items: center;
+    /* justify-content: center;
+    align-items: center; */
+
+    /* border-bottom: 2px solid ${({ theme }) => theme.colors.primary}; */
     span {
+      /* border: 1px solid ${({ theme }) => theme.colors.primary}; */
+      /* background-color: #fff; */
+      width: 45%;
+      min-width: 45%;
       color: ${({ theme }) => theme.colors.onBackground};
 
-      font-weight: bold;
+      /* font-weight: bold; */
+
+      padding-right: 1rem;
+
+      display: flex;
+      flex-direction: row-reverse;
     }
+  }
+
+  p:nth-child(2n) {
+    background-color: ${({ theme }) => theme.colors.background};
+  }
+
+  p:nth-child(2n + 1) {
+    background-color: ${({ theme }) => theme.colors.surface};
   }
 `;
 
@@ -90,7 +118,7 @@ const GuestTypeBit = styled(DetailBit)`
   margin-left: 0.5rem;
 
   background-color: ${({ theme, text }) =>
-    text === "r" ? theme.colors.error : theme.colors.correct};
+    text.toLowerCase() === "r" ? theme.colors.error : theme.colors.primary};
 
   p {
     color: white;
@@ -100,48 +128,16 @@ const GuestTypeBit = styled(DetailBit)`
 const PartySizeBit = styled(DetailBit)`
   ${bitSpacing}
   background-color: ${({ theme }) => rgba(theme.colors.onBackground, 0.9)};
+  /* background-color: ${({ theme }) => theme.colors.warning}; */
 
   p {
     color: ${({ theme }) => theme.colors.background};
   }
 `;
 
-const SeatedCheckButton = styled(Button)`
-  background-color: ${({ theme }) => rgba(theme.colors.onBackground, 0.1)};
-  background-color: #37d7b2;
-
-  margin-right: 0.75rem;
-  box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.2);
-
-  /* border-radius: 0; */
-  height: 2rem;
-  width: 2rem;
-
-  .btn-icon {
-    svg {
-      path {
-        /* fill: ${({ theme }) => theme.colors.onBackground}; */
-        fill: ${({ theme }) => "white"};
-      }
-    }
-  }
-
-  &:hover {
-    /* background-color: ${({ theme }) => theme.colors.correct}; */
-    background-color: #37d7b2;
-    .btn-icon {
-      svg {
-        path {
-          fill: white;
-          /* fill: ${({ theme }) => "white"}; */
-        }
-      }
-    }
-  }
-`;
-
 const GuestItem = ({ guestInfo, currentTime, handleChange = () => {} }) => {
   const [itemExpand, setItemExpand] = useState(false);
+  const theme = useTheme();
 
   const getCurrentTimeDelta = (time) => {
     const currenttime = currentTime ? currentTime : new Date();
@@ -152,9 +148,7 @@ const GuestItem = ({ guestInfo, currentTime, handleChange = () => {} }) => {
     if (timeDelta < 60) return `less than a minute`;
     else if (timeDelta < 3600) return `${Math.floor(timeDelta / 60)} minute(s)`;
     else
-      return `${Math.floor(timeDelta / 3600)} hour(s) ${Math.floor(
-        timeDelta % 60
-      )} minute(s)`;
+      return `${Math.floor(timeDelta / 3600)}h ${Math.floor(timeDelta % 60)}m`;
   };
 
   return (
@@ -172,9 +166,13 @@ const GuestItem = ({ guestInfo, currentTime, handleChange = () => {} }) => {
         <PartySizeBit text={guestInfo.party} />
         <p className="guest-name">{guestInfo.name}</p>
         {itemExpand && (
-          <SeatedCheckButton
-            type="circle"
+          <GlowButton
             icon={ImCheckmark}
+            color={theme.colors.correct}
+            effectOpacity={0.25}
+            css={css`
+              margin-right: 2px;
+            `}
             onClick={(e) => {
               e.stopPropagation();
               console.log("hellooooo");
@@ -186,35 +184,35 @@ const GuestItem = ({ guestInfo, currentTime, handleChange = () => {} }) => {
       </GuestItemContainer>
       <ItemDetails itemExpand={itemExpand}>
         <p>
-          <span>Notes: </span>
+          <span>Notes</span>
           {guestInfo.notes}
         </p>
         <p>
-          <span>Party Size: </span>
+          <span>Party Size</span>
           {guestInfo.party}
         </p>
         <p>
-          <span>Phone: </span>
+          <span>Phone #</span>
           {guestInfo.phone}
         </p>
         <p>
-          <span>Table Requested: </span>
+          <span>Table Requested</span>
           {guestInfo.table}
         </p>
         <p>
-          <span>Table Assigned: </span>
+          <span>Table Assigned</span>
           {guestInfo.tableAssigned}
         </p>
         <p>
-          <span>Reservation: </span>
+          <span>Reservation </span>
           {guestInfo.reserveTime ? guestInfo.reserveTime.getTime() : null}
         </p>
         <p>
-          <span>Waited for: </span>
+          <span>Waited for </span>
           {guestInfo.waitTime ? getCurrentTimeDelta(guestInfo.waitTime) : null}
         </p>
         <p>
-          <span>Departure: </span>
+          <span>Departure</span>
           {guestInfo.departureTime ? guestInfo.departureTime.getTime() : null}
         </p>
       </ItemDetails>

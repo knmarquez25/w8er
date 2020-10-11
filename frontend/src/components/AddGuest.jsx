@@ -71,10 +71,6 @@ const TABLE_ARRAY = (() => {
 const AddGuest = React.forwardRef(({ handleChange, ...props }, ref) => {
   const [guest, setGuest] = useState(INITIAL_GUEST);
 
-  useEffect(() => {
-    console.log("rerendered");
-  }, [guest.reserveTime]);
-
   return (
     <AddGuestContainer
       {...props}

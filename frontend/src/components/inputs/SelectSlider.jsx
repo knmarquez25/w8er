@@ -112,7 +112,7 @@ const SelectSlider = ({ label, options, handleChange, value, ...props }) => {
   const [itemSelected, setItemSelected] = useState("");
 
   useEffect(() => {
-    console.log("SELECT SLIDER");
+    // console.log("SELECT SLIDER");
 
     const optionsWidth =
       draggableRef.current.offsetWidth - containerRef.current.offsetWidth;
@@ -121,9 +121,9 @@ const SelectSlider = ({ label, options, handleChange, value, ...props }) => {
 
     if (newPosition > 0) newPosition = 0;
     else if (newPosition < -1 * optionsWidth) newPosition = -1 * optionsWidth;
-    console.log(
-      `drag.diff=${dragDifference} | oldPos=${currentPosition} | newPos=${newPosition} | width=${optionsWidth}`
-    );
+    // console.log(
+    //   `drag.diff=${dragDifference} | oldPos=${currentPosition} | newPos=${newPosition} | width=${optionsWidth}`
+    // );
 
     setCurrentPosition(newPosition);
 
