@@ -31,6 +31,21 @@ const shortid = require("shortid");
 
 const GUESTLIST = [
   {
+    test: new Date().getTime(),
+    waitTime: new Date(),
+    id: shortid.generate(),
+    seated: false,
+    name: "Rezzy Recent",
+    party: "2",
+    phone: "555-555-4352",
+    table: "",
+    notes: "need 30 baby seats, dont ask",
+    tableAssigned: "",
+    reserveTime: "",
+    seatedTime: "",
+    departureTime: "",
+  },
+  {
     test: new Date("2020-10-10T03:32:00").getTime(),
     waitTime: new Date("2020-10-10T03:32:00"),
     id: shortid.generate(),

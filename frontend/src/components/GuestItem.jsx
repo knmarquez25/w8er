@@ -25,7 +25,7 @@ const GuestItemContainer = styled.div`
 
   background-color: ${({ theme }) => theme.colors.background};
   width: 100%;
-  padding-left: 0.5rem;
+  padding: 0 0.75rem;
   border-radius: 4px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -42,19 +42,26 @@ const GuestItemContainer = styled.div`
     cursor: default;
 
     color: ${({ theme }) => theme.colors.onBackground};
-    font-style: italic;
+    /* font-style: italic; */
+    text-transform: capitalize;
     flex: 1;
 
     white-space: nowrap;
 
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
+    margin-left: 2rem;
     user-select: none;
+  }
+
+  .waited-time {
+    color: ${({ theme }) => theme.colors.onBackground};
+    font-style: italic;
   }
 `;
 
 const ItemDetails = styled.div`
-  background-color: ${({ theme }) => theme.colors.outline};
+  background-color: ${({ theme }) => theme.colors.surface};
   height: ${({ itemExpand }) => (itemExpand ? "20rem" : 0)};
   /* padding: ${({ itemExpand }) => (itemExpand ? "1rem" : 0)}; */
 
@@ -100,22 +107,17 @@ const ItemDetails = styled.div`
   }
 
   p:nth-of-type(2n) {
-    background-color: ${({ theme }) => theme.colors.background};
+    /* background-color: ${({ theme }) => theme.colors.background}; */
   }
 
   p:nth-of-type(2n + 1) {
-    background-color: ${({ theme }) => theme.colors.surface};
+    /* background-color: ${({ theme }) => theme.colors.surface}; */
   }
 `;
 
-const bitSpacing = css`
-  margin-right: 0.5rem;
-`;
-
 const GuestTypeBit = styled(DetailBit)`
-  ${bitSpacing}
-
-  margin-left: 0.5rem;
+  border-radius: 4px;
+  /* margin-left: 0.4rem; */
 
   background-color: ${({ theme, text }) =>
     text.toLowerCase() === "r" ? theme.colors.error : theme.colors.primary};
@@ -126,12 +128,13 @@ const GuestTypeBit = styled(DetailBit)`
 `;
 
 const PartySizeBit = styled(DetailBit)`
-  ${bitSpacing}
+  margin-left: 2rem;
   background-color: ${({ theme }) => rgba(theme.colors.onBackground, 0.9)};
-  /* background-color: ${({ theme }) => theme.colors.warning}; */
+  background-color: transparent;
+  box-shadow: none;
 
   p {
-    color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.onBackground};
   }
 `;
 
@@ -145,8 +148,8 @@ const GuestItem = ({ guestInfo, currentTime, handleChange = () => {} }) => {
       (currenttime.getTime() - time.getTime()) / 1000
     );
 
-    if (timeDelta < 60) return `less than a minute`;
-    else if (timeDelta < 3600) return `${Math.floor(timeDelta / 60)} minute(s)`;
+    if (timeDelta < 60) return `< 1m`;
+    else if (timeDelta < 3600) return `${Math.floor(timeDelta / 60)}m`;
     else
       return `${Math.floor(timeDelta / 3600)}h ${Math.floor(timeDelta % 60)}m`;
   };
@@ -165,14 +168,11 @@ const GuestItem = ({ guestInfo, currentTime, handleChange = () => {} }) => {
         <GuestTypeBit text={guestInfo.reserveTime ? "r" : "w"} />
         <PartySizeBit text={guestInfo.party} />
         <p className="guest-name">{guestInfo.name}</p>
-        {itemExpand && (
+        {itemExpand && !guestInfo.seated && (
           <GlowButton
             icon={ImCheckmark}
             color={theme.colors.correct}
             effectOpacity={0.25}
-            css={css`
-              margin-right: 2px;
-            `}
             onClick={(e) => {
               e.stopPropagation();
               console.log("hellooooo");
@@ -180,6 +180,11 @@ const GuestItem = ({ guestInfo, currentTime, handleChange = () => {} }) => {
               handleChange({ ...guestInfo, seated: true });
             }}
           />
+        )}
+        {!itemExpand && (
+          <p className="waited-time">
+            {getCurrentTimeDelta(guestInfo.waitTime)}
+          </p>
         )}
       </GuestItemContainer>
       <ItemDetails itemExpand={itemExpand}>
