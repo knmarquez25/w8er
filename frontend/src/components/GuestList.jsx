@@ -261,6 +261,18 @@ const Divider = styled.div`
   }
 
   &:hover {
+    .title {
+      color: ${({ theme }) => theme.colors.primary};
+    }
+    button {
+      color: ${({ theme }) => theme.colors.primary};
+
+      svg {
+        path {
+          fill: ${({ theme }) => theme.colors.primary};
+        }
+      }
+    }
   }
 `;
 
