@@ -30,6 +30,8 @@ const GuestItemContainer = styled.div`
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 
+  cursor: pointer;
+
   height: 3.5rem;
   min-height: 3.5rem;
 
@@ -39,7 +41,7 @@ const GuestItemContainer = styled.div`
   align-items: center;
 
   .guest-name {
-    cursor: default;
+    cursor: inherit;
 
     color: ${({ theme }) => theme.colors.onBackground};
     /* font-style: italic; */
@@ -57,6 +59,7 @@ const GuestItemContainer = styled.div`
   .waited-time {
     color: ${({ theme }) => theme.colors.onBackground};
     font-style: italic;
+    user-select: none;
   }
 `;
 
@@ -160,6 +163,7 @@ const Notes = styled.div`
 const GuestTypeBit = styled(DetailBit)`
   border-radius: 4px;
   /* margin-left: 0.4rem; */
+  cursor: inherit;
 
   background-color: ${({ theme, text }) =>
     text.toLowerCase() === "r" ? theme.colors.error : theme.colors.primary};
@@ -170,6 +174,8 @@ const GuestTypeBit = styled(DetailBit)`
 `;
 
 const PartySizeBit = styled(DetailBit)`
+  cursor: inherit;
+
   margin-left: 2rem;
   background-color: ${({ theme }) => rgba(theme.colors.onBackground, 0.9)};
   background-color: transparent;
@@ -295,7 +301,7 @@ const GuestItem = ({
           {!guestInfo.reserveTime && (
             <MainInfo>
               <p className="label"># in line:</p>
-              <p className="value">{line ? line + 1 : "Seated"}</p>
+              <p className="value">{line ? line : "Seated"}</p>
             </MainInfo>
           )}
         </MainInfoWrapper>

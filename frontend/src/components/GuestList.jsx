@@ -25,7 +25,8 @@ import { FaCaretSquareDown } from "react-icons/fa";
 import { AiOutlineCaretDown } from "react-icons/ai";
 import { BsCaretDownFill } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
-import GlowButton from "./buttons/GlowButton";
+
+import { MdExpandLess } from "react-icons/md";
 
 const shortid = require("shortid");
 
@@ -167,7 +168,7 @@ const GuestListContainer = styled.div`
 
 const ListContainer = styled.ul`
   width: 100%;
-  padding: 0.5rem;
+  padding: 0 0.5rem;
 
   /* flex: 1; */
 
@@ -189,8 +190,84 @@ const GLExtras = styled.div`
   /* margin-top: ${({ glExtrasOpen }) => (glExtrasOpen ? "1rem" : "0")}; */
 `;
 
+const Divider = styled.div`
+  /* background-color: red; */
+  height: 2rem;
+  width: 100%;
+  padding: 0 0.5rem;
+
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+  margin: 0.5rem 0;
+
+  .title {
+    white-space: nowrap;
+    height: 100%;
+    padding: 0 1rem;
+    border-radius: 5rem;
+    color: ${({ theme }) => theme.colors.onBackground};
+    background-color: ${({ theme }) => theme.colors.background};
+    font-weight: bold;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-bottom: 2px solid ${({ theme }) => theme.colors.outline};
+  }
+
+  .line {
+    background-color: ${({ theme }) => theme.colors.background};
+    height: 3px;
+    flex: 1;
+    margin-left: 0.5rem;
+  }
+
+  button {
+    /* background-color: green; */
+    height: 2rem;
+    width: 2rem;
+    min-height: 2rem;
+    min-width: 2rem;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.onBackground};
+    font-weight: bold;
+    margin-left: 0.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-bottom: 2px solid ${({ theme }) => theme.colors.outline};
+
+    svg {
+      /* border-radius: 50%; */
+
+      height: 1.8rem;
+      width: 1.8rem;
+
+      transition: transform 200ms ease-in-out;
+
+      transform: rotate(${({ expand }) => (expand ? 0 : -180)}deg);
+
+      path {
+        fill: ${({ theme }) => theme.colors.onBackground};
+      }
+    }
+  }
+
+  &:hover {
+  }
+`;
+
 const GuestList = () => {
   const [guestList, setGuestList] = useState(GUESTLIST);
+  const [seatedOpen, setSeatedOpen] = useState(GUESTLIST);
+  const [mustServeOpen, setMustServeOpen] = useState(GUESTLIST);
   const [currentTime, setCurrentTime] = useState(false);
   const sidebarOpen = useRecoilValue(sidebarState);
 
@@ -250,33 +327,62 @@ const GuestList = () => {
         // handleChange1={(state) => setGlExtrasOpen(state)}
         // handleChange2={(state) => setAddGuestOpen(state)}
       />
+      <Divider
+        expand={mustServeOpen}
+        onClick={() => {
+          setMustServeOpen(!mustServeOpen);
+        }}
+      >
+        <h2 className="title">Must Serve</h2>
+        <button>{guestList.filter((guest) => !guest.seated).length}</button>
+        <div className="line"></div>
 
-      <ListContainer className="guest-list">
-        {guestList
-          .filter((guest) => !guest.seated)
-          .map((guest, i) => (
-            <GuestItem
-              key={guest.id}
-              line={i}
-              guestInfo={guest}
-              currentTime={currentTime}
-              handleChange={updateGuestItem}
-            />
-          ))}
-      </ListContainer>
-
-      <ListContainer className="guest-list">
-        {guestList
-          .filter((guest) => guest.seated)
-          .map((guest, i) => (
-            <GuestItem
-              key={guest.id}
-              guestInfo={guest}
-              currentTime={currentTime}
-              handleChange={updateGuestItem}
-            />
-          ))}
-      </ListContainer>
+        <button>
+          <MdExpandLess />
+        </button>
+      </Divider>
+      {mustServeOpen && (
+        <ListContainer className="guest-list">
+          {guestList
+            .filter((guest) => !guest.seated)
+            .map((guest, i) => (
+              <GuestItem
+                key={guest.id}
+                line={i + 1}
+                guestInfo={guest}
+                currentTime={currentTime}
+                handleChange={updateGuestItem}
+              />
+            ))}
+        </ListContainer>
+      )}
+      <Divider
+        expand={seatedOpen}
+        onClick={() => {
+          setSeatedOpen(!seatedOpen);
+        }}
+      >
+        <h2 className="title">Seated</h2>
+        <button>{guestList.filter((guest) => guest.seated).length}</button>
+        <div className="line"></div>
+        <button>
+          <MdExpandLess />
+        </button>
+      </Divider>
+      {seatedOpen && (
+        <ListContainer className="guest-list">
+          {guestList
+            .filter((guest) => guest.seated)
+            .map((guest, i) => (
+              <GuestItem
+                key={guest.id}
+                guestInfo={guest}
+                currentTime={currentTime}
+                handleChange={updateGuestItem}
+              />
+            ))}
+        </ListContainer>
+      )}
     </GuestListContainer>
   );
 };

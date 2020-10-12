@@ -10,18 +10,16 @@ const glowEffect = keyframes`
   from {
     transform: scale(1);
   }
-
   to {
-    transform: scale(0.65);
-
+    transform: scale(1.5);
   }
 `;
 
 const GBContainer = styled.button`
-  height: 3rem;
-  width: 3rem;
-  min-height: 3em;
-  min-width: 3rem;
+  height: 2rem;
+  width: 2rem;
+  min-height: 2em;
+  min-width: 2rem;
 
   position: relative;
 
@@ -38,6 +36,10 @@ const GBContainer = styled.button`
       animation: none;
       box-shadow: none;
     }
+
+    .glow-effect {
+      transform: scale(1.5);
+    }
   }
 `;
 
@@ -48,10 +50,10 @@ const GlowEffect = styled.div`
   z-index: 0;
   animation: ${glowEffect} 1s ease infinite;
   border-radius: 50%;
-  height: 3rem;
-  width: 3rem;
-  min-height: 3rem;
-  min-width: 3rem;
+  height: 2rem;
+  width: 2rem;
+  min-height: 2rem;
+  min-width: 2rem;
 
   transition: none;
   background-color: ${({ theme, color, effectOpacity }) =>
@@ -83,7 +85,11 @@ const BaseButton = styled.div`
 const GlowButton = ({ text, icon, color, effectOpacity = 0.2, ...props }) => {
   return (
     <GBContainer {...props}>
-      <GlowEffect color={color} effectOpacity={effectOpacity}></GlowEffect>
+      <GlowEffect
+        className="glow-effect"
+        color={color}
+        effectOpacity={effectOpacity}
+      ></GlowEffect>
       <BaseButton color={color}>
         {icon && React.createElement(icon)}
         {!icon && text && text.charAt(0)}

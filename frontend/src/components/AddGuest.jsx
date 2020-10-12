@@ -82,8 +82,10 @@ const AddGuest = React.forwardRef(({ handleChange, ...props }, ref) => {
         handleChange({
           ...guest,
           id: shortid.generate(),
-          waitTime: guest.reserveTime ? guest.reserveTime : new Date(),
-          reserveTime: new Date(guest.reserveTime),
+          waitTime: guest.reserveTime
+            ? new Date(guest.reserveTime)
+            : new Date(),
+          reserveTime: guest.reserveTime ? new Date(guest.reserveTime) : "",
         });
         console.log("guest", guest);
 
@@ -155,9 +157,9 @@ const AddGuest = React.forwardRef(({ handleChange, ...props }, ref) => {
         <SelectSlider
           label="seating"
           options={TABLE_ARRAY}
-          value={guest.tableAssigned}
+          value={guest.table}
           handleChange={(val) => {
-            setGuest({ ...guest, tableAssigned: val });
+            setGuest({ ...guest, table: val });
           }}
           // css={spacing}
         />
