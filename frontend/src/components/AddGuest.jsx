@@ -10,6 +10,7 @@ import { rgba } from "emotion-rgba";
 import FormInput from "./inputs/FormInput";
 import Button from "./buttons/Button";
 import SelectSlider from "./inputs/SelectSlider";
+import shortid from "shortid";
 
 const spacing = css`
   margin-bottom: 1rem;
@@ -80,7 +81,8 @@ const AddGuest = React.forwardRef(({ handleChange, ...props }, ref) => {
         e.preventDefault();
         handleChange({
           ...guest,
-          waitTime: new Date(),
+          id: shortid.generate(),
+          waitTime: guest.reserveTime ? guest.reserveTime : new Date(),
           reserveTime: new Date(guest.reserveTime),
         });
         console.log("guest", guest);

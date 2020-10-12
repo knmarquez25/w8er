@@ -257,6 +257,7 @@ const GuestList = () => {
           .map((guest, i) => (
             <GuestItem
               key={guest.id}
+              line={i}
               guestInfo={guest}
               currentTime={currentTime}
               handleChange={updateGuestItem}
