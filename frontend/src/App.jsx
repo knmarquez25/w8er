@@ -73,7 +73,7 @@ const App = ({ ...props }) => {
           <meta name="theme-color" content={theme.colors.primary} />
         </Helmet>
 
-        <BrowserRouter>
+        <BrowserRouter basename="/w8er">
           <FlexWrapper>
             <Sidebar />
             <Main>
