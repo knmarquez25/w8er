@@ -195,16 +195,47 @@ const GuestItem = ({
   const [itemExpand, setItemExpand] = useState(false);
   const theme = useTheme();
 
+  useEffect(() => {
+    console.log("guest item", guestInfo, itemExpand);
+  }, []);
+
   const getCurrentTimeDelta = (time) => {
+    const ONE_MINUTE = 60;
+    const ONE_HOUR = 3600;
+
     const currenttime = currentTime ? currentTime : new Date();
     const timeDelta = Math.floor(
       (currenttime.getTime() - time.getTime()) / 1000
     );
 
-    if (timeDelta < 60) return `< 1m`;
-    else if (timeDelta < 3600) return `${Math.floor(timeDelta / 60)}m`;
-    else
-      return `${Math.floor(timeDelta / 3600)}h ${Math.floor(timeDelta % 60)}m`;
+    if (timeDelta < -ONE_HOUR)
+      return `in ${Math.floor((-1 * timeDelta) / ONE_HOUR)}h ${Math.floor(
+        ((-1 * timeDelta) % ONE_HOUR) / ONE_MINUTE
+      )}m`;
+    else if (timeDelta < 0)
+      return `in ${-1 * Math.floor(timeDelta / ONE_MINUTE)}m`;
+    else if (timeDelta < ONE_MINUTE) return `< 1m`;
+    else if (timeDelta < ONE_HOUR)
+      return `${Math.floor(timeDelta / ONE_MINUTE)}m`;
+    else {
+      return `${Math.floor(timeDelta / ONE_HOUR)}h ${Math.floor(
+        (timeDelta % ONE_HOUR) / ONE_MINUTE
+      )}m`;
+    }
+
+    // if (timeDelta < -3600)
+    //   return `in ${Math.floor(timeDelta / 3600)}h ${Math.floor(
+    //     timeDelta % 60
+    //   )}m`;
+    // else if (timeDelta < 0) return `in ${-1 * Math.floor(timeDelta / 60)}m`;
+    // else if (timeDelta < ONE_MINUTE) return `< 1m`;
+    // else if (timeDelta < ONE_HOUR) return `${Math.floor(timeDelta / 60)}m`;
+    // else {
+    //   console.log("timedelata > ONE_HOUR", timeDelta);
+    //   return `${Math.floor(timeDelta / 3600)}h ${Math.floor(
+    //     timeDelta % 3600
+    //   )}m`;
+    // }
   };
 
   const formatPhone = (phoneNumber) => {
@@ -231,6 +262,7 @@ const GuestItem = ({
   const formatReserveTime = (datetime) => {
     const date =
       datetime.getMonth() +
+      1 +
       "." +
       datetime.getDate() +
       "." +
@@ -271,7 +303,9 @@ const GuestItem = ({
         )}
         {!itemExpand && (
           <p className="waited-time">
-            {getCurrentTimeDelta(guestInfo.waitTime)}
+            {guestInfo.reserveTime
+              ? getCurrentTimeDelta(guestInfo.reserveTime)
+              : getCurrentTimeDelta(guestInfo.waitTime)}
           </p>
         )}
       </GuestItemContainer>
@@ -330,7 +364,7 @@ const GuestItem = ({
           <p className="value">
             {guestInfo.notes
               ? guestInfo.notes
-              : "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur quaerat voluptas hic veniam quod maxime tempore labore modi unde iure fugiat alias pariatur quia sapiente laboriosam quo, nisi explicabo nulla."}
+              : "Guest did not provide feedback."}
           </p>
         </Notes>
       </ItemDetails>

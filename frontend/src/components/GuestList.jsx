@@ -30,10 +30,15 @@ import { MdExpandLess } from "react-icons/md";
 
 const shortid = require("shortid");
 
+const HALF_HOUR_MS = 1800000;
+const ONE_MINUTE_MS = 60000;
+const RESERVE_OFFSET = 45 * ONE_MINUTE_MS;
+
+const CURRENT_DATE = new Date();
+
 const GUESTLIST = [
   {
-    test: new Date().getTime(),
-    waitTime: new Date(),
+    waitTime: new Date(CURRENT_DATE.getTime() - 30 * ONE_MINUTE_MS),
     id: shortid.generate(),
     seated: false,
     name: "Rezzy Recent",
@@ -47,8 +52,7 @@ const GUESTLIST = [
     departureTime: "",
   },
   {
-    test: new Date("2020-10-10T03:32:00").getTime(),
-    waitTime: new Date("2020-10-10T03:32:00"),
+    waitTime: new Date(CURRENT_DATE.getTime() - 15 * ONE_MINUTE_MS),
     id: shortid.generate(),
     seated: false,
     name: "ricky  bobby",
@@ -62,8 +66,7 @@ const GUESTLIST = [
     departureTime: "",
   },
   {
-    test: new Date("2020-09-09T03:56:00").getTime(),
-    waitTime: new Date("2020-09-09T03:56:00"),
+    waitTime: new Date(CURRENT_DATE.getTime() - 7 * ONE_MINUTE_MS),
     id: shortid.generate(),
     seated: false,
     name: "Lebron sucks",
@@ -77,8 +80,7 @@ const GUESTLIST = [
     departureTime: "",
   },
   {
-    test: new Date("2020-10-10T03:36:00").getTime(),
-    waitTime: new Date("2020-10-10T03:36:00"),
+    waitTime: new Date(CURRENT_DATE.getTime() - 71 * ONE_MINUTE_MS),
     id: shortid.generate(),
     seated: false,
     name: "michael jackson",
@@ -92,8 +94,10 @@ const GUESTLIST = [
     departureTime: "",
   },
   {
-    test: new Date("2020-10-10T03:14:00").getTime(),
-    waitTime: new Date("2020-10-10T03:14:00"),
+    waitTime: new Date(
+      new Date(CURRENT_DATE.getTime() + 7 * ONE_MINUTE_MS).getTime() -
+        RESERVE_OFFSET
+    ),
     id: shortid.generate(),
     seated: false,
     name: "john cena",
@@ -102,13 +106,15 @@ const GUESTLIST = [
     table: "2A",
     notes: "",
     tableAssigned: "",
-    reserveTime: new Date(),
+    reserveTime: new Date(CURRENT_DATE.getTime() + 7 * ONE_MINUTE_MS),
     seatedTime: "",
     departureTime: "",
   },
   {
-    test: new Date("2020-10-10T03:26:00").getTime(),
-    waitTime: new Date("2020-10-10T03:26:00"),
+    waitTime: new Date(
+      new Date(CURRENT_DATE.getTime() + 30 * ONE_MINUTE_MS).getTime() -
+        RESERVE_OFFSET
+    ),
     id: shortid.generate(),
     seated: false,
     name: "t pain",
@@ -117,14 +123,29 @@ const GUESTLIST = [
     table: "",
     notes: "",
     tableAssigned: "",
-    reserveTime: "",
-
+    reserveTime: new Date(CURRENT_DATE.getTime() + 30 * ONE_MINUTE_MS),
     seatedTime: "",
     departureTime: "",
   },
   {
-    test: new Date("2020-10-10T03:25:00").getTime(),
-    waitTime: new Date("2020-10-10T03:25:00"),
+    waitTime: new Date(
+      new Date(CURRENT_DATE.getTime() - 8 * ONE_MINUTE_MS).getTime() -
+        RESERVE_OFFSET
+    ),
+    id: shortid.generate(),
+    seated: false,
+    name: "Late Dude",
+    party: "16",
+    phone: "456-789-1238",
+    table: "6H",
+    notes: "",
+    tableAssigned: "",
+    reserveTime: new Date(CURRENT_DATE.getTime() - 8 * ONE_MINUTE_MS),
+    seatedTime: "",
+    departureTime: "",
+  },
+  {
+    waitTime: new Date(CURRENT_DATE.getTime() - 32 * ONE_MINUTE_MS),
     id: shortid.generate(),
     seated: true,
     name: "t pain",
@@ -134,11 +155,17 @@ const GUESTLIST = [
     notes: "",
     tableAssigned: "",
     reserveTime: "",
-
     seatedTime: "",
     departureTime: "",
   },
-];
+].sort((a, b) => {
+  const wtA = a.waitTime.getTime();
+  const wtB = b.waitTime.getTime();
+
+  if (wtA > wtB) return 1;
+  else if (wtA < wtB) return -1;
+  else return 0;
+});
 
 const GuestListContainer = styled.div`
   position: relative;
@@ -278,8 +305,8 @@ const Divider = styled.div`
 
 const GuestList = () => {
   const [guestList, setGuestList] = useState(GUESTLIST);
-  const [seatedOpen, setSeatedOpen] = useState(GUESTLIST);
-  const [mustServeOpen, setMustServeOpen] = useState(GUESTLIST);
+  const [seatedOpen, setSeatedOpen] = useState(true);
+  const [mustServeOpen, setMustServeOpen] = useState(true);
   const [currentTime, setCurrentTime] = useState(false);
   const sidebarOpen = useRecoilValue(sidebarState);
 
@@ -295,8 +322,17 @@ const GuestList = () => {
     };
   }, []);
 
+  const compareByWaitTime = (a, b) => {
+    const wtA = a.waitTime.getTime();
+    const wtB = b.waitTime.getTime();
+
+    if (wtA > wtB) return 1;
+    else if (wtA < wtB) return -1;
+    else return 0;
+  };
+
   const addGuestItem = (guestItem) => {
-    setGuestList([...guestList, guestItem]);
+    setGuestList([...guestList, guestItem].sort(compareByWaitTime));
   };
 
   const updateGuestItem = (guestItem) => {
@@ -308,14 +344,7 @@ const GuestList = () => {
       ...guestList.slice(0, deleteIndex),
       ...guestList.slice(deleteIndex + 1, guestList.length),
       guestItem,
-    ].sort((a, b) => {
-      const wtA = a.waitTime.getTime();
-      const wtB = b.waitTime.getTime();
-
-      if (wtA > wtB) return 1;
-      else if (wtA < wtB) return -1;
-      else return 0;
-    });
+    ].sort(compareByWaitTime);
 
     setGuestList(updatedItems);
   };
