@@ -30,10 +30,8 @@ import { MdExpandLess } from "react-icons/md";
 
 const shortid = require("shortid");
 
-const HALF_HOUR_MS = 1800000;
 const ONE_MINUTE_MS = 60000;
 const RESERVE_OFFSET = 45 * ONE_MINUTE_MS;
-
 const CURRENT_DATE = new Date();
 
 const GUESTLIST = [
@@ -374,7 +372,7 @@ const GuestList = () => {
           setMustServeOpen(!mustServeOpen);
         }}
       >
-        <h2 className="title">Must Serve</h2>
+        <h2 className="title">Waiting</h2>
         <button>{guestList.filter((guest) => !guest.seated).length}</button>
         <div className="line"></div>
 

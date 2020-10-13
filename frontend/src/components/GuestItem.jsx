@@ -64,7 +64,10 @@ const GuestItemContainer = styled.div`
 `;
 
 const ItemDetails = styled.div`
-  background-color: ${({ theme }) => theme.colors.surface};
+  /* this conditional bg-color is for solving a bug of mobile only */
+  background-color: ${({ theme, itemExpand }) =>
+    itemExpand ? theme.colors.surface : theme.colors.outline};
+
   height: ${({ itemExpand }) => (itemExpand ? "24rem" : 0)};
   padding: ${({ itemExpand }) => (itemExpand ? "1rem" : 0)};
 
@@ -72,7 +75,7 @@ const ItemDetails = styled.div`
 
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.colors.outline};
+  border: 2px solid ${({ theme }) => theme.colors.outline};
 
   overflow: hidden;
   transition-property: height, padding;
@@ -195,10 +198,6 @@ const GuestItem = ({
   const [itemExpand, setItemExpand] = useState(false);
   const theme = useTheme();
 
-  useEffect(() => {
-    console.log("guest item", guestInfo, itemExpand);
-  }, []);
-
   const getCurrentTimeDelta = (time) => {
     const ONE_MINUTE = 60;
     const ONE_HOUR = 3600;
@@ -222,20 +221,31 @@ const GuestItem = ({
         (timeDelta % ONE_HOUR) / ONE_MINUTE
       )}m`;
     }
+  };
 
-    // if (timeDelta < -3600)
-    //   return `in ${Math.floor(timeDelta / 3600)}h ${Math.floor(
-    //     timeDelta % 60
-    //   )}m`;
-    // else if (timeDelta < 0) return `in ${-1 * Math.floor(timeDelta / 60)}m`;
-    // else if (timeDelta < ONE_MINUTE) return `< 1m`;
-    // else if (timeDelta < ONE_HOUR) return `${Math.floor(timeDelta / 60)}m`;
-    // else {
-    //   console.log("timedelata > ONE_HOUR", timeDelta);
-    //   return `${Math.floor(timeDelta / 3600)}h ${Math.floor(
-    //     timeDelta % 3600
-    //   )}m`;
-    // }
+  const getReservationStatus = (time) => {
+    const ONE_MINUTE = 60;
+    const ONE_HOUR = 3600;
+
+    const currenttime = currentTime ? currentTime : new Date();
+    const timeDelta = Math.floor(
+      (currenttime.getTime() - time.getTime()) / 1000
+    );
+
+    if (timeDelta < -ONE_HOUR)
+      return `in ${Math.floor((-1 * timeDelta) / ONE_HOUR)}h ${Math.floor(
+        ((-1 * timeDelta) % ONE_HOUR) / ONE_MINUTE
+      )}m`;
+    else if (timeDelta < 0)
+      return `in ${-1 * Math.floor(timeDelta / ONE_MINUTE)}m`;
+    else if (timeDelta < ONE_MINUTE) return `OVERDUE`;
+    else if (timeDelta < ONE_HOUR)
+      return `OVERDUE by ${Math.floor(timeDelta / ONE_MINUTE)}m`;
+    else {
+      return `OVERDUE by ${Math.floor(timeDelta / ONE_HOUR)}h ${Math.floor(
+        (timeDelta % ONE_HOUR) / ONE_MINUTE
+      )}m`;
+    }
   };
 
   const formatPhone = (phoneNumber) => {
@@ -295,7 +305,6 @@ const GuestItem = ({
             effectOpacity={0.25}
             onClick={(e) => {
               e.stopPropagation();
-              console.log("hellooooo");
               setItemExpand(!itemExpand);
               handleChange({ ...guestInfo, seated: true });
             }}
@@ -304,7 +313,7 @@ const GuestItem = ({
         {!itemExpand && (
           <p className="waited-time">
             {guestInfo.reserveTime
-              ? getCurrentTimeDelta(guestInfo.reserveTime)
+              ? getReservationStatus(guestInfo.reserveTime)
               : getCurrentTimeDelta(guestInfo.waitTime)}
           </p>
         )}

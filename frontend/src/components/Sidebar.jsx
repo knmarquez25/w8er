@@ -324,6 +324,7 @@ const Sidebar = ({ children, ...props }) => {
               />
             </div>
           ))}
+
           <ToggleButton
             orientation={`${mQuery.matches ? "horizontal" : "vertical"}`}
             label="theme"
