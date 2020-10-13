@@ -298,7 +298,7 @@ const GuestItem = ({
         <GuestTypeBit text={guestInfo.reserveTime ? "r" : "w"} />
         <PartySizeBit text={guestInfo.party} />
         <p className="guest-name">{guestInfo.name}</p>
-        {itemExpand && !guestInfo.seated && (
+        {itemExpand && !guestInfo.seatedTime && (
           <GlowButton
             icon={ImCheckmark}
             color={theme.colors.correct}
@@ -306,7 +306,7 @@ const GuestItem = ({
             onClick={(e) => {
               e.stopPropagation();
               setItemExpand(!itemExpand);
-              handleChange({ ...guestInfo, seated: true });
+              handleChange({ ...guestInfo, seatedTime: new Date() });
             }}
           />
         )}

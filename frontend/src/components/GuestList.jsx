@@ -38,7 +38,6 @@ const GUESTLIST = [
   {
     waitTime: new Date(CURRENT_DATE.getTime() - 30 * ONE_MINUTE_MS),
     id: shortid.generate(),
-    seated: false,
     name: "Rezzy Recent",
     party: "2",
     phone: "555-555-4352",
@@ -52,7 +51,6 @@ const GUESTLIST = [
   {
     waitTime: new Date(CURRENT_DATE.getTime() - 15 * ONE_MINUTE_MS),
     id: shortid.generate(),
-    seated: false,
     name: "ricky  bobby",
     party: "2",
     phone: "555-555-4352",
@@ -66,7 +64,6 @@ const GUESTLIST = [
   {
     waitTime: new Date(CURRENT_DATE.getTime() - 7 * ONE_MINUTE_MS),
     id: shortid.generate(),
-    seated: false,
     name: "Lebron sucks",
     party: "13",
     phone: "310-135-4352",
@@ -80,7 +77,6 @@ const GUESTLIST = [
   {
     waitTime: new Date(CURRENT_DATE.getTime() - 71 * ONE_MINUTE_MS),
     id: shortid.generate(),
-    seated: false,
     name: "michael jackson",
     party: "4",
     phone: "123-565-5685",
@@ -97,7 +93,6 @@ const GUESTLIST = [
         RESERVE_OFFSET
     ),
     id: shortid.generate(),
-    seated: false,
     name: "john cena",
     party: "10",
     phone: "565-565-7894",
@@ -114,7 +109,6 @@ const GUESTLIST = [
         RESERVE_OFFSET
     ),
     id: shortid.generate(),
-    seated: false,
     name: "t pain",
     party: "1",
     phone: "456-789-1238",
@@ -131,7 +125,6 @@ const GUESTLIST = [
         RESERVE_OFFSET
     ),
     id: shortid.generate(),
-    seated: false,
     name: "Late Dude",
     party: "16",
     phone: "456-789-1238",
@@ -373,7 +366,7 @@ const GuestList = () => {
         }}
       >
         <h2 className="title">Waiting</h2>
-        <button>{guestList.filter((guest) => !guest.seated).length}</button>
+        <button>{guestList.filter((guest) => !guest.seatedTime).length}</button>
         <div className="line"></div>
 
         <button>
@@ -383,7 +376,7 @@ const GuestList = () => {
       {mustServeOpen && (
         <ListContainer className="guest-list">
           {guestList
-            .filter((guest) => !guest.seated)
+            .filter((guest) => !guest.seatedTime)
             .map((guest, i) => (
               <GuestItem
                 key={guest.id}
@@ -402,7 +395,7 @@ const GuestList = () => {
         }}
       >
         <h2 className="title">Seated</h2>
-        <button>{guestList.filter((guest) => guest.seated).length}</button>
+        <button>{guestList.filter((guest) => guest.seatedTime).length}</button>
         <div className="line"></div>
         <button>
           <MdExpandLess />
@@ -411,7 +404,7 @@ const GuestList = () => {
       {seatedOpen && (
         <ListContainer className="guest-list">
           {guestList
-            .filter((guest) => guest.seated)
+            .filter((guest) => guest.seatedTime)
             .map((guest, i) => (
               <GuestItem
                 key={guest.id}
