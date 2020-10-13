@@ -298,6 +298,7 @@ const GuestList = () => {
   const [guestList, setGuestList] = useState(GUESTLIST);
   const [seatedOpen, setSeatedOpen] = useState(true);
   const [mustServeOpen, setMustServeOpen] = useState(true);
+  const [finishedOpen, setFinishedOpen] = useState(true);
   const [currentTime, setCurrentTime] = useState(false);
   const sidebarOpen = useRecoilValue(sidebarState);
 
@@ -359,6 +360,8 @@ const GuestList = () => {
         // handleChange1={(state) => setGlExtrasOpen(state)}
         // handleChange2={(state) => setAddGuestOpen(state)}
       />
+
+      {/* ----------------   THE WAITING LIST  ----------------*/}
       <Divider
         expand={mustServeOpen}
         onClick={() => {
@@ -388,6 +391,8 @@ const GuestList = () => {
             ))}
         </ListContainer>
       )}
+
+      {/* ----------------   THE SEATED LIST  ----------------*/}
       <Divider
         expand={seatedOpen}
         onClick={() => {
@@ -395,7 +400,13 @@ const GuestList = () => {
         }}
       >
         <h2 className="title">Seated</h2>
-        <button>{guestList.filter((guest) => guest.seatedTime).length}</button>
+        <button>
+          {
+            guestList.filter(
+              (guest) => guest.seatedTime && !guest.departureTime
+            ).length
+          }
+        </button>
         <div className="line"></div>
         <button>
           <MdExpandLess />
@@ -404,7 +415,37 @@ const GuestList = () => {
       {seatedOpen && (
         <ListContainer className="guest-list">
           {guestList
-            .filter((guest) => guest.seatedTime)
+            .filter((guest) => guest.seatedTime && !guest.departureTime)
+            .map((guest, i) => (
+              <GuestItem
+                key={guest.id}
+                guestInfo={guest}
+                currentTime={currentTime}
+                handleChange={updateGuestItem}
+              />
+            ))}
+        </ListContainer>
+      )}
+      {/* ----------------   THE FINISHED LIST  ----------------*/}
+      <Divider
+        expand={finishedOpen}
+        onClick={() => {
+          setFinishedOpen(!finishedOpen);
+        }}
+      >
+        <h2 className="title">Finished</h2>
+        <button>
+          {guestList.filter((guest) => guest.departureTime).length}
+        </button>
+        <div className="line"></div>
+        <button>
+          <MdExpandLess />
+        </button>
+      </Divider>
+      {finishedOpen && (
+        <ListContainer className="guest-list">
+          {guestList
+            .filter((guest) => guest.departureTime)
             .map((guest, i) => (
               <GuestItem
                 key={guest.id}

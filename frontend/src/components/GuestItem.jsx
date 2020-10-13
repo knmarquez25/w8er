@@ -298,7 +298,8 @@ const GuestItem = ({
         <GuestTypeBit text={guestInfo.reserveTime ? "r" : "w"} />
         <PartySizeBit text={guestInfo.party} />
         <p className="guest-name">{guestInfo.name}</p>
-        {itemExpand && !guestInfo.seatedTime && (
+
+        {itemExpand && !guestInfo.seatedTime && !guestInfo.departureTime && (
           <GlowButton
             icon={ImCheckmark}
             color={theme.colors.correct}
@@ -310,11 +311,31 @@ const GuestItem = ({
             }}
           />
         )}
-        {!itemExpand && (
+
+        {!itemExpand && !guestInfo.seatedTime && !guestInfo.departureTime && (
           <p className="waited-time">
             {guestInfo.reserveTime
               ? getReservationStatus(guestInfo.reserveTime)
               : getCurrentTimeDelta(guestInfo.waitTime)}
+          </p>
+        )}
+
+        {/* Render button for seated items and seated time */}
+        {itemExpand && guestInfo.seatedTime && !guestInfo.departureTime && (
+          <GlowButton
+            icon={ImCheckmark}
+            color={theme.colors.error}
+            effectOpacity={0.25}
+            onClick={(e) => {
+              e.stopPropagation();
+              setItemExpand(!itemExpand);
+              handleChange({ ...guestInfo, departureTime: new Date() });
+            }}
+          />
+        )}
+        {!itemExpand && guestInfo.seatedTime && !guestInfo.departureTime && (
+          <p className="waited-time">
+            {getCurrentTimeDelta(guestInfo.seatedTime)}
           </p>
         )}
       </GuestItemContainer>
