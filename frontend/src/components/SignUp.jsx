@@ -8,13 +8,21 @@ import styled from "@emotion/styled";
 import FormInput from "../components/inputs/FormInput";
 import Button from "../components/buttons/Button";
 
+
+import { useHistory } from "react-router-dom";
+
 const SignUpContainer = styled.form `
   background-color: ${({theme})=> theme.colors.surface};
-  background-color: lightblue;
   width: 40%;
   height: 80%;
-  margin: 1rem;
+  margin: 3rem;
 
+.title{
+    margin: 5px 0;
+    font-weight:bold;
+    font-size:2rem;
+    color:white;
+}
   
   display:flex;
   flex-direction: column;
@@ -35,8 +43,33 @@ const Spacing = css`
   margin-top:1rem;
 `;
 
+const SFormInput = styled(FormInput)`
+    min-width:80%;
+    margin-bottom:2rem;
+   
+    &:hover {
+    border-bottom: 4px solid #CD5C5C;
+  }
+
+`;
+
+const SButton = styled(Button)`
+    background-color:red;
+    width:40%;
+
+    .btn-text{
+        color:white;
+    }
+
+    &:hover{
+        background-color:#CD5C5C;
+    }
+
+`;
+
 
 const SignUp = () => {
+    const history = useHistory();
     const [formValues, setValues] = useState(INITIAL);
     const [submitted, setSubmitted] = useState(false);
 
@@ -52,48 +85,49 @@ const SignUp = () => {
             console.log("formValues",formValues);
             setSubmitted(true);
             setValues(INITIAL);
+            history.push("/");
         }}
     >
-      <h1 className="title">SIGN UP</h1>
-      <FormInput 
+      <h1 className="title">Create Account</h1>
+      <SFormInput 
         required
-        label="name"
+        label="Name"
         htmlFor="name"
         value = {formValues.name}
         handleChange= {(e) => {
           setValues({...formValues, name: e.target.value});
         }} 
       />
-       <FormInput 
+       <SFormInput 
         required
-        label="email"
+        label="Email"
         htmlFor="email"
         value = {formValues.email}
         handleChange= {(e) => {
           setValues({...formValues, email: e.target.value});
         }} 
       />
-       <FormInput 
+       <SFormInput 
         required
         type="password"
-        label="password"
+        label="Password"
         htmlFor="password"
         value = {formValues.password}
         handleChange= {(e) => {
           setValues({...formValues, password: e.target.value});
         }} 
       />
-       <FormInput 
+       <SFormInput 
         required
         type="password"
-        label="repeat password"
+        label="Repeat Password"
         htmlFor="password"
         value = {formValues.password2}
         handleChange= {(e) => {
           setValues({...formValues, password2: e.target.value});
         }} 
       />
-      <Button text="SIGN UP" css={Spacing}> </Button>
+      <SButton text="SIGN UP" css={Spacing}> </SButton>
       {submitted ? (<h1>Sign up successfully!</h1>): null}
 
   </SignUpContainer>

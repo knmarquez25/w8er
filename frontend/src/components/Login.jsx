@@ -13,16 +13,45 @@ import Button from "../components/buttons/Button";
 
 const LoginContainer = styled.form`
  background-color: ${({theme})=> theme.colors.surface};
-  background-color: lightblue;
   width: 40%;
   height: 80%;
-  margin: 1rem;
+  margin: 3rem;
 
+  .title{
+      margin: 5px 0;
+      font-weight:bold;
+      font-size:2rem;
+      color:white;
+  }
   
   display:flex;
   flex-direction: column;
   justify-content:center;
   align-items:center;
+
+`;
+
+const LFormInput = styled(FormInput)`
+    min-width:80%;
+    margin-bottom:2rem;
+   
+    &:hover {
+    border-bottom: 4px solid #CD5C5C;
+  }
+
+`;
+
+const LButton = styled(Button)`
+    background-color:red;
+    width:40%;
+
+    .btn-text{
+        color:white;
+    }
+
+    &:hover{
+        background-color:#CD5C5C;
+    }
 
 `;
 
@@ -50,8 +79,8 @@ const Login = () => {
         history.push("/");
       }}
     > 
-      <h1 className="title" >LOGIN</h1>
-      <FormInput 
+      <h1 className="title" >Login To W8er</h1>
+      <LFormInput 
         required
         type="email"
         label="email"
@@ -61,7 +90,7 @@ const Login = () => {
           setValues({...formValues, email: e.target.value});
         }} 
       />
-      <FormInput 
+      <LFormInput 
         required
         type="password"
         label="password"
@@ -72,7 +101,7 @@ const Login = () => {
         }} 
       />
       {/* <button onClick={() => console.log("clicked")}>I'm a button</button> */}
-      <Button text="LOGIN IN" css={Spacing} ></Button>  
+      <LButton text="LOGIN IN" css={Spacing} ></LButton>  
   </LoginContainer>
   );
 };
