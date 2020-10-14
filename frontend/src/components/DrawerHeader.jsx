@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-
 import useResizeObserver from "use-resize-observer";
 
 // styling:
@@ -16,7 +15,7 @@ import Button from "./buttons/Button";
 import { CgOptions } from "react-icons/cg";
 import { GoPlus } from "react-icons/go";
 
-const contentPadding = 28;
+const contentPadding = 14; // measured in pixels
 
 const HeaderContainer = styled.div`
   position: sticky;

@@ -24,6 +24,11 @@ import Settings from "./pages/Settings";
 // icons:
 import { MdBrightnessLow } from "react-icons/md";
 import { SiGoogle as GoogleLogoIcon } from "react-icons/si";
+import LandingPage from "./pages/LandingPage";
+
+// state management:
+import { useRecoilValue } from "recoil";
+import { userState } from "./recoil/UserState";
 
 const AppContainer = styled.section`
   background-color: ${(props) => props.theme.colors.background};
@@ -61,6 +66,7 @@ const FlexWrapper = styled.div`
 
 const App = ({ ...props }) => {
   const theme = useTheme();
+  const user = useRecoilValue(userState);
 
   useEffect(() => {
     // console.log("UE1");
@@ -74,16 +80,32 @@ const App = ({ ...props }) => {
         </Helmet>
 
         <BrowserRouter basename="/w8er">
-          <FlexWrapper>
-            <Sidebar />
-            <Main>
-              <Switch>
-                <Route exact path="/" component={SeatingLayout} />
-                <Route exact path="/seating-layout" component={SeatingLayout} />
-                <Route exact path="/settings" component={Settings} />
-              </Switch>
-            </Main>
-          </FlexWrapper>
+          {user && (
+            <FlexWrapper>
+              <Sidebar />
+              <Main>
+                <Switch>
+                  <Route exact path="/" component={SeatingLayout} />
+                  <Route exact path="/floor-map" component={SeatingLayout} />
+                  <Route
+                    exact
+                    path="/floor-map/edit"
+                    component={SeatingLayout}
+                  />
+                  <Route exact path="/settings" component={Settings} />
+                </Switch>
+              </Main>
+            </FlexWrapper>
+          )}
+
+          {!user && (
+            <Switch>
+              <Route exact path="/" component={LandingPage} />
+              <Route exact path="/register" component={SeatingLayout} />
+              <Route exact path="/customer-faq" component={SeatingLayout} />
+              <Route exact path="/features" component={Settings} />
+            </Switch>
+          )}
         </BrowserRouter>
       </AppContainer>
     </DndProvider>

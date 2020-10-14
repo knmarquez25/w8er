@@ -227,7 +227,7 @@ const navItems = [
     component: <GuestList />,
     // componentHeader: <FloorMapHeader />,
     icon: IoMdListBox,
-    link: "",
+    link: "/floor-map",
   },
   {
     // component: (
@@ -239,7 +239,7 @@ const navItems = [
     component: <FloorMapTools />,
     // componentHeader: <FloorMapHeader />,
     icon: BiCustomize,
-    link: "/seating-layout",
+    link: "/floor-map/edit",
   },
   {
     // component: <Button text="hello" />,
