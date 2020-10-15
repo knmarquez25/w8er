@@ -20,6 +20,9 @@ import Main from "./components/Main";
 // page components:
 import SeatingLayout from "./pages/SeatingLayout";
 import Settings from "./pages/Settings";
+import RegisterPage from "./pages/RegisterPage";
+import CustomerFAQPage from "./pages/CustomerFAQPage";
+import FeaturesPage from "./pages/CustomerFAQPage";
 
 // icons:
 import { MdBrightnessLow } from "react-icons/md";
@@ -101,9 +104,9 @@ const App = ({ ...props }) => {
           {!user && (
             <Switch>
               <Route exact path="/" component={LandingPage} />
-              <Route exact path="/register" component={SeatingLayout} />
-              <Route exact path="/customer-faq" component={SeatingLayout} />
-              <Route exact path="/features" component={Settings} />
+              <Route exact path="/register" component={RegisterPage} />
+              <Route exact path="/customer-faq" component={CustomerFAQPage} />
+              <Route exact path="/features" component={FeaturesPage} />
             </Switch>
           )}
         </BrowserRouter>

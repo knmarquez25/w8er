@@ -52,7 +52,8 @@ const themeDark = {
   colors: {
     // primary: "#afb9f1",
     primary: "#5e89e6",
-    secondary: "#e87b9b",
+    secondary: "#5e89e6",
+    // secondary: "#e87b9b",
 
     background: "#373e4d",
     surface: "#444c60",
@@ -78,7 +79,7 @@ const themeLight = {
   colors: {
     // primary: "#e87b9b",
     primary: "#54a0ff",
-    secondary: "#afb9f1",
+    secondary: "#54a0ff",
 
     // background: "#e5e5e5",
     background: "#f1f3f4",
