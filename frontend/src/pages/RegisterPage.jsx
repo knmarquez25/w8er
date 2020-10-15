@@ -41,6 +41,10 @@ const FormContainer = styled.form`
   /* align-items: center; */
 `;
 
+const SpacedInput = styled(Input)`
+  margin-bottom: 1rem;
+`;
+
 const ButtonContainer = styled.div`
   width: 100%;
   flex: 1;
@@ -86,43 +90,34 @@ const RegisterPage = () => {
       <Card>
         {/* noValidate disables the html5 validation and its ugly messages */}
         <FormContainer onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Input
+          <SpacedInput
             type="text"
             htmlFor="restaurant"
             label="restaurant name"
             name="restaurant"
             ref={register(resNameReqs)}
             error={errors.restaurant && errors.restaurant.message}
-            css={css`
-              margin-top: 1rem;
-            `}
           />
 
-          <Input
+          <SpacedInput
             type="email"
             htmlFor="email"
             label="email"
             name="email"
             ref={register(emailReqs)}
             error={errors.email && errors.email.message}
-            css={css`
-              margin-top: 1rem;
-            `}
           />
 
-          <Input
+          <SpacedInput
             type="password"
             htmlFor="password"
             label="password"
             name="password"
             ref={register(passwordReqs)}
             error={errors.password && errors.password.message}
-            css={css`
-              margin-top: 1rem;
-            `}
           />
 
-          <Input
+          <SpacedInput
             type="password"
             htmlFor="confirmPassword"
             label="confirm password"
@@ -130,9 +125,6 @@ const RegisterPage = () => {
             ref={register(confirmPwReqs)}
             error={errors.confirmPassword && errors.confirmPassword.message}
             onClick={() => console.log(errors)}
-            css={css`
-              margin-top: 1rem;
-            `}
           />
           <ButtonContainer>
             <RegisterButton type="submit" text="register" />

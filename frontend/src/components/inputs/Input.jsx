@@ -128,8 +128,13 @@ const Input = React.forwardRef(
   ({ className, error, label, htmlFor, type, ...props }, ref) => {
     const [focused, setFocused] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
-
     const inputRef = useRef({ current: { value: "" } });
+
+    const determineInputType = () => {
+      if (type === "password" && passwordVisible === true) return "text";
+      else if (type === "password") return "password";
+      else return type;
+    };
 
     return (
       <InputWrapper className={className}>
@@ -145,7 +150,7 @@ const Input = React.forwardRef(
         <ErrorMsg>{error}</ErrorMsg>
         <InputField
           {...props}
-          type={passwordVisible ? "text" : "password"}
+          type={determineInputType(type)}
           id={htmlFor}
           ref={(e) => {
             if (ref) ref(e);
