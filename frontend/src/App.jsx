@@ -27,6 +27,7 @@ import { MdBrightnessLow } from "react-icons/md";
 import { SiGoogle as GoogleLogoIcon } from "react-icons/si";
 import WaitlistPage from "./pages/WaitlistPage";
 import FloorMap from "./components/layout-tools/FloorMap";
+import ReservationPage from "./pages/ReservationPage";
 
 const AppContainer = styled.section`
   background-color: ${(props) => props.theme.colors.background};
@@ -86,6 +87,7 @@ const App = ({ ...props }) => {
               <Route exact path="/settings" component={Settings} />
               <Route exact path="/waitlist" component={WaitlistPage} />
               <Route exact path="/waitlist-complete" component={FloorMap} />
+              <Route exact path="/reservation" component={ReservationPage} />
             </Switch>
           </Main>
           {/* </FlexWrapper> */}
