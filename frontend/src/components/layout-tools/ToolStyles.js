@@ -4,7 +4,9 @@ import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 
 const halfCircle = css`
-  clip-path: circle(50.2% at 50% 0);
+  transform-origin: 50% 25%;
+  clip-path: circle(50% at 50% 0);
+  /* padding-top: 50%; */
   /* clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); */
 `;
 
@@ -20,7 +22,16 @@ const rectangle = (theme, size) => css`
   width: ${size ? size.width / 2 : (theme.dimensions.gridUnit / 2) * 3}px;
 `;
 
-const ToolContainer = styled.div``;
+const ToolContainer = styled.div`
+  /* background-color: lightblue; */
+  position: relative;
+
+  &:hover {
+    .shape {
+      background-color: ${({ theme }) => theme.colors.secondary};
+    }
+  }
+`;
 
 const Shape = styled.div`
   position: relative;
@@ -31,7 +42,7 @@ const Shape = styled.div`
     size ? size.height : theme.dimensions.gridUnit * 3}px;
   background-color: ${({ theme }) => theme.colors.primary};
 
-  border: 1px solid ${({ theme }) => theme.colors.onBackground};
+  /* border: 1px solid ${({ theme }) => theme.colors.onBackground}; */
   /* border: 1px solid red; */
 
   transform: rotate(${({ rotateAngle }) => rotateAngle}deg);
@@ -41,6 +52,10 @@ const Shape = styled.div`
   transition-timing-function: linear;
 
   cursor: move;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:active {
     background-color: red;
@@ -62,6 +77,55 @@ const Shape = styled.div`
         return lshape;
       case "rectangle":
         return rectangle(theme, size);
+      default:
+        return null;
+    }
+  }}
+`;
+
+const LabelInput = styled.input`
+  margin: auto;
+  background-color: transparent;
+  /* background-color: red; */
+  /* width: 100%; */
+  cursor: move;
+
+  font-weight: bold;
+
+  min-width: 3rem;
+  width: 100%;
+  max-width: 10rem;
+
+  text-transform: uppercase;
+
+  text-align: center;
+
+  position: absolute;
+  /* top: 30%;
+  left: 20%; */
+  top: 0;
+  bottom: 0;
+
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+
+  color: ${({ theme }) => theme.colors.surface};
+
+  ${({ shapeType, theme }) => {
+    switch (shapeType) {
+      case "halfCircle":
+        return css`
+          bottom: auto;
+          top: 15%;
+        `;
+      case "lshape":
+        return css`
+          /* color: ${theme.colors.onBackground}; */
+        `;
       default:
         return null;
     }
@@ -132,4 +196,5 @@ export {
   IncreaseSize,
   DecreaseSize,
   HiddenHack,
+  LabelInput,
 };

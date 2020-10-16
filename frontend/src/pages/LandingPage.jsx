@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
+import useWindowDimension from "../hooks/useWindowDimensions";
 
 // styling:
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
+
+// custom component:
+import Card from "../components/Card";
+import FloorMapBackground from "../components/FloorMapBackground";
 
 // illustrations:
 import { ReactComponent as QueueDrawing } from "../assets/illustrations/queue.svg";
@@ -12,9 +17,10 @@ import Button from "../components/buttons/Button";
 import { useHistory } from "react-router-dom";
 
 const LPContainer = styled.div`
+  position: relative;
   background-color: ${({ theme }) => theme.colors.background};
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
 
   color: ${({ theme }) => theme.colors.onBackground};
 
@@ -23,87 +29,36 @@ const LPContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 768px) {
+  /* background-color: lightblue; */
+
+  @media (max-width: ${30 * 2 + 5}rem) {
     /*  
       since display: flex; is causing flow issues at around this brekapoint
       we'll turn it back to the default display since we don't need the center
       that was achieved using flex box
      */
     display: block;
+    width: auto;
   }
 `;
 
-const CardContainer = styled.div`
-  /* background-color: red; */
+const LPCard = styled(Card)`
+  /* margin: auto 0; */
+  position: relative;
+  z-index: 10;
 
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
   align-items: center;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
-const Card = styled.div`
-  background-color: ${({ theme }) => theme.colors.surface};
-  margin: 2rem;
-  padding: 2rem;
-
-  width: 30rem;
-  height: 40rem;
-  min-width: 30rem;
-  min-height: 40rem;
-
-  border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.colors.outline};
-  border-bottom: 4px solid ${({ theme }) => theme.colors.outline};
-  border-right: 4px solid ${({ theme }) => theme.colors.outline};
-
-  transition-property: width, height, border-bottom, border-right;
-  transition-duration: 200ms;
-  transition-timing-function: ease-out;
-
-  cursor: pointer;
-
-  display: flex;
-  flex-direction: column;
-  /* justify-content: center; */
-  align-items: center;
-
-  @media (max-width: 1000px) {
-    /* transform: scale(0.6); */
-    width: 20rem;
-    height: 30rem;
-    min-width: 20rem;
-    min-height: 30rem;
-  }
-
-  @media (max-width: 768px) {
-    max-width: 30rem;
-    max-height: 40rem;
-    width: 90%;
-    height: 40rem;
-    min-width: 20rem;
-    min-height: 40rem;
-  }
-
-  @media (max-width: 400px) {
-    /* transform: scale(0.6); */
-    width: 90%;
-    height: 30rem;
-  }
-
-  &:hover {
-    /* border: 1px solid ${({ theme }) => theme.colors.primary}; */
-    border-bottom: 4px solid ${({ theme }) => theme.colors.primary};
-    border-right: 4px solid ${({ theme }) => theme.colors.primary};
-  }
 
   svg {
     width: 70%;
     height: 50%;
+  }
+
+  @media (max-width: ${30 * 2 + 5}rem) {
+    flex-direction: column;
+    margin: auto;
+
+    margin: ${({ height }) => (height - 560) / 2}px auto;
   }
 `;
 
@@ -148,60 +103,57 @@ const LPButton = styled(Button)`
 
 const LandingPage = () => {
   const history = useHistory();
+  const { width, height } = useWindowDimension();
 
   return (
     <LPContainer>
-      <CardContainer>
-        <Card
-          onClick={(e) => {
-            history.push("/customer-faq");
-          }}
-        >
-          <QueueDrawing />
-          <Title>Waitlist or Reservation</Title>
-          <Text>
-            Are you a <Highlight>customer</Highlight> trying to make a
-            reservation or get your place in line?
-          </Text>
-          <Text>We can show you how!</Text>
-          <ButtonContainer>
-            <LPButton text="Show me how!" />
-          </ButtonContainer>
-        </Card>
+      <LPCard
+        height={height}
+        css={css`
+          margin-right: 2rem;
+        `}
+      >
+        <QueueDrawing />
+        <Title>Waitlist or Reservation</Title>
+        <Text>
+          Are you a <Highlight>customer</Highlight> trying to make a reservation
+          or get your place in line?
+        </Text>
+        <Text>We can show you how!</Text>
+        <ButtonContainer>
+          <LPButton text="Show me how!" />
+        </ButtonContainer>
+      </LPCard>
 
-        <Card
-          onClick={(e) => {
-            history.push("/register");
-          }}
-        >
-          <DashboardDrawing />
-          <Title>Sign up for our services!</Title>
-          <Text>
-            Are you a <Highlight>restaurant professional</Highlight> looking to
-            improve wait times for your customers?
-          </Text>
-          <Text>
-            Use our services to manage your waitlists and reservations, allow
-            your customers to pick out their seats, and much more!
-          </Text>
+      <LPCard height={height}>
+        <DashboardDrawing />
+        <Title>Sign up for our services!</Title>
+        <Text>
+          Are you a <Highlight>restaurant professional</Highlight> looking to
+          improve wait times for your customers?
+        </Text>
+        <Text>
+          Use our services to manage your waitlists and reservations, allow your
+          customers to pick out their seats, and much more!
+        </Text>
 
-          <ButtonContainer>
-            <LPButton
-              text="See features"
-              css={css`
-                margin-right: 2rem;
-              `}
-              onClick={(e) => {
-                e.stopPropagation();
+        <ButtonContainer>
+          <LPButton
+            text="See features"
+            css={css`
+              margin-right: 2rem;
+            `}
+            onClick={(e) => {
+              e.stopPropagation();
 
-                history.push("/features");
-              }}
-            />
+              history.push("/features");
+            }}
+          />
 
-            <LPButton text="Sign Up" />
-          </ButtonContainer>
-        </Card>
-      </CardContainer>
+          <LPButton text="Sign Up" />
+        </ButtonContainer>
+      </LPCard>
+      <FloorMapBackground />
     </LPContainer>
   );
 };

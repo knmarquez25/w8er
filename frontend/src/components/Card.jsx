@@ -7,13 +7,11 @@ import styled from "@emotion/styled";
 
 const CardContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.surface};
-  margin: 2rem;
+  /* margin: 2rem; */
   padding: 2rem;
 
   width: 30rem;
   height: 40rem;
-  min-width: 30rem;
-  min-height: 40rem;
 
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.outline};
@@ -29,30 +27,7 @@ const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
-  align-items: center;
-
-  @media (max-width: 1000px) {
-    /* transform: scale(0.6); */
-    width: 20rem;
-    height: 30rem;
-    min-width: 20rem;
-    min-height: 30rem;
-  }
-
-  @media (max-width: 768px) {
-    max-width: 30rem;
-    max-height: 40rem;
-    width: 90%;
-    height: 40rem;
-    min-width: 20rem;
-    min-height: 40rem;
-  }
-
-  @media (max-width: 400px) {
-    /* transform: scale(0.6); */
-    width: 90%;
-    height: 30rem;
-  }
+  /* align-items: center; */
 
   &:hover {
     /* border: 1px solid ${({ theme }) => theme.colors.primary}; */
@@ -63,6 +38,12 @@ const CardContainer = styled.div`
   svg {
     width: 70%;
     height: 50%;
+  }
+
+  @media (max-width: 500px) {
+    width: 90%;
+    padding: 1rem;
+    /* background-color: red; */
   }
 `;
 
@@ -90,8 +71,8 @@ const Highlight = styled.span`
   font-style: italic;
 `;
 
-const Card = ({ children }) => {
-  return <CardContainer>{children}</CardContainer>;
+const Card = ({ children, ...props }) => {
+  return <CardContainer {...props}>{children}</CardContainer>;
 };
 
 export default Card;

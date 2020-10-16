@@ -12,58 +12,19 @@ import styled from "@emotion/styled";
 
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../../utils/draggables";
-import Tool from "./Tool";
-import ToolNode, {
+
+import { FloorMapItems } from "../../recoil/FloorMapItems";
+
+import {
   Square,
   Circle,
   HalfCircle,
   Lshape,
   Rectangle,
 } from "../layout-tools/ToolNode";
+import { useRecoilState } from "recoil";
 
 const shortid = require("shortid");
-
-const elements = [
-  {
-    type: "halfCircle",
-    id: shortid.generate(),
-    data: { label: "3" },
-    position: { x: 0, y: 0 },
-  },
-  {
-    type: "circle",
-    id: shortid.generate(),
-    data: { label: "a" },
-    position: { x: 240, y: 0 },
-  },
-  // you can also pass a React component as a label
-  {
-    type: "lshape",
-    id: shortid.generate(),
-    data: { label: <div>b</div> },
-    position: { x: 60, y: 40 },
-  },
-  {
-    type: "square",
-    id: shortid.generate(),
-    data: { label: <div>c</div> },
-    position: { x: -40, y: 80 },
-  },
-  {
-    type: "circle",
-    id: shortid.generate(),
-    data: { label: <div>d</div> },
-    position: { x: 120, y: 220 },
-  },
-  {
-    type: "square",
-    id: shortid.generate(),
-    data: { label: <div>d</div> },
-    position: { x: 120, y: 220 },
-  },
-
-  // { id: "e1-2", source: "1", target: "2", animated: true },
-];
 
 const FloorMapContainer = styled.div`
   width: 100%;
@@ -95,7 +56,7 @@ const FloorMap = () => {
   const theme = useTheme();
   const fmRef = useResizeObserver();
   const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const [items, setItems] = useState(elements);
+  const [items, setItems] = useRecoilState(FloorMapItems);
   const [endDropCoords, setEndDropCoords] = useState({ x: 0, y: 0 });
 
   const [{ item, isOver, didDrop, ...addedProps }, drop] = useDrop({
@@ -127,14 +88,39 @@ const FloorMap = () => {
     },
   });
 
+  // const updateNode = (id, updatedItem) => {
+  //   console.log("updateNode", id, updatedItem);
+
+  //   const deleteIndex = items.findIndex((item, i) => {
+  //     console.log(item.id, id, item.id === id);
+
+  //     return item.id === id;
+  //   });
+  //   console.log("deleteIndex", deleteIndex);
+
+  //   if (deleteIndex > -1) {
+  //     console.log("updating");
+  //     const updatedItems = [
+  //       ...items.slice(0, deleteIndex),
+  //       ...items.slice(deleteIndex + 1, items.length),
+  //       updatedItem,
+  //     ];
+
+  //     setItems(updatedItems);
+  //   }
+  // };
+
   useEffect(() => {
     console.log("didDrop", didDrop, item);
+
     if (item) {
+      console.log("didDrop", didDrop, item.data);
+      const projectPosition = reactFlow.project(endDropCoords);
       const newItem = {
-        type: item.data.data.type,
+        type: item.data.type,
         id: shortid.generate(),
-        data: item.data.data,
-        position: reactFlow.project(endDropCoords),
+        data: { ...item.data, position: projectPosition },
+        position: projectPosition,
       };
       console.log("newItem", newItem);
       setItems([...items, newItem]);
@@ -161,7 +147,9 @@ const FloorMap = () => {
   return (
     <FloorMapContainer ref={fmRef.ref}>
       <DropTarget ref={drop}>
+        <button onClick={() => console.log(items)}>fdsfsdf</button>
         <ReactFlow
+          // onClick={() => consle.log(items)}
           onLoad={onLoad}
           elements={items}
           // snapToGrid

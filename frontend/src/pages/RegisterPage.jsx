@@ -31,6 +31,14 @@ const RegisterContainer = styled.div`
   align-items: center;
 `;
 
+const RegisterCard = styled(Card)`
+  @media (max-width: 500px) {
+    width: 90%;
+    padding: 1rem;
+    /* background-color: red; */
+  }
+`;
+
 const FormContainer = styled.form`
   width: 100%;
   height: 100%;
@@ -61,10 +69,7 @@ const RegisterButton = styled(Button)`
 
 const RegisterPage = () => {
   const [user, setUser] = useRecoilState(userState);
-
   const { register, handleSubmit, errors, watch } = useForm();
-
-  const onSubmit = (data) => setUser(data);
 
   const resNameReqs = {
     required: { value: true, message: "name required" },
@@ -85,9 +90,11 @@ const RegisterPage = () => {
       value === watch("password") || "passwords do not match",
   };
 
+  const onSubmit = (data) => setUser(data);
+
   return (
     <RegisterContainer>
-      <Card>
+      <RegisterCard>
         {/* noValidate disables the html5 validation and its ugly messages */}
         <FormContainer onSubmit={handleSubmit(onSubmit)} noValidate>
           <SpacedInput
@@ -130,7 +137,7 @@ const RegisterPage = () => {
             <RegisterButton type="submit" text="register" />
           </ButtonContainer>
         </FormContainer>
-      </Card>
+      </RegisterCard>
     </RegisterContainer>
   );
 };

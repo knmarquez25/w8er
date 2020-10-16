@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 
 // styling:
 /** @jsx jsx */
@@ -17,40 +18,79 @@ import {
   IncreaseSize,
   DecreaseSize,
   HiddenHack,
+  LabelInput,
 } from "./ToolStyles";
 
 // icons:
 import { BiRotateLeft, BiRotateRight } from "react-icons/bi";
 import { MdAddCircleOutline, MdRemoveCircleOutline } from "react-icons/md";
 
+// Node states and defaults:
+import { FloorMapItems, DEFAULT_NODE_DATA } from "../../recoil/FloorMapItems";
+
 const ToolNode = ({
+  id,
   type = "square",
+  selected,
+  data = DEFAULT_NODE_DATA,
   mode = "normal",
   info,
-  selected,
   rotateUnit = 15,
   sizeUnit = 20,
   ...props
 }) => {
-  const [rotateAngle, setRotateAngle] = useState(0);
-  const [size, setSize] = useState({ height: 60, width: 60 });
+  const [rotateAngle, setRotateAngle] = useState(data.rotateAngle);
+  const [size, setSize] = useState(data.size);
+  const [label, setLabel] = useState(data.label);
+  const [items, setItems] = useRecoilState(FloorMapItems);
+
+  useEffect(() => {
+    // console.log("ToolNodeChanged", id, type, rotateAngle, data.rotateAngle);
+  }, [rotateAngle, size, label]);
+
+  const updateNodeData = (dataUpdate) => {
+    const deleteIndex = items.findIndex((item, i) => item.id === id);
+    if (deleteIndex > -1) {
+      const itemCopy = items[deleteIndex];
+
+      const updatedItem = {
+        ...itemCopy,
+        data: { ...itemCopy.data, ...dataUpdate },
+      };
+
+      const updatedItems = [
+        ...items.slice(0, deleteIndex),
+        ...items.slice(deleteIndex + 1, items.length),
+        updatedItem,
+      ];
+      setItems(updatedItems);
+    }
+  };
 
   const rotateCW = () => {
-    setRotateAngle(rotateAngle + rotateUnit);
+    const newValue = rotateAngle + rotateUnit;
+    setRotateAngle(newValue);
+    updateNodeData({ rotateAngle: newValue });
   };
 
   const rotateCCW = () => {
-    setRotateAngle(rotateAngle - rotateUnit);
+    const newValue = rotateAngle - rotateUnit;
+    setRotateAngle(newValue);
+    updateNodeData({ rotateAngle: newValue });
   };
 
   const increaseSize = () => {
     const { height, width } = size;
-    setSize({ height: height + sizeUnit, width: width + sizeUnit });
+    const newValue = { height: height + sizeUnit, width: width + sizeUnit };
+    setSize(newValue);
+    updateNodeData({ size: newValue });
   };
 
   const decreaseSize = () => {
     const { height, width } = size;
-    setSize({ height: height - sizeUnit, width: width - sizeUnit });
+    const newValue = { height: height - sizeUnit, width: width - sizeUnit };
+    setSize(newValue);
+    updateNodeData({ size: newValue });
   };
 
   const cwLongPressAction = useRepeatLongPress(rotateCW, 200);
@@ -64,8 +104,22 @@ const ToolNode = ({
 
   return (
     <ToolContainer {...props}>
-      <Shape size={size} rotateAngle={rotateAngle} type={type} info={info} />
-
+      {/* <Shape size={size} rotateAngle={rotateAngle} type={type} info={info} /> */}
+      <Shape
+        className="shape"
+        size={size}
+        rotateAngle={rotateAngle}
+        type={type}
+        // info={info}
+      />
+      <LabelInput
+        type="text"
+        shapeType={type}
+        value={label}
+        onChange={(e) => {
+          setLabel(e.target.value);
+        }}
+      />
       <HiddenHack selected={selected}>
         <IncreaseSize {...increaseSizePressActions}>
           <MdAddCircleOutline />
