@@ -16,6 +16,8 @@ import Button from "./components/buttons/Button";
 import FormInput from "./components/inputs/FormInput";
 import Sidebar from "./components/Sidebar";
 import Main from "./components/Main";
+import FloorMapEdit from "./components/layout-tools/FloorMapEdit";
+import FloorMap from "./components/layout-tools/FloorMap";
 
 // page components:
 import SeatingLayout from "./pages/SeatingLayout";
@@ -88,12 +90,12 @@ const App = ({ ...props }) => {
               <Sidebar />
               <Main>
                 <Switch>
-                  <Route exact path="/" component={SeatingLayout} />
-                  <Route exact path="/floor-map" component={SeatingLayout} />
+                  <Route exact path="/" component={FloorMap} />
+                  <Route exact path="/floor-map" component={FloorMap} />
                   <Route
                     exact
                     path="/floor-map/edit"
-                    component={SeatingLayout}
+                    component={FloorMapEdit}
                   />
                   <Route exact path="/settings" component={Settings} />
                 </Switch>

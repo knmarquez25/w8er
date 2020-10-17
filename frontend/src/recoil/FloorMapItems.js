@@ -30,19 +30,19 @@ const INITIAL_NODES = [
   {
     type: "square",
     id: shortid.generate(),
-    data: { ...DEFAULT_NODE_DATA },
+    data: { ...DEFAULT_NODE_DATA, label: "BS" },
     position: { x: -40, y: 80 },
   },
   {
     type: "circle",
     id: shortid.generate(),
-    data: { ...DEFAULT_NODE_DATA },
+    data: { ...DEFAULT_NODE_DATA, label: "G5" },
     position: { x: 120, y: 220 },
   },
   {
     type: "square",
     id: shortid.generate(),
-    data: { ...DEFAULT_NODE_DATA },
+    data: { ...DEFAULT_NODE_DATA, label: "ZH" },
     position: { x: 120, y: 220 },
   },
 ];

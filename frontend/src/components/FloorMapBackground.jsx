@@ -9,13 +9,13 @@ import { HiUser } from "react-icons/hi";
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 
-import ToolNode, {
+import {
   Square,
   Circle,
   HalfCircle,
   Lshape,
   Rectangle,
-} from "../components/layout-tools/ToolNode";
+} from "../components/layout-tools/ToolNodeEdit";
 
 const shortid = require("shortid");
 
