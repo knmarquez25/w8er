@@ -20,9 +20,6 @@ import Main from "./components/Main";
 // page components:
 import SeatingLayout from "./pages/SeatingLayout";
 import Settings from "./pages/Settings";
-import index from "./pages/index";
-import Waitlist from "./pages/Waitlist";
-import Confirmation from "./pages/Confirmation";
 
 // icons:
 import { MdBrightnessLow } from "react-icons/md";
@@ -84,9 +81,6 @@ const App = ({ ...props }) => {
                 <Route exact path="/" component={SeatingLayout} />
                 <Route exact path="/seating-layout" component={SeatingLayout} />
                 <Route exact path="/settings" component={Settings} />
-                <Route exact path="/index" component={index} />
-                <Route exact path="/waitlist" component={Waitlist} />
-                <Route exact path="/confirmation" component={Confirmation} />
               </Switch>
             </Main>
           </FlexWrapper>
