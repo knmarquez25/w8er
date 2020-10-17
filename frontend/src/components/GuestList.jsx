@@ -30,12 +30,14 @@ import { MdExpandLess } from "react-icons/md";
 
 const shortid = require("shortid");
 
+const ONE_MINUTE_MS = 60000;
+const RESERVE_OFFSET = 45 * ONE_MINUTE_MS;
+const CURRENT_DATE = new Date();
+
 const GUESTLIST = [
   {
-    test: new Date().getTime(),
-    waitTime: new Date(),
+    waitTime: new Date(CURRENT_DATE.getTime() - 30 * ONE_MINUTE_MS),
     id: shortid.generate(),
-    seated: false,
     name: "Rezzy Recent",
     party: "2",
     phone: "555-555-4352",
@@ -47,10 +49,8 @@ const GUESTLIST = [
     departureTime: "",
   },
   {
-    test: new Date("2020-10-10T03:32:00").getTime(),
-    waitTime: new Date("2020-10-10T03:32:00"),
+    waitTime: new Date(CURRENT_DATE.getTime() - 15 * ONE_MINUTE_MS),
     id: shortid.generate(),
-    seated: false,
     name: "ricky  bobby",
     party: "2",
     phone: "555-555-4352",
@@ -62,10 +62,8 @@ const GUESTLIST = [
     departureTime: "",
   },
   {
-    test: new Date("2020-09-09T03:56:00").getTime(),
-    waitTime: new Date("2020-09-09T03:56:00"),
+    waitTime: new Date(CURRENT_DATE.getTime() - 7 * ONE_MINUTE_MS),
     id: shortid.generate(),
-    seated: false,
     name: "Lebron sucks",
     party: "13",
     phone: "310-135-4352",
@@ -77,10 +75,8 @@ const GUESTLIST = [
     departureTime: "",
   },
   {
-    test: new Date("2020-10-10T03:36:00").getTime(),
-    waitTime: new Date("2020-10-10T03:36:00"),
+    waitTime: new Date(CURRENT_DATE.getTime() - 71 * ONE_MINUTE_MS),
     id: shortid.generate(),
-    seated: false,
     name: "michael jackson",
     party: "4",
     phone: "123-565-5685",
@@ -92,39 +88,55 @@ const GUESTLIST = [
     departureTime: "",
   },
   {
-    test: new Date("2020-10-10T03:14:00").getTime(),
-    waitTime: new Date("2020-10-10T03:14:00"),
+    waitTime: new Date(
+      new Date(CURRENT_DATE.getTime() + 7 * ONE_MINUTE_MS).getTime() -
+        RESERVE_OFFSET
+    ),
     id: shortid.generate(),
-    seated: false,
     name: "john cena",
     party: "10",
     phone: "565-565-7894",
     table: "2A",
     notes: "",
     tableAssigned: "",
-    reserveTime: new Date(),
+    reserveTime: new Date(CURRENT_DATE.getTime() + 7 * ONE_MINUTE_MS),
     seatedTime: "",
     departureTime: "",
   },
   {
-    test: new Date("2020-10-10T03:26:00").getTime(),
-    waitTime: new Date("2020-10-10T03:26:00"),
+    waitTime: new Date(
+      new Date(CURRENT_DATE.getTime() + 30 * ONE_MINUTE_MS).getTime() -
+        RESERVE_OFFSET
+    ),
     id: shortid.generate(),
-    seated: false,
     name: "t pain",
     party: "1",
     phone: "456-789-1238",
     table: "",
     notes: "",
     tableAssigned: "",
-    reserveTime: "",
-
+    reserveTime: new Date(CURRENT_DATE.getTime() + 30 * ONE_MINUTE_MS),
     seatedTime: "",
     departureTime: "",
   },
   {
-    test: new Date("2020-10-10T03:25:00").getTime(),
-    waitTime: new Date("2020-10-10T03:25:00"),
+    waitTime: new Date(
+      new Date(CURRENT_DATE.getTime() - 8 * ONE_MINUTE_MS).getTime() -
+        RESERVE_OFFSET
+    ),
+    id: shortid.generate(),
+    name: "Late Dude",
+    party: "16",
+    phone: "456-789-1238",
+    table: "6H",
+    notes: "",
+    tableAssigned: "",
+    reserveTime: new Date(CURRENT_DATE.getTime() - 8 * ONE_MINUTE_MS),
+    seatedTime: "",
+    departureTime: "",
+  },
+  {
+    waitTime: new Date(CURRENT_DATE.getTime() - 32 * ONE_MINUTE_MS),
     id: shortid.generate(),
     seated: true,
     name: "t pain",
@@ -134,11 +146,17 @@ const GUESTLIST = [
     notes: "",
     tableAssigned: "",
     reserveTime: "",
-
     seatedTime: "",
     departureTime: "",
   },
-];
+].sort((a, b) => {
+  const wtA = a.waitTime.getTime();
+  const wtB = b.waitTime.getTime();
+
+  if (wtA > wtB) return 1;
+  else if (wtA < wtB) return -1;
+  else return 0;
+});
 
 const GuestListContainer = styled.div`
   position: relative;
@@ -278,8 +296,9 @@ const Divider = styled.div`
 
 const GuestList = () => {
   const [guestList, setGuestList] = useState(GUESTLIST);
-  const [seatedOpen, setSeatedOpen] = useState(GUESTLIST);
-  const [mustServeOpen, setMustServeOpen] = useState(GUESTLIST);
+  const [seatedOpen, setSeatedOpen] = useState(true);
+  const [mustServeOpen, setMustServeOpen] = useState(true);
+  const [finishedOpen, setFinishedOpen] = useState(true);
   const [currentTime, setCurrentTime] = useState(false);
   const sidebarOpen = useRecoilValue(sidebarState);
 
@@ -295,8 +314,17 @@ const GuestList = () => {
     };
   }, []);
 
+  const compareByWaitTime = (a, b) => {
+    const wtA = a.waitTime.getTime();
+    const wtB = b.waitTime.getTime();
+
+    if (wtA > wtB) return 1;
+    else if (wtA < wtB) return -1;
+    else return 0;
+  };
+
   const addGuestItem = (guestItem) => {
-    setGuestList([...guestList, guestItem]);
+    setGuestList([...guestList, guestItem].sort(compareByWaitTime));
   };
 
   const updateGuestItem = (guestItem) => {
@@ -308,14 +336,7 @@ const GuestList = () => {
       ...guestList.slice(0, deleteIndex),
       ...guestList.slice(deleteIndex + 1, guestList.length),
       guestItem,
-    ].sort((a, b) => {
-      const wtA = a.waitTime.getTime();
-      const wtB = b.waitTime.getTime();
-
-      if (wtA > wtB) return 1;
-      else if (wtA < wtB) return -1;
-      else return 0;
-    });
+    ].sort(compareByWaitTime);
 
     setGuestList(updatedItems);
   };
@@ -339,14 +360,16 @@ const GuestList = () => {
         // handleChange1={(state) => setGlExtrasOpen(state)}
         // handleChange2={(state) => setAddGuestOpen(state)}
       />
+
+      {/* ----------------   THE WAITING LIST  ----------------*/}
       <Divider
         expand={mustServeOpen}
         onClick={() => {
           setMustServeOpen(!mustServeOpen);
         }}
       >
-        <h2 className="title">Must Serve</h2>
-        <button>{guestList.filter((guest) => !guest.seated).length}</button>
+        <h2 className="title">Waiting</h2>
+        <button>{guestList.filter((guest) => !guest.seatedTime).length}</button>
         <div className="line"></div>
 
         <button>
@@ -356,7 +379,7 @@ const GuestList = () => {
       {mustServeOpen && (
         <ListContainer className="guest-list">
           {guestList
-            .filter((guest) => !guest.seated)
+            .filter((guest) => !guest.seatedTime)
             .map((guest, i) => (
               <GuestItem
                 key={guest.id}
@@ -368,6 +391,8 @@ const GuestList = () => {
             ))}
         </ListContainer>
       )}
+
+      {/* ----------------   THE SEATED LIST  ----------------*/}
       <Divider
         expand={seatedOpen}
         onClick={() => {
@@ -375,7 +400,13 @@ const GuestList = () => {
         }}
       >
         <h2 className="title">Seated</h2>
-        <button>{guestList.filter((guest) => guest.seated).length}</button>
+        <button>
+          {
+            guestList.filter(
+              (guest) => guest.seatedTime && !guest.departureTime
+            ).length
+          }
+        </button>
         <div className="line"></div>
         <button>
           <MdExpandLess />
@@ -384,7 +415,37 @@ const GuestList = () => {
       {seatedOpen && (
         <ListContainer className="guest-list">
           {guestList
-            .filter((guest) => guest.seated)
+            .filter((guest) => guest.seatedTime && !guest.departureTime)
+            .map((guest, i) => (
+              <GuestItem
+                key={guest.id}
+                guestInfo={guest}
+                currentTime={currentTime}
+                handleChange={updateGuestItem}
+              />
+            ))}
+        </ListContainer>
+      )}
+      {/* ----------------   THE FINISHED LIST  ----------------*/}
+      <Divider
+        expand={finishedOpen}
+        onClick={() => {
+          setFinishedOpen(!finishedOpen);
+        }}
+      >
+        <h2 className="title">Finished</h2>
+        <button>
+          {guestList.filter((guest) => guest.departureTime).length}
+        </button>
+        <div className="line"></div>
+        <button>
+          <MdExpandLess />
+        </button>
+      </Divider>
+      {finishedOpen && (
+        <ListContainer className="guest-list">
+          {guestList
+            .filter((guest) => guest.departureTime)
             .map((guest, i) => (
               <GuestItem
                 key={guest.id}

@@ -21,7 +21,7 @@ import {
   Lshape,
   Rectangle,
   Triangle,
-} from "../layout-tools/ToolNodeDisplay";
+} from "../layout-tools/ToolNodeEdit";
 import { useRecoilState } from "recoil";
 
 const shortid = require("shortid");
@@ -52,7 +52,7 @@ const nodeTypes = {
   triangle: Triangle,
 };
 
-const FloorMap = () => {
+const FloorMapEdit = () => {
   const [reactFlow, setReactFlow] = useState({});
   const theme = useTheme();
   const fmRef = useRef();
@@ -136,7 +136,7 @@ const FloorMap = () => {
       // onClick={(e) => console.log("xy", e.clientX, e.clientY)}
     >
       <DropTarget ref={drop}>
-        {/* <button onClick={() => console.log(items)}>REGULAR FLOOR MAP</button> */}
+        {/* <button onClick={() => console.log(items)}>FLOOR MAP EDIT</button> */}
         <ReactFlow
           // onClick={() => consle.log(items)}
           onLoad={onLoad}
@@ -148,7 +148,7 @@ const FloorMap = () => {
           //   [0, 0],
           //   [500, 500],
           // ]}
-          nodesDraggable={false}
+          nodesDraggable={true}
         >
           <Background
             variant="dots"
@@ -177,4 +177,4 @@ const FloorMap = () => {
   );
 };
 
-export default FloorMap;
+export default FloorMapEdit;

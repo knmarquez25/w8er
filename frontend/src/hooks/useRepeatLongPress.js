@@ -47,9 +47,10 @@ const useRepeatLongPress = (
   return {
     onMouseDown: (e) => startLongPress(),
     onTouchStart: (e) => startLongPress(),
+    onTouchStart: (e) => actionRef.current(),
     onMouseUp: (e) => endLongPress(),
     onMouseLeave: (e) => endLongPress(),
-    onTouchEnd: (e) => endLongPress(),
+    // onTouchEnd: (e) => endLongPress(),
     onClick: (e) => actionRef.current(),
   };
 };
