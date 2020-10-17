@@ -259,7 +259,7 @@ const Sidebar = ({ children, ...props }) => {
   const [sidebarOpen, setSidebarOpen] = useRecoilState(sidebarState);
   const [itemSelected, setItemSelected] = useState(0);
 
-  const history = useHistory();
+  const history = useHistory();////////////////////////////////////////////////////
 
   const [themeToggle, toggleTheme] = useRecoilState(themeState);
   const [mQuery, setMQuery] = useState({
@@ -319,7 +319,7 @@ const Sidebar = ({ children, ...props }) => {
                   }
                   setItemSelected(i);
 
-                  if (item.link || item.link !== "") history.push(item.link);
+                  if (item.link || item.link !== "") history.push(item.link);////////////////////////
                 }}
               />
             </div>
