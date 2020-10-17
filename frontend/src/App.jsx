@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { ReactFlowProvider } from "react-flow-renderer";
 
 // styling:
 /** @jsx jsx */
@@ -18,6 +19,7 @@ import Sidebar from "./components/Sidebar";
 import Main from "./components/Main";
 import FloorMapEdit from "./components/layout-tools/FloorMapEdit";
 import FloorMap from "./components/layout-tools/FloorMap";
+import Overlay from "./components/Overlay";
 
 // page components:
 import SeatingLayout from "./pages/SeatingLayout";
@@ -79,40 +81,43 @@ const App = ({ ...props }) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <AppContainer>
-        <Helmet>
-          <meta name="theme-color" content={theme.colors.primary} />
-        </Helmet>
+      <ReactFlowProvider>
+        <AppContainer>
+          <Helmet>
+            <meta name="theme-color" content={theme.colors.primary} />
+          </Helmet>
 
-        <BrowserRouter basename="/w8er">
-          {user && (
-            <FlexWrapper>
-              <Sidebar />
-              <Main>
-                <Switch>
-                  <Route exact path="/" component={FloorMap} />
-                  <Route exact path="/floor-map" component={FloorMap} />
-                  <Route
-                    exact
-                    path="/floor-map/edit"
-                    component={FloorMapEdit}
-                  />
-                  <Route exact path="/settings" component={Settings} />
-                </Switch>
-              </Main>
-            </FlexWrapper>
-          )}
+          <BrowserRouter basename="/w8er">
+            {user && (
+              <FlexWrapper>
+                <Sidebar />
+                <Main>
+                  <Switch>
+                    <Route exact path="/" component={FloorMap} />
+                    <Route exact path="/floor-map" component={FloorMap} />
+                    <Route
+                      exact
+                      path="/floor-map/edit"
+                      component={FloorMapEdit}
+                    />
+                    <Route exact path="/settings" component={Settings} />
+                  </Switch>
+                </Main>
+                <Overlay />
+              </FlexWrapper>
+            )}
 
-          {!user && (
-            <Switch>
-              <Route exact path="/" component={LandingPage} />
-              <Route exact path="/register" component={RegisterPage} />
-              <Route exact path="/customer-faq" component={CustomerFAQPage} />
-              <Route exact path="/features" component={FeaturesPage} />
-            </Switch>
-          )}
-        </BrowserRouter>
-      </AppContainer>
+            {!user && (
+              <Switch>
+                <Route exact path="/" component={LandingPage} />
+                <Route exact path="/register" component={RegisterPage} />
+                <Route exact path="/customer-faq" component={CustomerFAQPage} />
+                <Route exact path="/features" component={FeaturesPage} />
+              </Switch>
+            )}
+          </BrowserRouter>
+        </AppContainer>
+      </ReactFlowProvider>
     </DndProvider>
   );
 };

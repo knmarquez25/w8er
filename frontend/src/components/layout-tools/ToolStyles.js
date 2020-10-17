@@ -159,7 +159,8 @@ const LabelInput = styled.input`
   margin-top: auto;
   margin-bottom: auto;
 
-  color: ${({ theme }) => theme.colors.surface};
+  /* color: ${({ theme }) => theme.colors.surface}; */
+  color: white;
 `;
 
 //  ${({ shapeType, theme }) => {

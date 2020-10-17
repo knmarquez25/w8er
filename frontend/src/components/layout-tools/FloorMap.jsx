@@ -37,9 +37,17 @@ const FloorMapContainer = styled.div`
   display: inline-block;
 `;
 
-const DropTarget = styled.div`
-  width: 100%;
-  height: 100%;
+const TestComp = styled.div`
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10rem;
+  height: 5rem;
+
+  background-color: red;
+
+  margin: 5rem;
 `;
 
 const nodeTypes = {
@@ -60,70 +68,6 @@ const FloorMap = () => {
   const [items, setItems] = useRecoilState(FloorMapItems);
   const [endDropCoords, setEndDropCoords] = useState({ x: 0, y: 0 });
 
-  const [{ item, isOver, didDrop, ...addedProps }, drop] = useDrop({
-    accept: ItemTypes.TOOL,
-    collect: (monitor, componen) => ({
-      isOver: monitor.isOver(),
-      didDrop: monitor.didDrop(),
-      item: monitor.getItem(),
-    }),
-    drop: (props, monitor, component) => {
-      const fin = monitor.getClientOffset();
-      const offset = fmRef.current.getBoundingClientRect();
-      setEndDropCoords({ x: fin.x - offset.x, y: fin.y - offset.y });
-    },
-  });
-
-  // const updateNode = (id, updatedItem) => {
-  //   console.log("updateNode", id, updatedItem);
-
-  //   const deleteIndex = items.findIndex((item, i) => {
-  //     console.log(item.id, id, item.id === id);
-
-  //     return item.id === id;
-  //   });
-  //   console.log("deleteIndex", deleteIndex);
-
-  //   if (deleteIndex > -1) {
-  //     console.log("updating");
-  //     const updatedItems = [
-  //       ...items.slice(0, deleteIndex),
-  //       ...items.slice(deleteIndex + 1, items.length),
-  //       updatedItem,
-  //     ];
-
-  //     setItems(updatedItems);
-  //   }
-  // };
-
-  useEffect(() => {
-    console.log("didDrop", didDrop, item);
-
-    if (item) {
-      console.log("didDrop", didDrop, item.data);
-      const projectPosition = reactFlow.project(endDropCoords);
-      const newItem = {
-        type: item.data.type,
-        id: shortid.generate(),
-        data: { ...item.data, position: projectPosition },
-        position: projectPosition,
-      };
-      console.log("newItem", newItem);
-      setItems([...items, newItem]);
-    }
-  }, [didDrop]);
-
-  useEffect(() => {
-    console.log("isOver", isOver, item);
-  }, [isOver]);
-
-  // useEffect(() => {
-  //   if (fmRef) {
-  //     const { x, y } = fmRef.ref.current.getBoundingClientRect();
-  //     setOffset({ x, y });
-  //   }
-  // }, [fmRef]);
-
   const onLoad = (reactFlowInstance) => {
     reactFlowInstance.fitView();
     reactFlowInstance.zoomTo(1);
@@ -135,44 +79,43 @@ const FloorMap = () => {
       ref={fmRef}
       // onClick={(e) => console.log("xy", e.clientX, e.clientY)}
     >
-      <DropTarget ref={drop}>
-        {/* <button onClick={() => console.log(items)}>REGULAR FLOOR MAP</button> */}
-        <ReactFlow
-          // onClick={() => consle.log(items)}
-          onLoad={onLoad}
-          elements={items}
-          // snapToGrid
-          nodeTypes={nodeTypes}
-          snapGrid={[theme.dimensions.gridUnit, theme.dimensions.gridUnit]}
-          // translateExtent={[
-          //   [0, 0],
-          //   [500, 500],
-          // ]}
-          nodesDraggable={false}
-        >
-          <Background
-            variant="dots"
-            gap={theme.dimensions.gridUnit}
-            color={rgba(theme.colors.onBackground, 0.3)}
-            size={1}
-          />
+      {/* <button onClick={() => console.log(items)}>REGULAR FLOOR MAP</button> */}
+      <ReactFlow
+        // onClick={() => consle.log(items)}
+        onLoad={onLoad}
+        elements={items}
+        // snapToGrid
+        nodeTypes={nodeTypes}
+        snapGrid={[theme.dimensions.gridUnit, theme.dimensions.gridUnit]}
+        // translateExtent={[
+        //   [0, 0],
+        //   [500, 500],
+        // ]}
+        nodesDraggable={false}
+      >
+        <Background
+          variant="dots"
+          gap={theme.dimensions.gridUnit}
+          color={rgba(theme.colors.onBackground, 0.3)}
+          size={1}
+        />
 
-          <MiniMap
-            nodeColor={(node) => {
-              switch (node.type) {
-                case "input":
-                  return "red";
-                case "default":
-                  return "#00ff00";
-                case "output":
-                  return "rgb(0,0,255)";
-                default:
-                  return "#eee";
-              }
-            }}
-          />
-        </ReactFlow>
-      </DropTarget>
+        <MiniMap
+          nodeColor={(node) => {
+            switch (node.type) {
+              case "input":
+                return "red";
+              case "default":
+                return "#00ff00";
+              case "output":
+                return "rgb(0,0,255)";
+              default:
+                return "#eee";
+            }
+          }}
+        />
+        {/* <TestComp /> */}
+      </ReactFlow>
     </FloorMapContainer>
   );
 };

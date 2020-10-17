@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { ReactFlowProvider } from "react-flow-renderer";
+// import { ReactFlowProvider } from "react-flow-renderer";
 
 // styling:
 /** @jsx jsx */
@@ -12,6 +12,7 @@ import { rgba } from "emotion-rgba";
 import { useRecoilState } from "recoil";
 import { themeState } from "../recoil/ThemeState";
 import { sidebarState } from "../recoil/SidebarState";
+import { sidebarItem } from "../recoil/SidebarItem";
 
 // custom components:
 import Button from "./buttons/Button";
@@ -86,7 +87,7 @@ const SidebarNav = styled.div`
   background-color: ${({ theme }) => theme.colors.surface};
   /* background-color: red; */
 
-  z-index: 3;
+  z-index: 11;
 
   /* min-width: 4rem;
   max-width: 4rem; */
@@ -107,7 +108,7 @@ const SidebarNav = styled.div`
 `;
 
 const SidebarContainer = styled.div`
-  z-index: 2;
+  z-index: 10;
   position: relative;
   background-color: ${({ theme }) => theme.colors.surface};
 
@@ -257,7 +258,7 @@ const navItems = [
 const Sidebar = ({ children, ...props }) => {
   // const [sidebarOpen, setSidebarOpen] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useRecoilState(sidebarState);
-  const [itemSelected, setItemSelected] = useState(0);
+  const [itemSelected, setItemSelected] = useRecoilState(sidebarItem);
 
   const history = useHistory();
 
@@ -287,60 +288,58 @@ const Sidebar = ({ children, ...props }) => {
 
   return (
     <React.Fragment>
-      <ReactFlowProvider>
-        <SidebarNav className="sb-nav">
-          <Slider itemSelected={itemSelected} />
-          <ToggleSidebarButton
-            type="circle"
-            icon={MdChevronRight}
-            onClick={() => {
-              if (itemSelected === 2) {
-                setItemSelected(0);
-              }
-              toggleSidebar();
-            }}
-            sidebarOpen={sidebarOpen}
-          />
-          {navItems.map((item, i) => (
-            <div key={i}>
-              <NavItemButton
-                itemSelected={itemSelected}
-                // settingsSelected={settingsSelected}
-                index={i}
-                type="circle"
-                icon={item.icon}
-                onClick={() => {
-                  if (itemSelected === i && item.component) {
-                    toggleSidebar();
-                  } else if (item.component) {
-                    openSidebar();
-                  } else {
-                    closeSidebar();
-                  }
-                  setItemSelected(i);
-
-                  if (item.link || item.link !== "") history.push(item.link);
-                }}
-              />
-            </div>
-          ))}
-
-          <ToggleButton
-            orientation={`${mQuery.matches ? "horizontal" : "vertical"}`}
-            label="theme"
-            value={themeToggle}
-            onClick={() => toggleTheme(!themeToggle)}
-            css={sidebarItemStyles}
-          />
-        </SidebarNav>
-        <SidebarContainer
+      <SidebarNav className="sb-nav">
+        <Slider itemSelected={itemSelected} />
+        <ToggleSidebarButton
+          type="circle"
+          icon={MdChevronRight}
+          onClick={() => {
+            if (itemSelected === 2) {
+              setItemSelected(0);
+            }
+            toggleSidebar();
+          }}
           sidebarOpen={sidebarOpen}
-          className="sb-container"
-          css={sidebarOpen ? sbOpened : sbClosed}
-        >
-          {navItems[itemSelected].component}
-        </SidebarContainer>
-      </ReactFlowProvider>
+        />
+        {navItems.map((item, i) => (
+          <div key={i}>
+            <NavItemButton
+              itemSelected={itemSelected}
+              // settingsSelected={settingsSelected}
+              index={i}
+              type="circle"
+              icon={item.icon}
+              onClick={() => {
+                if (itemSelected === i && item.component) {
+                  toggleSidebar();
+                } else if (item.component) {
+                  openSidebar();
+                } else {
+                  closeSidebar();
+                }
+                setItemSelected(i);
+
+                if (item.link || item.link !== "") history.push(item.link);
+              }}
+            />
+          </div>
+        ))}
+
+        <ToggleButton
+          orientation={`${mQuery.matches ? "horizontal" : "vertical"}`}
+          label="theme"
+          value={themeToggle}
+          onClick={() => toggleTheme(!themeToggle)}
+          css={sidebarItemStyles}
+        />
+      </SidebarNav>
+      <SidebarContainer
+        sidebarOpen={sidebarOpen}
+        className="sb-container"
+        css={sidebarOpen ? sbOpened : sbClosed}
+      >
+        {navItems[itemSelected].component}
+      </SidebarContainer>
     </React.Fragment>
   );
 };
