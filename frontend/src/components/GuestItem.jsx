@@ -64,10 +64,7 @@ const GuestItemContainer = styled.div`
 `;
 
 const ItemDetails = styled.div`
-  /* this conditional bg-color is for solving a bug of mobile only */
-  background-color: ${({ theme, itemExpand }) =>
-    itemExpand ? theme.colors.surface : theme.colors.outline};
-
+  background-color: ${({ theme }) => theme.colors.surface};
   height: ${({ itemExpand }) => (itemExpand ? "24rem" : 0)};
   padding: ${({ itemExpand }) => (itemExpand ? "1rem" : 0)};
 
@@ -75,7 +72,7 @@ const ItemDetails = styled.div`
 
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
-  border: 2px solid ${({ theme }) => theme.colors.outline};
+  border: 1px solid ${({ theme }) => theme.colors.outline};
 
   overflow: hidden;
   transition-property: height, padding;
@@ -199,53 +196,15 @@ const GuestItem = ({
   const theme = useTheme();
 
   const getCurrentTimeDelta = (time) => {
-    const ONE_MINUTE = 60;
-    const ONE_HOUR = 3600;
-
     const currenttime = currentTime ? currentTime : new Date();
     const timeDelta = Math.floor(
       (currenttime.getTime() - time.getTime()) / 1000
     );
 
-    if (timeDelta < -ONE_HOUR)
-      return `in ${Math.floor((-1 * timeDelta) / ONE_HOUR)}h ${Math.floor(
-        ((-1 * timeDelta) % ONE_HOUR) / ONE_MINUTE
-      )}m`;
-    else if (timeDelta < 0)
-      return `in ${-1 * Math.floor(timeDelta / ONE_MINUTE)}m`;
-    else if (timeDelta < ONE_MINUTE) return `< 1m`;
-    else if (timeDelta < ONE_HOUR)
-      return `${Math.floor(timeDelta / ONE_MINUTE)}m`;
-    else {
-      return `${Math.floor(timeDelta / ONE_HOUR)}h ${Math.floor(
-        (timeDelta % ONE_HOUR) / ONE_MINUTE
-      )}m`;
-    }
-  };
-
-  const getReservationStatus = (time) => {
-    const ONE_MINUTE = 60;
-    const ONE_HOUR = 3600;
-
-    const currenttime = currentTime ? currentTime : new Date();
-    const timeDelta = Math.floor(
-      (currenttime.getTime() - time.getTime()) / 1000
-    );
-
-    if (timeDelta < -ONE_HOUR)
-      return `in ${Math.floor((-1 * timeDelta) / ONE_HOUR)}h ${Math.floor(
-        ((-1 * timeDelta) % ONE_HOUR) / ONE_MINUTE
-      )}m`;
-    else if (timeDelta < 0)
-      return `in ${-1 * Math.floor(timeDelta / ONE_MINUTE)}m`;
-    else if (timeDelta < ONE_MINUTE) return `OVERDUE`;
-    else if (timeDelta < ONE_HOUR)
-      return `OVERDUE by ${Math.floor(timeDelta / ONE_MINUTE)}m`;
-    else {
-      return `OVERDUE by ${Math.floor(timeDelta / ONE_HOUR)}h ${Math.floor(
-        (timeDelta % ONE_HOUR) / ONE_MINUTE
-      )}m`;
-    }
+    if (timeDelta < 60) return `< 1m`;
+    else if (timeDelta < 3600) return `${Math.floor(timeDelta / 60)}m`;
+    else
+      return `${Math.floor(timeDelta / 3600)}h ${Math.floor(timeDelta % 60)}m`;
   };
 
   const formatPhone = (phoneNumber) => {
@@ -272,7 +231,6 @@ const GuestItem = ({
   const formatReserveTime = (datetime) => {
     const date =
       datetime.getMonth() +
-      1 +
       "." +
       datetime.getDate() +
       "." +
@@ -298,44 +256,22 @@ const GuestItem = ({
         <GuestTypeBit text={guestInfo.reserveTime ? "r" : "w"} />
         <PartySizeBit text={guestInfo.party} />
         <p className="guest-name">{guestInfo.name}</p>
-
-        {itemExpand && !guestInfo.seatedTime && !guestInfo.departureTime && (
+        {itemExpand && !guestInfo.seated && (
           <GlowButton
             icon={ImCheckmark}
             color={theme.colors.correct}
             effectOpacity={0.25}
             onClick={(e) => {
               e.stopPropagation();
+              console.log("hellooooo");
               setItemExpand(!itemExpand);
-              handleChange({ ...guestInfo, seatedTime: new Date() });
+              handleChange({ ...guestInfo, seated: true });
             }}
           />
         )}
-
-        {!itemExpand && !guestInfo.seatedTime && !guestInfo.departureTime && (
+        {!itemExpand && (
           <p className="waited-time">
-            {guestInfo.reserveTime
-              ? getReservationStatus(guestInfo.reserveTime)
-              : getCurrentTimeDelta(guestInfo.waitTime)}
-          </p>
-        )}
-
-        {/* Render button for seated items and seated time */}
-        {itemExpand && guestInfo.seatedTime && !guestInfo.departureTime && (
-          <GlowButton
-            icon={ImCheckmark}
-            color={theme.colors.error}
-            effectOpacity={0.25}
-            onClick={(e) => {
-              e.stopPropagation();
-              setItemExpand(!itemExpand);
-              handleChange({ ...guestInfo, departureTime: new Date() });
-            }}
-          />
-        )}
-        {!itemExpand && guestInfo.seatedTime && !guestInfo.departureTime && (
-          <p className="waited-time">
-            {getCurrentTimeDelta(guestInfo.seatedTime)}
+            {getCurrentTimeDelta(guestInfo.waitTime)}
           </p>
         )}
       </GuestItemContainer>
@@ -394,7 +330,7 @@ const GuestItem = ({
           <p className="value">
             {guestInfo.notes
               ? guestInfo.notes
-              : "Guest did not provide feedback."}
+              : "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur quaerat voluptas hic veniam quod maxime tempore labore modi unde iure fugiat alias pariatur quia sapiente laboriosam quo, nisi explicabo nulla."}
           </p>
         </Notes>
       </ItemDetails>

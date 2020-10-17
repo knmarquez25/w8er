@@ -227,7 +227,7 @@ const navItems = [
     component: <GuestList />,
     // componentHeader: <FloorMapHeader />,
     icon: IoMdListBox,
-    link: "/floor-map",
+    link: "",
   },
   {
     // component: (
@@ -239,7 +239,7 @@ const navItems = [
     component: <FloorMapTools />,
     // componentHeader: <FloorMapHeader />,
     icon: BiCustomize,
-    link: "/floor-map/edit",
+    link: "/seating-layout",
   },
   {
     // component: <Button text="hello" />,
@@ -324,7 +324,6 @@ const Sidebar = ({ children, ...props }) => {
               />
             </div>
           ))}
-
           <ToggleButton
             orientation={`${mQuery.matches ? "horizontal" : "vertical"}`}
             label="theme"

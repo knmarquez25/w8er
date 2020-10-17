@@ -149,17 +149,6 @@ const VisibilityContainer = styled.div`
   }
 `;
 
-const ErrorMsg = styled.p`
-  color: ${({ theme }) => theme.colors.error};
-  font-weight: bold;
-  font-size: 0.8em;
-  text-transform: uppercase;
-
-  position: absolute;
-  top: 4px;
-  right: 0;
-`;
-
 const FormInput = ({
   id,
   handleChange,
@@ -204,17 +193,14 @@ const FormInput = ({
       ) : null}
 
       {type !== "textarea" ? (
-        <React.Fragment>
-          {error ? <ErrorMsg>{` ${error}`}</ErrorMsg> : null}
-          <InputField
-            {...props}
-            id={htmlFor}
-            type={determineInputType()}
-            onChange={handleChange}
-            disabled={disabled}
-            value={value}
-          ></InputField>
-        </React.Fragment>
+        <InputField
+          {...props}
+          id={htmlFor}
+          type={determineInputType()}
+          onChange={handleChange}
+          disabled={disabled}
+          value={value}
+        ></InputField>
       ) : null}
 
       {type === "password" ? (

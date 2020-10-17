@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+
 import useResizeObserver from "use-resize-observer";
 
 // styling:
@@ -11,11 +12,10 @@ import { rgba } from "emotion-rgba";
 import Button from "./buttons/Button";
 
 // icon:
-// import { BsCaretDownFill } from "react-icons/bs";
-import { CgOptions } from "react-icons/cg";
+import { BsCaretDownFill } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
 
-const contentPadding = 14; // measured in pixels
+const contentPadding = 28;
 
 const HeaderContainer = styled.div`
   position: sticky;
@@ -193,15 +193,15 @@ const DrawerHeader = ({
               type="circle"
               openContent={drawerBtn1}
               buttonOpen={drawerBtn1}
-              icon={CgOptions}
-              // css={css`
-              //   .btn-icon {
-              //     svg {
-              //       width: 1.5rem;
-              //       height: 1.5rem;
-              //     }
-              //   }
-              // `}
+              icon={BsCaretDownFill}
+              css={css`
+                .btn-icon {
+                  svg {
+                    width: 1.2rem;
+                    height: 1.2rem;
+                  }
+                }
+              `}
               onClick={() => {
                 toggleButton1();
                 setDrawerBtn2(false);
