@@ -23,6 +23,13 @@ import { BsCaretDownFill } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
 import { useRef } from "react";
 
+import { ReactComponent as Circle } from "../assets/shapes/circle.svg";
+import { ReactComponent as Triangle } from "../assets/shapes/triangle.svg";
+import { ReactComponent as HalfCircle } from "../assets/shapes/half-circle.svg";
+import { ReactComponent as Square } from "../assets/shapes/square.svg";
+import { ReactComponent as Rectangle } from "../assets/shapes/rectangle.svg";
+import { ReactComponent as Lshape } from "../assets/shapes/lshape.svg";
+
 const FMTContainer = styled.div`
   position: relative;
   /* margin: 1rem; */
@@ -112,6 +119,16 @@ const FloorMapTools = () => {
           info={{
             id: "",
             data: { type: "rectangle" },
+            position: { x: 0, y: 0 },
+          }}
+          css={margin}
+        />
+
+        <Tool
+          type="triangle"
+          info={{
+            id: "",
+            data: { type: "triangle" },
             position: { x: 0, y: 0 },
           }}
           css={margin}

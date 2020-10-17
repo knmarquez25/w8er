@@ -15,6 +15,8 @@ const circle = css`
 `;
 
 const lshape = css`
+  transform-origin: 25% 75%;
+
   clip-path: polygon(0 0, 50% 0, 50% 50%, 100% 50%, 100% 100%, 0 100%);
 `;
 
@@ -28,7 +30,13 @@ const ToolContainer = styled.div`
 
   &:hover {
     .shape {
-      background-color: ${({ theme }) => theme.colors.secondary};
+      svg {
+        path,
+        circle,
+        rect {
+          fill: ${({ theme }) => theme.colors.secondary};
+        }
+      }
     }
   }
 `;
@@ -40,7 +48,10 @@ const Shape = styled.div`
     size ? size.width : theme.dimensions.gridUnit * 3}px;
   height: ${({ theme, size }) =>
     size ? size.height : theme.dimensions.gridUnit * 3}px;
-  background-color: ${({ theme }) => theme.colors.primary};
+
+  /* background-color: ${({ theme }) => theme.colors.primary}; */
+  background-color: transparent;
+  /* background-color: red; */
 
   /* border: 1px solid ${({ theme }) => theme.colors.onBackground}; */
   /* border: 1px solid red; */
@@ -51,21 +62,42 @@ const Shape = styled.div`
   transition-duration: 200ms;
   transition-timing-function: linear;
 
-  cursor: move;
+  /* cursor: move;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  &:active {
+  /* &:active {
     background-color: red;
   }
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.secondary};
-  }
+  } */
 
-  ${({ type, theme, size }) => {
+  svg {
+    width: 100%;
+    height: 100%;
+    path,
+    circle,
+    rect {
+      fill: ${({ theme }) => theme.colors.primary};
+    }
+
+    /* width: ${({ theme, size }) =>
+      size ? size.width : theme.dimensions.gridUnit * 3}px;
+    height: ${({ theme, size }) =>
+      size ? size.height : theme.dimensions.gridUnit * 3}px;
+
+    transform: rotate(${({ rotateAngle }) => rotateAngle}deg);
+
+    transition-property: transform, width, height;
+    transition-duration: 200ms;
+    transition-timing-function: linear; */
+  }
+`;
+/* ${({ type, theme, size }) => {
     switch (type) {
       case "square":
         return null;
@@ -80,9 +112,7 @@ const Shape = styled.div`
       default:
         return null;
     }
-  }}
-`;
-
+  }} */
 const Label = styled.label`
   position: absolute;
   top: 0;
@@ -97,22 +127,6 @@ const Label = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* ${({ shapeType, theme }) => {
-    switch (shapeType) {
-      case "halfCircle":
-        return css`
-          bottom: auto;
-          top: 15%;
-        `;
-      case "lshape":
-        return css`
-          /* color: ${theme.colors.onBackground}; */
-        `;
-      default:
-        return null;
-    }
-  }} */
 `;
 
 const LabelInput = styled.input`
@@ -146,23 +160,27 @@ const LabelInput = styled.input`
   margin-bottom: auto;
 
   color: ${({ theme }) => theme.colors.surface};
-
-  ${({ shapeType, theme }) => {
-    switch (shapeType) {
-      case "halfCircle":
-        return css`
-          bottom: auto;
-          top: 15%;
-        `;
-      case "lshape":
-        return css`
-          /* color: ${theme.colors.onBackground}; */
-        `;
-      default:
-        return null;
-    }
-  }}
 `;
+
+//  ${({ shapeType, theme }) => {
+//     switch (shapeType) {
+//       case "halfCircle":
+//         return css`
+//           bottom: auto;
+//           top: 15%;
+//         `;
+//       case "lshape":
+//         return css`
+//           /* color: ${theme.colors.onBackground}; */
+//           top: 75%;
+//           bottom: auto;
+//           left: 0;
+//           right: auto;
+//         `;
+//       default:
+//         return null;
+//     }
+//   }}
 
 const overlayControls = (theme) => css`
   position: absolute;

@@ -20,6 +20,7 @@ import {
   HalfCircle,
   Lshape,
   Rectangle,
+  Triangle,
 } from "../layout-tools/ToolNodeDisplay";
 import { useRecoilState } from "recoil";
 
@@ -48,6 +49,7 @@ const nodeTypes = {
   lshape: Lshape,
   test: HiUser,
   rectangle: Rectangle,
+  triangle: Triangle,
 };
 
 const FloorMap = () => {

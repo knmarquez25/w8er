@@ -21,6 +21,13 @@ import {
   LabelInput,
 } from "./ToolStyles";
 
+import { ReactComponent as CircleShape } from "../../assets/shapes/circle.svg";
+import { ReactComponent as HalfCircleShape } from "../../assets/shapes/half-circle.svg";
+import { ReactComponent as TriangleShape } from "../../assets/shapes/triangle.svg";
+import { ReactComponent as SquareShape } from "../../assets/shapes/square.svg";
+import { ReactComponent as RectangleShape } from "../../assets/shapes/rectangle.svg";
+import { ReactComponent as LshapeShape } from "../../assets/shapes/lshape.svg";
+
 // icons:
 import { BiRotateLeft, BiRotateRight } from "react-icons/bi";
 import { MdAddCircleOutline, MdRemoveCircleOutline } from "react-icons/md";
@@ -38,6 +45,7 @@ const ToolNode = memo(
     info,
     rotateUnit = 15,
     sizeUnit = 20,
+    shape = TriangleShape,
     ...props
   }) => {
     const [rotateAngle, setRotateAngle] = useState(data.rotateAngle);
@@ -138,7 +146,9 @@ const ToolNode = memo(
           rotateAngle={rotateAngle}
           type={type}
           // info={info}
-        />
+        >
+          {React.createElement(shape)}
+        </Shape>
         <LabelInput
           type="text"
           shapeType={type}
@@ -167,24 +177,70 @@ const ToolNode = memo(
 );
 
 const Square = ({ selected, ...props }) => {
-  return <ToolNode {...props} selected={selected} type="square"></ToolNode>;
+  return (
+    <ToolNode
+      {...props}
+      selected={selected}
+      shape={SquareShape}
+      type="square"
+    ></ToolNode>
+  );
 };
 
 const Circle = ({ selected, ...props }) => {
-  return <ToolNode {...props} selected={selected} type="circle"></ToolNode>;
+  return (
+    <ToolNode
+      {...props}
+      selected={selected}
+      shape={CircleShape}
+      type="circle"
+    ></ToolNode>
+  );
 };
 
 const HalfCircle = ({ selected, ...props }) => {
-  return <ToolNode {...props} selected={selected} type="halfCircle"></ToolNode>;
+  return (
+    <ToolNode
+      {...props}
+      selected={selected}
+      shape={HalfCircleShape}
+      type="halfCircle"
+    ></ToolNode>
+  );
 };
 
 const Lshape = ({ selected, ...props }) => {
-  return <ToolNode {...props} selected={selected} type="lshape"></ToolNode>;
+  return (
+    <ToolNode
+      {...props}
+      selected={selected}
+      shape={LshapeShape}
+      type="lshape"
+    ></ToolNode>
+  );
 };
 
 const Rectangle = ({ selected, ...props }) => {
-  return <ToolNode {...props} selected={selected} type="rectangle"></ToolNode>;
+  return (
+    <ToolNode
+      {...props}
+      selected={selected}
+      shape={RectangleShape}
+      type="rectangle"
+    ></ToolNode>
+  );
+};
+
+const Triangle = ({ selected, ...props }) => {
+  return (
+    <ToolNode
+      {...props}
+      selected={selected}
+      shape={TriangleShape}
+      type="triangle"
+    ></ToolNode>
+  );
 };
 
 export default ToolNode;
-export { Square, Circle, HalfCircle, Lshape, Rectangle };
+export { Square, Circle, HalfCircle, Lshape, Rectangle, Triangle };
