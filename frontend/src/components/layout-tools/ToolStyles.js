@@ -83,6 +83,38 @@ const Shape = styled.div`
   }}
 `;
 
+const Label = styled.label`
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* background-color: red; */
+  width: 100%;
+  height: 100%;
+
+  font-weight: bold;
+  text-transform: uppercase;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* ${({ shapeType, theme }) => {
+    switch (shapeType) {
+      case "halfCircle":
+        return css`
+          bottom: auto;
+          top: 15%;
+        `;
+      case "lshape":
+        return css`
+          /* color: ${theme.colors.onBackground}; */
+        `;
+      default:
+        return null;
+    }
+  }} */
+`;
+
 const LabelInput = styled.input`
   margin: auto;
   background-color: transparent;
@@ -197,4 +229,5 @@ export {
   DecreaseSize,
   HiddenHack,
   LabelInput,
+  Label,
 };
