@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import ReactFlow, { Background, MiniMap } from "react-flow-renderer";
 import { useTheme } from "emotion-theming";
 import { rgba } from "emotion-rgba";
-import useResizeObserver from "use-resize-observer";
 import { HiUser } from "react-icons/hi";
 
 // styling:
@@ -54,23 +53,13 @@ const nodeTypes = {
 const FloorMap = () => {
   const [reactFlow, setReactFlow] = useState({});
   const theme = useTheme();
-  const fmRef = useResizeObserver();
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const fmRef = useRef();
+  // const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [items, setItems] = useRecoilState(FloorMapItems);
   const [endDropCoords, setEndDropCoords] = useState({ x: 0, y: 0 });
 
   const [{ item, isOver, didDrop, ...addedProps }, drop] = useDrop({
     accept: ItemTypes.TOOL,
-    // hover: (item, monitor) => {
-    //   const fin = monitor.getClientOffset();
-
-    //   const diffX = Math.abs(endDropCoords.x - fin.x);
-    //   const diffY = Math.abs(endDropCoords.y - fin.y);
-
-    //   if (diffX > 5 || diffY > 5) {
-    //     setEndDropCoords({ x: fin.x - offset.x, y: fin.y - offset.y });
-    //   }
-    // },
     collect: (monitor, componen) => ({
       isOver: monitor.isOver(),
       didDrop: monitor.didDrop(),
@@ -78,13 +67,8 @@ const FloorMap = () => {
     }),
     drop: (props, monitor, component) => {
       const fin = monitor.getClientOffset();
-
-      // const diffX = Math.abs(endDropCoords.x - fin.x);
-      // const diffY = Math.abs(endDropCoords.y - fin.y);
-
-      // if (diffX > 5 || diffY > 5) {
+      const offset = fmRef.current.getBoundingClientRect();
       setEndDropCoords({ x: fin.x - offset.x, y: fin.y - offset.y });
-      // }
     },
   });
 
@@ -131,12 +115,12 @@ const FloorMap = () => {
     console.log("isOver", isOver, item);
   }, [isOver]);
 
-  useEffect(() => {
-    if (fmRef) {
-      const { x, y } = fmRef.ref.current.getBoundingClientRect();
-      setOffset({ x, y });
-    }
-  }, [fmRef]);
+  // useEffect(() => {
+  //   if (fmRef) {
+  //     const { x, y } = fmRef.ref.current.getBoundingClientRect();
+  //     setOffset({ x, y });
+  //   }
+  // }, [fmRef]);
 
   const onLoad = (reactFlowInstance) => {
     reactFlowInstance.fitView();
@@ -145,9 +129,12 @@ const FloorMap = () => {
   };
 
   return (
-    <FloorMapContainer ref={fmRef.ref}>
+    <FloorMapContainer
+      ref={fmRef}
+      // onClick={(e) => console.log("xy", e.clientX, e.clientY)}
+    >
       <DropTarget ref={drop}>
-        <button onClick={() => console.log(items)}>fdsfsdf</button>
+        {/* <button onClick={() => console.log(items)}>fdsfsdf</button> */}
         <ReactFlow
           // onClick={() => consle.log(items)}
           onLoad={onLoad}

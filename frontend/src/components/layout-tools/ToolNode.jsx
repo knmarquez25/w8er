@@ -94,9 +94,9 @@ const ToolNode = memo(
       updateNodeData();
     }, [selected]);
 
-    useEffect(() => {
-      updateNodeData();
-    }, [rotateAngle, size, label]);
+    // useEffect(() => {
+    //   updateNodeData();
+    // }, [rotateAngle, size, label]);
 
     const rotateCW = () => {
       const newValue = rotateAngle + rotateUnit;
