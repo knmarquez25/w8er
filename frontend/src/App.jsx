@@ -21,6 +21,7 @@ import Main from "./components/Main";
 // page components:
 import SeatingLayout from "./pages/SeatingLayout";
 import Settings from "./pages/Settings";
+import Login_Signup from "./pages/login_signup";
 
 // icons:
 import { MdBrightnessLow } from "react-icons/md";
@@ -28,6 +29,7 @@ import { SiGoogle as GoogleLogoIcon } from "react-icons/si";
 import WaitlistPage from "./pages/WaitlistPage";
 import FloorMap from "./components/layout-tools/FloorMap";
 import ReservationPage from "./pages/ReservationPage";
+
 
 const AppContainer = styled.section`
   background-color: ${(props) => props.theme.colors.background};
@@ -90,6 +92,7 @@ const App = ({ ...props }) => {
               <Route exact path="/reservation" component={ReservationPage} />
               /* Added for when reservation is completed and you need to go to the floor map*/
               <Route exact path="/reservation-choose-table" component={FloorMap}/>
+              <Route exact path="/login_signup" component= {Login_Signup}/>
             </Switch>
           </Main>
           {/* </FlexWrapper> */}
