@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 
+import Guestlist_Floormap from '../pages/Guest_Floormap';
 
 import { useHistory } from "react-router-dom";
 
@@ -76,7 +77,7 @@ const Login = () => {
         console.log("formvalues", formValues);
         setSubmitted(true);
         setValues(INITIAL);
-        history.push("/");
+        history.push("/guestlist_floormap");
       }}
     > 
       <h1 className="title" >Login To W8er</h1>

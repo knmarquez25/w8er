@@ -22,6 +22,7 @@ import Main from "./components/Main";
 import SeatingLayout from "./pages/SeatingLayout";
 import Settings from "./pages/Settings";
 import Login_Signup from "./pages/login_signup";
+import Guestlist_Floormap from './pages/Guest_Floormap';
 // import index from "./pages/index";
 import Waitlist from "./pages/Waitlist";
 import Confirmation from "./pages/Confirmation";
@@ -103,6 +104,7 @@ const App = ({ ...props }) => {
               {/* <Route exact path="/index" component={index} /> */}
               <Route exact path="/waitlist" component={Waitlist} />
               <Route exact path="/confirmation" component={Confirmation} />
+              <Route exact path = "/guestlist_floormap" component={Guestlist_Floormap}/>
             </Switch>
           </Main>
           {/* </FlexWrapper> */}

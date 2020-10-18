@@ -9,6 +9,8 @@ import FormInput from "../components/inputs/FormInput";
 import Button from "../components/buttons/Button";
 
 
+import Guestlist_Floormap from '../pages/Guest_Floormap';
+
 import { useHistory } from "react-router-dom";
 
 const SignUpContainer = styled.form `
@@ -85,7 +87,7 @@ const SignUp = () => {
             console.log("formValues",formValues);
             setSubmitted(true);
             setValues(INITIAL);
-            history.push("/");
+            history.push("/guestlist_floormap");
         }}
     >
       <h1 className="title">Create Account</h1>
