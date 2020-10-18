@@ -63,7 +63,6 @@ const themeDark = {
     onSurface: "white",
 
     outline: "#575e70",
-
     error: "#e85359",
   },
   font: baseFont,
