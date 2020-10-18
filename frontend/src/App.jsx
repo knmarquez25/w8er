@@ -22,6 +22,9 @@ import Main from "./components/Main";
 import SeatingLayout from "./pages/SeatingLayout";
 import Settings from "./pages/Settings";
 import Login_Signup from "./pages/login_signup";
+// import index from "./pages/index";
+import Waitlist from "./pages/Waitlist";
+import Confirmation from "./pages/Confirmation";
 
 // icons:
 import { MdBrightnessLow } from "react-icons/md";
@@ -29,7 +32,6 @@ import { SiGoogle as GoogleLogoIcon } from "react-icons/si";
 import WaitlistPage from "./pages/WaitlistPage";
 import FloorMap from "./components/layout-tools/FloorMap";
 import ReservationPage from "./pages/ReservationPage";
-
 
 const AppContainer = styled.section`
   background-color: ${(props) => props.theme.colors.background};
@@ -87,12 +89,20 @@ const App = ({ ...props }) => {
               <Route exact path="/" component={LandingPagesdfsdfsd} />
               {/* <Route exact path="/seating-layout" component={SeatingLayout} /> */}
               <Route exact path="/settings" component={Settings} />
-              <Route exact path="/waitlist" component={WaitlistPage} />
-              <Route exact path="/waitlist-complete" component={FloorMap} />
+              {/* <Route exact path="/waitlist" component={WaitlistPage} /> */}
+              {/* <Route exact path="/waitlist-complete" component={FloorMap} /> */}
               <Route exact path="/reservation" component={ReservationPage} />
-              /* Added for when reservation is completed and you need to go to the floor map*/
-              <Route exact path="/reservation-choose-table" component={FloorMap}/>
-              <Route exact path="/login_signup" component= {Login_Signup}/>
+              /* Added for when reservation is completed and you need to go to
+              the floor map*/
+              {/* <Route
+                exact
+                path="/reservation-choose-table"
+                component={FloorMap}
+              /> */}
+              <Route exact path="/login_signup" component={Login_Signup} />
+              {/* <Route exact path="/index" component={index} /> */}
+              <Route exact path="/waitlist" component={Waitlist} />
+              <Route exact path="/confirmation" component={Confirmation} />
             </Switch>
           </Main>
           {/* </FlexWrapper> */}
