@@ -56,11 +56,14 @@ const LandingPage = () => {
         }}
       >
         <Heading>Waitlist</Heading>
+      
       </Card>
       <Card
         className="card"
         onClick={() => {
           console.log("Reserve clikced");
+          console.log(history);
+          history.push("/reservation");
         }}
       >
         <Heading>Reserve</Heading>

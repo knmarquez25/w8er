@@ -83,7 +83,7 @@ return(
                 Reservation
             </Title>
 
-            /*Dropdown*/
+            /*Dropdown Search for the resturant*/
 
             <RFormInput
                 required
