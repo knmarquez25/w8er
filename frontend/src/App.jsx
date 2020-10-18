@@ -88,6 +88,8 @@ const App = ({ ...props }) => {
               <Route exact path="/waitlist" component={WaitlistPage} />
               <Route exact path="/waitlist-complete" component={FloorMap} />
               <Route exact path="/reservation" component={ReservationPage} />
+              /* Added for when reservation is completed and you need to go to the floor map*/
+              <Route exact path="/reservation-choose-table" component={FloorMap}/>
             </Switch>
           </Main>
           {/* </FlexWrapper> */}
