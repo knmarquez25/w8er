@@ -6,6 +6,9 @@ import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import { useHistory } from "react-router-dom";
 
+
+import Login_Signup from "../pages/login_signup";
+
 const LandingPageContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
   height: 100%;
@@ -50,7 +53,7 @@ const LandingPage = () => {
       <Card
         className="card"
         onClick={() => {
-          console.log("waitlist clikced");
+          console.log("waitlist clicked");
           console.log(history);
           history.push("/waitlist");
         }}
@@ -60,7 +63,7 @@ const LandingPage = () => {
       <Card
         className="card"
         onClick={() => {
-          console.log("Reserve clikced");
+          console.log("Reserve clicked");
         }}
       >
         <Heading>Reserve</Heading>
@@ -68,7 +71,8 @@ const LandingPage = () => {
       <Card
         className="card"
         onClick={() => {
-          console.log("Manage your restaurant clikced");
+          console.log("Manage your restaurant clikced");  
+          history.push("/login_signup");
         }}
       >
         <Heading>Manage your restaurant!</Heading>

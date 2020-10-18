@@ -100,7 +100,6 @@ const Login = () => {
           setValues({...formValues, password: e.target.value});
         }} 
       />
-      {/* <button onClick={() => console.log("clicked")}>I'm a button</button> */}
       <LButton text="LOGIN IN" css={Spacing} ></LButton>  
   </LoginContainer>
   );
