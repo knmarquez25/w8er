@@ -5,9 +5,13 @@ import React, { useState, useEffect } from "react";
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 
+import { useRecoilState } from "recoil";
+import { userState } from "../recoil/UserState";
+
+
 const MainContent = styled.main`
   background-color: ${({ theme }) => theme.colors.background};
-  background-color: red;
+ // background-color: red;
   /* z-index: 1; */
 
   width: 100%;
@@ -36,7 +40,9 @@ const MainContent = styled.main`
 `;
 
 const Main = ({ children, ...props }) => {
-  return <MainContent {...props}>{children}</MainContent>;
+  const [user, setUser] = useRecoilState(userState);
+
+  return <MainContent {...props}  onClick={() => console.log(user)}>{children}</MainContent>;
 };
 
 export default Main;
