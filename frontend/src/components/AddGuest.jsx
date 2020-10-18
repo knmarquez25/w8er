@@ -12,9 +12,6 @@ import Button from "./buttons/Button";
 import SelectSlider from "./inputs/SelectSlider";
 import shortid from "shortid";
 
-const ONE_MINUTE_MS = 60000;
-const RESERVE_OFFSET = 45 * ONE_MINUTE_MS;
-
 const spacing = css`
   margin-bottom: 1rem;
 `;
@@ -86,7 +83,7 @@ const AddGuest = React.forwardRef(({ handleChange, ...props }, ref) => {
           ...guest,
           id: shortid.generate(),
           waitTime: guest.reserveTime
-            ? new Date(new Date(guest.reserveTime).getTime() - RESERVE_OFFSET)
+            ? new Date(guest.reserveTime)
             : new Date(),
           reserveTime: guest.reserveTime ? new Date(guest.reserveTime) : "",
         });

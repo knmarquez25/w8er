@@ -6,79 +6,93 @@ import { rgba } from "emotion-rgba";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
-import { useState } from "react";
 
-const DEFAULT_SIZE = 28; // measured in pixels
-const LONG_SCALING_FACTOR = 1.8; // meant to measure to scale the long side based of the short side
+// export interface ToggleInputProps {
+//   value: boolean;
+//   onClick: () => {};
+//   label: string;
 
-const dimensions = ({ size }) => css`
-  height: ${size}px;
-  width: ${LONG_SCALING_FACTOR * size}px;
-  max-height: ${size}px;
-  max-width: ${LONG_SCALING_FACTOR * size}px;
-  min-height: ${size}px;
-  min-width: ${LONG_SCALING_FACTOR * size}px;
+//   // htmlFor: String;
+//   // label: String;
+// }
+
+const verticalOn = css`
+  transform: translateY(0);
 `;
 
-const ToggleContainer = styled.button`
-  background-color: ${(props) => props.theme.colors.onBackground};
+const verticalOff = css`
+  transform: translateY(100%);
+`;
 
-  transform: rotate(
-    ${({ orientation }) => (orientation !== "vertical" ? 0 : 90)}deg
-  );
+const horizontalOn = css`
+  transform: translateX(0);
+`;
+
+const horizontalOff = css`
+  transform: translateX(100%);
+`;
+
+const horizontal = css`
+  width: 4.3rem;
+  height: 2.4rem;
+`;
+
+const vertical = css`
+  width: 2.3rem;
+  height: 4.3rem;
+`;
+
+const ToggleContainer = styled.div`
+  background-color: ${(props) => props.theme.colors.onBackground};
+  /* border: 1px solid ${({ theme }) =>
+    rgba(theme.colors.onBackground, 0.05)}; */
+
+  ${({ orientation }) => (orientation === "vertical" ? vertical : horizontal)}
 
   padding: 0.15rem;
   border-radius: 5rem;
+  /* margin: 0.25rem; */
+  /* margin: 0.25rem 0; */
 
-  ${dimensions}
+  .on {
+    ${({ orientation }) =>
+      orientation === "vertical" ? verticalOn : horizontalOn}
+  }
 
-  &:hover {
-    div {
-      background-color: ${(props) => props.theme.colors.primary};
-    }
+  .off {
+    ${({ orientation }) =>
+      orientation === "vertical" ? verticalOff : horizontalOff}
   }
 `;
 
-const ToggleButton = styled.div`
-  max-height: 100%;
-  max-width: 50%;
-  height: 100%;
-  width: 50%;
-  min-height: 100%;
-  min-width: 50%;
-
+const ToggleButton = styled.button`
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   background-color: ${(props) => props.theme.colors.background};
 
-  transform: translateX(${({ toggled }) => (toggled ? "100%" : "1%")});
+  font-size: 0px;
 
   transition-property: transform, background-color;
+  transition-timing-function: ease-out;
   transition-duration: 250ms;
-  transition-timing-function: linear;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.primary};
+  }
 `;
 
-const ToggleInput = ({
-  size = DEFAULT_SIZE,
-  orientation,
-  value,
-  onClick = () => {},
-  label,
-  ...props
-}) => {
-  const [toggled, setToggled] = useState(false);
-
+const ToggleInput = ({ orientation, value, onClick, label, ...props }) => {
   return (
-    <ToggleContainer
-      {...props}
-      orientation={orientation}
-      size={size}
-      onClick={() => {
-        setToggled(!toggled);
-        onClick();
-      }}
-      aria-pressed={value}
-    >
-      <ToggleButton type="button" toggled={toggled} />
+    <ToggleContainer {...props} orientation={orientation}>
+      <ToggleButton
+        type="button"
+        aria-pressed={value}
+        onClick={onClick}
+        className={`${value ? "on" : "off"}`}
+      >
+        {label}
+      </ToggleButton>
     </ToggleContainer>
   );
 };

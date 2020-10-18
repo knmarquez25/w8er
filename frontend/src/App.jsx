@@ -16,27 +16,14 @@ import Button from "./components/buttons/Button";
 import FormInput from "./components/inputs/FormInput";
 import Sidebar from "./components/Sidebar";
 import Main from "./components/Main";
-import FloorMapEdit from "./components/layout-tools/FloorMapEdit";
-import FloorMap from "./components/layout-tools/FloorMap";
 
 // page components:
 import SeatingLayout from "./pages/SeatingLayout";
 import Settings from "./pages/Settings";
-import index from "./pages/index";
-import Waitlist from "./pages/Waitlist";
-import Confirmation from "./pages/Confirmation";
-import RegisterPage from "./pages/RegisterPage";
-import CustomerFAQPage from "./pages/CustomerFAQPage";
-import FeaturesPage from "./pages/CustomerFAQPage";
 
 // icons:
 import { MdBrightnessLow } from "react-icons/md";
 import { SiGoogle as GoogleLogoIcon } from "react-icons/si";
-import LandingPage from "./pages/LandingPage";
-
-// state management:
-import { useRecoilValue } from "recoil";
-import { userState } from "./recoil/UserState";
 
 const AppContainer = styled.section`
   background-color: ${(props) => props.theme.colors.background};
@@ -74,7 +61,6 @@ const FlexWrapper = styled.div`
 
 const App = ({ ...props }) => {
   const theme = useTheme();
-  const user = useRecoilValue(userState);
 
   useEffect(() => {
     // console.log("UE1");
@@ -95,9 +81,6 @@ const App = ({ ...props }) => {
                 <Route exact path="/" component={SeatingLayout} />
                 <Route exact path="/seating-layout" component={SeatingLayout} />
                 <Route exact path="/settings" component={Settings} />
-                <Route exact path="/index" component={index} />
-                <Route exact path="/waitlist" component={Waitlist} />
-                <Route exact path="/confirmation" component={Confirmation} />
               </Switch>
             </Main>
           </FlexWrapper>

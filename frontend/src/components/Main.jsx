@@ -5,12 +5,8 @@ import React, { useState, useEffect } from "react";
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 
-
-//////////////////////////////////////CHANGED HERE////////////////////////////
-
 const MainContent = styled.main`
   background-color: ${({ theme }) => theme.colors.background};
-  //background-color: blue;
   z-index: 1;
 
   width: 100%;
@@ -38,9 +34,9 @@ const MainContent = styled.main`
     left: 0;
   }
 
-   display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center; */
 `;
 
 const Main = ({ children, ...props }) => {

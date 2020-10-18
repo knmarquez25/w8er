@@ -51,9 +51,8 @@ const dimensions = {
 const themeDark = {
   colors: {
     // primary: "#afb9f1",
-    primary: "#6c63ff",
-    secondary: "#5e89e6",
-    // secondary: "#e87b9b",
+    primary: "#54a0ff",
+    secondary: "#e87b9b",
 
     background: "#373e4d",
     surface: "#444c60",
@@ -79,7 +78,7 @@ const themeLight = {
   colors: {
     // primary: "#e87b9b",
     primary: "#54a0ff",
-    secondary: "#6c63ff",
+    secondary: "#afb9f1",
 
     // background: "#e5e5e5",
     background: "#f1f3f4",
