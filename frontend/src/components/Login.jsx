@@ -11,6 +11,8 @@ import { useHistory } from "react-router-dom";
 
 import FormInput from "../components/inputs/FormInput";
 import Button from "../components/buttons/Button";
+import { useRecoilState } from "recoil";
+import { userState } from "../recoil/UserState";
 
 const LoginContainer = styled.form`
  background-color: ${({theme})=> theme.colors.surface};
@@ -69,13 +71,17 @@ const Login = () => {
   const history = useHistory();
   const [formValues, setValues] = useState(INITIAL);
   const [submitted, setSubmitted] = useState(false);
+  const [user, setUser] = useRecoilState(userState);
+
+   //const onSubmit = (data) => setUser(data);
 
   return ( 
-    <LoginContainer
+    <LoginContainer 
       onSubmit={(e) => {
         e.preventDefault();
         console.log("formvalues", formValues);
         setSubmitted(true);
+        setUser(formValues);
         setValues(INITIAL);
         history.push("/guestlist_floormap");
       }}

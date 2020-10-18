@@ -8,6 +8,8 @@ import styled from "@emotion/styled";
 import FormInput from "../components/inputs/FormInput";
 import Button from "../components/buttons/Button";
 
+import { useRecoilState } from "recoil";
+import { userState } from "../recoil/UserState";
 
 import Guestlist_Floormap from '../pages/Guest_Floormap';
 
@@ -74,6 +76,8 @@ const SignUp = () => {
     const history = useHistory();
     const [formValues, setValues] = useState(INITIAL);
     const [submitted, setSubmitted] = useState(false);
+    const [user, setUser] = useRecoilState(userState);
+
 
   return (
     <SignUpContainer
@@ -85,9 +89,12 @@ const SignUp = () => {
 
             e.preventDefault();
             console.log("formValues",formValues);
-            setSubmitted(true);
+            setSubmitted(true); 
+            setUser(formValues);
             setValues(INITIAL);
             history.push("/guestlist_floormap");
+
+            
         }}
     >
       <h1 className="title">Create Account</h1>
