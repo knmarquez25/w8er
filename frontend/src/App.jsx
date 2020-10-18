@@ -88,7 +88,6 @@ const App = ({ ...props }) => {
         </Helmet>
 
         <BrowserRouter basename="/w8er">
-<<<<<<< HEAD
           <FlexWrapper>
             <Sidebar />
             <Main>
@@ -102,7 +101,6 @@ const App = ({ ...props }) => {
               </Switch>
             </Main>
           </FlexWrapper>
-=======
           {user && (
             <FlexWrapper>
               <Sidebar />
@@ -129,7 +127,6 @@ const App = ({ ...props }) => {
               <Route exact path="/features" component={FeaturesPage} />
             </Switch>
           )}
->>>>>>> 62ed9c86aab9d1185e1e11ad1a879f2f090ff6b6
         </BrowserRouter>
       </AppContainer>
     </DndProvider>
