@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useDrag, DragPreviewImage } from "react-dnd";
+import { useDrag } from "react-dnd";
 import { ItemTypes } from "../utils/draggables";
 
 // styling:
@@ -192,34 +192,19 @@ const PartySizeBit = styled(DetailBit)`
   }
 `;
 
-const DumDiv = styled.div`
-  width: 10rem;
-  height: 5rem;
-
-  background-color: red;
-  opacity: 1;
-`;
-
 const GuestItem = ({
   guestInfo,
   currentTime,
   line,
-
   handleChange = () => {},
-  ...props
 }) => {
   const [itemExpand, setItemExpand] = useState(false);
   const theme = useTheme();
-  const [
-    { isDragging, end, coords, opacity, ...dragProps },
-    drag,
-    preview,
-  ] = useDrag({
+  const [{ isDragging, end, coords, ...dragProps }, drag] = useDrag({
     item: { type: ItemTypes.GUEST, data: { ...guestInfo } },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
       end: monitor.getDropResult(),
-      opacity: monitor.isDragging() ? 0.1 : 1,
     }),
   });
 
@@ -309,20 +294,9 @@ const GuestItem = ({
     return date + " @ " + time12H;
   };
 
-  // useEffect(() => {
-  //   preview(getEmptyImage(), { captureDraggingState: true });
-  // }, []);
-
   return (
-    <ItemWrapper {...props} ref={drag}>
-      {/* <DumDiv
-        ref={preview}
-        css={css`
-          opacity: ${opacity};
-        `}
-      ></DumDiv> */}
+    <ItemWrapper ref={drag}>
       <GuestItemContainer
-        ref={preview}
         itemExpand={itemExpand}
         onClick={(e) => {
           setItemExpand(!itemExpand);

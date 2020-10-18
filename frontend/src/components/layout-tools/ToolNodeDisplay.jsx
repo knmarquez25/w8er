@@ -1,6 +1,9 @@
 import React, { useState, useEffect, memo } from "react";
 import { useRecoilState } from "recoil";
 
+import { useDrop } from "react-dnd";
+import { ItemTypes } from "../../utils/draggables";
+
 // styling:
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -36,6 +39,15 @@ import { MdAddCircleOutline, MdRemoveCircleOutline } from "react-icons/md";
 // Node states and defaults:
 import { FloorMapItems, DEFAULT_NODE_DATA } from "../../recoil/FloorMapItems";
 
+const GuestDetails = styled.div`
+  /* height: 3rem; */
+  width: 100%;
+  /* background-color: red; */
+
+  text-transform: capitalize;
+  color: ${({ theme }) => theme.colors.onBackground};
+`;
+
 const ToolNode = memo(
   ({
     id,
@@ -50,6 +62,24 @@ const ToolNode = memo(
     ...props
   }) => {
     const [items, setItems] = useRecoilState(FloorMapItems);
+    const [guestData, setGuestData] = useState({
+      type: "",
+      data: { name: "", party: "" },
+    });
+    const [{ item, isOver, didDrop, ...addedProps }, drop] = useDrop({
+      accept: ItemTypes.GUEST,
+      collect: (monitor, componen) => ({
+        isOver: monitor.isOver(),
+        didDrop: monitor.didDrop(),
+        item: monitor.getItem(),
+      }),
+      drop: (props, monitor, component) => {
+        setGuestData(props);
+        // const fin = monitor.getClientOffset();
+        // const offset = fmRef.current.getBoundingClientRect();
+        // setEndDropCoords({ x: fin.x - offset.x, y: fin.y - offset.y });
+      },
+    });
 
     useEffect(() => {
       // console.log("ToolNodeChanged", id, type, rotateAngle, data.rotateAngle);
@@ -85,8 +115,9 @@ const ToolNode = memo(
     // }, [rotateAngle, size, label]);
 
     return (
-      <ToolContainer {...props}>
+      <ToolContainer {...props} ref={drop}>
         {/* <Shape size={size} rotateAngle={rotateAngle} type={type} info={info} /> */}
+        <GuestDetails>{guestData.data.name}</GuestDetails>
         <Shape
           className="shape"
           size={data.size}
@@ -96,7 +127,9 @@ const ToolNode = memo(
         >
           {React.createElement(shape)}
         </Shape>
-        <Label shapeType={type}>{data.label}</Label>
+        <Label onClick={() => console.log("help", guestData)} shapeType={type}>
+          {data.label}
+        </Label>
       </ToolContainer>
     );
   }
