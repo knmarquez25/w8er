@@ -26,7 +26,7 @@ import SeatingLayout from "./pages/SeatingLayout";
 import Settings from "./pages/Settings";
 import RegisterPage from "./pages/RegisterPage";
 import CustomerFAQPage from "./pages/CustomerFAQPage";
-import FeaturesPage from "./pages/CustomerFAQPage";
+import FeaturesPage from "./pages/FeaturesPage";
 
 // icons:
 import { MdBrightnessLow } from "react-icons/md";
@@ -93,7 +93,9 @@ const App = ({ ...props }) => {
                 <Sidebar />
                 <Main>
                   <Switch>
-                    <Route exact path="/" component={FloorMap} />
+                    <Route exact path="/">
+                      <Redirect to="/floor-map" />
+                    </Route>
                     <Route exact path="/floor-map" component={FloorMap} />
                     <Route
                       exact

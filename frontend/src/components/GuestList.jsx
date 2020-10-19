@@ -38,7 +38,7 @@ const GUESTLIST = [
   {
     waitTime: new Date(CURRENT_DATE.getTime() - 30 * ONE_MINUTE_MS),
     id: shortid.generate(),
-    name: "Rezzy Recent",
+    name: "Mike",
     party: "2",
     phone: "555-555-4352",
     table: "",
@@ -64,7 +64,7 @@ const GUESTLIST = [
   {
     waitTime: new Date(CURRENT_DATE.getTime() - 7 * ONE_MINUTE_MS),
     id: shortid.generate(),
-    name: "Lebron sucks",
+    name: "Bob",
     party: "13",
     phone: "310-135-4352",
     table: "",
@@ -109,7 +109,7 @@ const GUESTLIST = [
         RESERVE_OFFSET
     ),
     id: shortid.generate(),
-    name: "t pain",
+    name: "Penny Cilin",
     party: "1",
     phone: "456-789-1238",
     table: "",
@@ -125,7 +125,7 @@ const GUESTLIST = [
         RESERVE_OFFSET
     ),
     id: shortid.generate(),
-    name: "Late Dude",
+    name: "Harambe",
     party: "16",
     phone: "456-789-1238",
     table: "6H",
@@ -296,6 +296,7 @@ const Divider = styled.div`
 
 const GuestList = () => {
   const [guestList, setGuestList] = useState(GUESTLIST);
+  // const [guestList, setGuestList] = useState([]);
   const [seatedOpen, setSeatedOpen] = useState(true);
   const [mustServeOpen, setMustServeOpen] = useState(true);
   const [finishedOpen, setFinishedOpen] = useState(true);

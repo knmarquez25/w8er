@@ -15,51 +15,62 @@ import {
   HalfCircle,
   Lshape,
   Rectangle,
+  Triangle,
 } from "../components/layout-tools/ToolNodeEdit";
 
 const shortid = require("shortid");
 
-const elements = [
-  {
-    type: "halfCircle",
-    id: 1,
-    data: { label: "3" },
-    position: { x: 0, y: 0 },
-  },
-  {
-    type: "circle",
-    id: shortid.generate(),
-    data: { label: "a" },
-    position: { x: 240, y: 0 },
-  },
-  // you can also pass a React component as a label
-  {
-    type: "lshape",
-    id: 2,
-    data: { label: <div>b</div> },
-    position: { x: 60, y: 40 },
-  },
-  {
-    type: "square",
-    id: 3,
-    data: { label: <div>c</div> },
-    position: { x: -40, y: 80 },
-  },
-  {
-    type: "circle",
-    id: 4,
-    data: { label: <div>d</div> },
-    position: { x: 120, y: 220 },
-  },
-  {
-    type: "square",
-    id: 5,
-    data: { label: <div>d</div> },
-    position: { x: 120, y: 220 },
-  },
+export const DEFAULT_NODE_DATA = {
+  rotateAngle: 0,
+  size: { height: 60, width: 60 },
+  label: "",
+};
 
-  // { id: "e1-2", source: "1", target: "2", animated: true },
-];
+// const elements = [
+//   {
+//     type: "halfCircle",
+//     id: shortid.generate(),
+//     data: { ...DEFAULT_NODE_DATA, label: "12", rotateAngle: 30 },
+//     position: { x: -25, y: 50 },
+//   },
+//   {
+//     type: "circle",
+//     id: shortid.generate(),
+//     data: { ...DEFAULT_NODE_DATA, label: "B" },
+//     position: { x: 0, y: 0 },
+//   },
+//   {
+//     type: "lshape",
+//     id: shortid.generate(),
+//     data: { label: "F", size: { width: 120, height: 120 }, rotateAngle: 0 },
+//     position: { x: 0, y: 0 },
+//   },
+//   {
+//     type: "square",
+//     id: shortid.generate(),
+//     data: { ...DEFAULT_NODE_DATA, label: "T5" },
+//     position: { x: 0, y: 0 },
+//   },
+//   {
+//     type: "rectangle",
+//     id: shortid.generate(),
+//     data: { ...DEFAULT_NODE_DATA, label: "A4" },
+//     position: { x: 0, y: 0 },
+//   },
+//   {
+//     type: "square",
+//     id: shortid.generate(),
+//     data: { ...DEFAULT_NODE_DATA, label: "F5" },
+//     position: { x: 0, y: 0 },
+//   },
+
+//   {
+//     type: "triangle",
+//     id: shortid.generate(),
+//     data: { ...DEFAULT_NODE_DATA, label: "B5" },
+//     position: { x: 0, y: 0 },
+//   },
+// ];
 
 const FloorMapContainer = styled.div`
   position: absolute;
@@ -88,13 +99,14 @@ const nodeTypes = {
   lshape: Lshape,
   test: HiUser,
   rectangle: Rectangle,
+  triangle: Triangle,
 };
 
 const FloorMap = () => {
   const [reactFlow, setReactFlow] = useState({});
   const theme = useTheme();
   // const fmRef = useResizeObserver();
-  const [items, setItems] = useState(elements);
+  // const [items, setItems] = useState(elements);
 
   const onLoad = (reactFlowInstance) => {
     reactFlowInstance.fitView();
@@ -107,7 +119,7 @@ const FloorMap = () => {
       <ReactFlow
         zoomOnScroll={false}
         onLoad={onLoad}
-        elements={items}
+        // elements={items}
         // snapToGrid
         nodeTypes={nodeTypes}
         snapGrid={[theme.dimensions.gridUnit, theme.dimensions.gridUnit]}

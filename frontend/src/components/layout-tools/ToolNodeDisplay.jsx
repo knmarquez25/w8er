@@ -13,17 +13,7 @@ import styled from "@emotion/styled";
 import useRepeatLongPress from "../../hooks/useRepeatLongPress";
 
 // styles:
-import {
-  ToolContainer,
-  RotateCWControl,
-  RotateCCWControl,
-  Shape,
-  IncreaseSize,
-  DecreaseSize,
-  HiddenHack,
-  LabelInput,
-  Label,
-} from "./ToolStyles";
+import { ToolContainer, Shape, Label } from "./ToolStyles";
 
 import { ReactComponent as CircleShape } from "../../assets/shapes/circle.svg";
 import { ReactComponent as HalfCircleShape } from "../../assets/shapes/half-circle.svg";
@@ -40,12 +30,46 @@ import { MdAddCircleOutline, MdRemoveCircleOutline } from "react-icons/md";
 import { FloorMapItems, DEFAULT_NODE_DATA } from "../../recoil/FloorMapItems";
 
 const GuestDetails = styled.div`
-  /* height: 3rem; */
-  width: 100%;
-  /* background-color: red; */
+  position: absolute;
+  top: -2rem;
+  left: 0;
+  z-index: 3;
 
+  border-radius: 3px;
+
+  /* height: 3rem; */
+  /* width: 100%; */
+
+  background-color: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.outline};
+
+  display: flex;
+  align-items: center;
+
+  padding: 0.5rem;
+`;
+
+const GuestName = styled.p`
+  white-space: nowrap;
   text-transform: capitalize;
+  /* background-color: ${({ theme }) => "red"}; */
+  padding-right: 0.5rem;
+
   color: ${({ theme }) => theme.colors.onBackground};
+`;
+
+const PartySize = styled.div`
+  height: 1.8rem;
+  width: 1.8rem;
+  border-radius: 5rem;
+
+  background-color: ${({ theme }) => theme.colors.onBackground};
+  color: ${({ theme }) => theme.colors.background};
+  font-weight: bold;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ToolNode = memo(
@@ -62,10 +86,7 @@ const ToolNode = memo(
     ...props
   }) => {
     const [items, setItems] = useRecoilState(FloorMapItems);
-    const [guestData, setGuestData] = useState({
-      type: "",
-      data: { name: "", party: "" },
-    });
+    const [guestData, setGuestData] = useState(null);
     const [{ item, isOver, didDrop, ...addedProps }, drop] = useDrop({
       accept: ItemTypes.GUEST,
       collect: (monitor, componen) => ({
@@ -117,7 +138,12 @@ const ToolNode = memo(
     return (
       <ToolContainer {...props} ref={drop}>
         {/* <Shape size={size} rotateAngle={rotateAngle} type={type} info={info} /> */}
-        <GuestDetails>{guestData.data.name}</GuestDetails>
+        {guestData && (
+          <GuestDetails>
+            <GuestName>{guestData.data.name}</GuestName>
+            <PartySize>{guestData.data.party}</PartySize>
+          </GuestDetails>
+        )}
         <Shape
           className="shape"
           size={data.size}

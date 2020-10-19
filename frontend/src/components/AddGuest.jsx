@@ -53,7 +53,7 @@ const INITIAL_GUEST = {
   reserveTime: "", // time that the guest reserves (use this variable to check if waitlist or reservation)
   waitTime: "", // time that the guest STARTS waiting (when the entry is confirmed)
   seatedTime: "", // time that the guest is seated
-  departureTime: new Date(), // time that the guest finishes eating and leaves
+  departureTime: "", // time that the guest finishes eating and leaves
 };
 
 const PARTY_ARRAY = [...Array(50).keys()];
@@ -82,15 +82,19 @@ const AddGuest = React.forwardRef(({ handleChange, ...props }, ref) => {
       className="add-guest-container"
       onSubmit={(e) => {
         e.preventDefault();
-        handleChange({
+
+        const newGuest = {
           ...guest,
           id: shortid.generate(),
           waitTime: guest.reserveTime
             ? new Date(new Date(guest.reserveTime).getTime() - RESERVE_OFFSET)
             : new Date(),
           reserveTime: guest.reserveTime ? new Date(guest.reserveTime) : "",
-        });
-        console.log("guest", guest);
+        };
+
+        handleChange(newGuest);
+
+        console.log("guest----", newGuest);
 
         setGuest(INITIAL_GUEST);
         if (props.toggleDrawer) props.toggleDrawer();

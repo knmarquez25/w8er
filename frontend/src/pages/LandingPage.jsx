@@ -150,7 +150,14 @@ const LandingPage = () => {
             }}
           />
 
-          <LPButton text="Sign Up" />
+          <LPButton
+            text="Sign Up"
+            onClick={(e) => {
+              e.stopPropagation();
+
+              history.push("/register");
+            }}
+          />
         </ButtonContainer>
       </LPCard>
       <FloorMapBackground />

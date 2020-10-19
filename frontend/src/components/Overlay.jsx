@@ -13,6 +13,10 @@ import { sidebarItem } from "../recoil/SidebarItem";
 // icons:
 import { MdSettings } from "react-icons/md";
 
+// logo:
+
+import { ReactComponent as Logo } from "../assets/w8r-logo.svg";
+
 const OverlayContainer = styled.div`
   position: relative;
   z-index: 30;
@@ -48,7 +52,10 @@ const Content = styled.div`
 
 const HeaderWrapper = styled.div`
   /* background-color: lightblue; */
+  flex: 1;
+
   display: flex;
+  justify-content: center;
   align-items: center;
 
   svg {
@@ -107,6 +114,28 @@ const NeutralHighlight = styled.span`
   }
 `;
 
+const StyledLogo = styled(Logo)`
+  height: 100%;
+  width: 6rem;
+  margin-right: 0.5rem;
+
+  #w1,
+  #eight,
+  #r {
+    fill: ${({ theme }) => theme.colors.primary};
+
+    circle,
+    path {
+      fill: ${({ theme }) => theme.colors.primary};
+    }
+  }
+
+  #w2,
+  #w3 {
+    fill: ${({ theme }) => theme.colors.onBackground};
+  }
+`;
+
 const Overlay = () => {
   const history = useHistory();
   const sidebarOpen = useRecoilValue(sidebarState);
@@ -122,7 +151,7 @@ const Overlay = () => {
         <HeaderWrapper>
           {history.location.pathname === "/floor-map" && (
             <Header>
-              Floor Map:<LiveHighlight>live</LiveHighlight>
+              Floor Map: <LiveHighlight>live</LiveHighlight>
               <NeutralHighlight
                 onClick={() => {
                   setSbItem(1);
@@ -136,7 +165,7 @@ const Overlay = () => {
 
           {history.location.pathname === "/floor-map/edit" && (
             <Header>
-              Floor Map:
+              Floor Map:{" "}
               <NeutralHighlight
                 onClick={() => {
                   setSbItem(0);
@@ -157,6 +186,7 @@ const Overlay = () => {
             </React.Fragment>
           )}
         </HeaderWrapper>
+        <StyledLogo />
       </Content>
     </OverlayContainer>
   );

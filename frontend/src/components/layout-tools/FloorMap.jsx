@@ -92,6 +92,7 @@ const FloorMap = () => {
         //   [500, 500],
         // ]}
         nodesDraggable={false}
+        onElementClick={(e, el) => console.log("coming from the east", el)}
       >
         <Background
           variant="dots"
