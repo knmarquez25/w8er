@@ -17,9 +17,10 @@ const spacing = css`
   margin-bottom: 1rem;
 `;
 
-const WaitlistContainer = styled.form`
-  width: 50%;
+const WaitlistContainer = styled.div`
+  width: 100%;
   height: 100%;
+  background-color: black;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -35,7 +36,17 @@ const ContainerContainer = styled.div`
   flex-direction: column;
 `;
 */
+const FormContainer = styled.form`
+  width: 80%;
+  height: 80%;
+  background-color: blue;
 
+  display: flex;
+  justify-conten: center;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+`;
 const AddButton = styled(Button)`
   background-color: red;
   width: 50%;
@@ -93,16 +104,18 @@ const Waitlist = React.forwardRef(({ handleChange, ...props }, ref) => {
 
   return (
     <WaitlistContainer
-      onSubmit={(e) => {
-        e.preventDefault();
-        console.log("guest", guest);
-        setGuest(GUEST_VALUES);
-        history.push("/confirmation");
-      }}
-    >
-      <Heading>Waitlist Stuff</Heading>
 
-      <InputStuff
+    >
+      <FormContainer
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log("guest", guest);
+          setGuest(GUEST_VALUES);
+          history.push("/confirmation");
+        }}
+      >
+        <Heading>Waitlist Stuff</Heading>
+        <InputStuff
         required
         type="text"
         htmlFor="name"
@@ -162,6 +175,11 @@ const Waitlist = React.forwardRef(({ handleChange, ...props }, ref) => {
         css={spacing}
       />
       <AddButton text="confirm guest"></AddButton>
+
+      </FormContainer>
+      
+
+      
     </WaitlistContainer>
   );
 });
