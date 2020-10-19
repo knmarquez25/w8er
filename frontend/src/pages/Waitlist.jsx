@@ -75,6 +75,8 @@ const inputStyles = (theme) => css`
   margin-bottom: 1rem;
   input {
     background-color: $theme.colors.onSurf{ace};
+
+    
   }
 `;
 
