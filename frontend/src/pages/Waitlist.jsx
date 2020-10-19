@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
+import {ReactComponent as QueueGraphic} from "../assets/illustrations/queue.svg";
+
 // styling:
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -20,7 +22,7 @@ const spacing = css`
 const WaitlistContainer = styled.div`
   width: 100%;
   height: 100%;
-  background-color: black;
+  //background-color: black;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -37,15 +39,25 @@ const ContainerContainer = styled.div`
 `;
 */
 const FormContainer = styled.form`
-  width: 80%;
+  width: 50%;
   height: 80%;
-  background-color: blue;
+  //background-color: blue;
 
   display: flex;
   justify-conten: center;
   flex-direction: column;
   align-items: center;
   overflow: auto;
+
+  svg {
+    width: 20 rem;
+    height: 20rem;
+  }
+
+  padding: 2rem 3rem;
+  border: 2px white;
+  box-shadow: 3px 5px 10px white;
+  
 `;
 const AddButton = styled(Button)`
   background-color: red;
@@ -53,7 +65,6 @@ const AddButton = styled(Button)`
   color: yellow;
 `;
 
-////////////IS THIS HOW YOU WOULD OVERRIDE SOME OF THE STUFF FOR FORM INPUT///////
 
 const InputStuff = styled(FormInput)`
   width: 100%;
@@ -62,10 +73,14 @@ const InputStuff = styled(FormInput)`
     input-color: blue;
     background-color: ${({ theme }) => theme.colors.onBackground};
   }
+  
 `;
 
 const Heading = styled.p`
-  font-weight: bold;
+  font-family: Arial, "Times New Roman";
+  font-weight: 100;
+  text-transform: capitalize;  
+
   font-size: 2rem;
   color: ${({ theme }) => theme.colors.onBackground};
 `;
@@ -105,9 +120,7 @@ const Waitlist = React.forwardRef(({ handleChange, ...props }, ref) => {
   const history = useHistory();
 
   return (
-    <WaitlistContainer
-
-    >
+    <WaitlistContainer>
       <FormContainer
         onSubmit={(e) => {
           e.preventDefault();
@@ -115,8 +128,11 @@ const Waitlist = React.forwardRef(({ handleChange, ...props }, ref) => {
           setGuest(GUEST_VALUES);
           history.push("/confirmation");
         }}
+        style={{borderRadius:  20}}
       >
-        <Heading>Waitlist Stuff</Heading>
+        <Heading>waitlist</Heading>
+        <QueueGraphic/>
+        <Heading>please fill to be wailisted</Heading>
         <InputStuff
         required
         type="text"
