@@ -146,13 +146,14 @@ const FormContainer = styled.form`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  /*overflow: hidden;*/ 
-  overflow: auto;
+  overflow: hidden;
 
   svg {
     width: 20 rem;
     height: 20rem;
   }
+
+  box-shadow: 3px 5px 10px white;
 `;
 
 const RFormInput = styled(FormInput)`
@@ -213,7 +214,6 @@ const ReservationPage = () => {
   
         <ReserveGraphic/>
 
-        
         <TitleInput>Restaurant Name</TitleInput>
         <SearchBar />
         
@@ -221,7 +221,7 @@ const ReservationPage = () => {
         <RFormInput
           required
           htmlFor="name"
-          label="name"
+          label="Your name"
           value={formValues.name}
           handleChange={(e) => {
             setFormValues({ ...formValues, name: e.target.value });
