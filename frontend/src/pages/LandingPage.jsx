@@ -78,11 +78,11 @@ const LandingPage = () => {
     <LandingPageContainer>
       <Card
         className="card"
-        // onClick={() => {
-        //   console.log("waitlist clicked");
-        //   console.log(history);
-        //   history.push("/waitlist");
-        // }}
+        onClick={() => {
+          console.log("waitlist clicked");
+          console.log(history);
+          history.push("/waitlist");
+        }}
       >
         <WaitlistGraphic />
         <Heading>Waitlist</Heading>
