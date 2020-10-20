@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import LandingPagesdfsdfsd from "./pages/LandingPage";
+import LandingPage from "./pages/LandingPage";
 
 // styling:
 /** @jsx jsx */
@@ -36,6 +36,11 @@ import { SiGoogle as GoogleLogoIcon } from "react-icons/si";
 import WaitlistPage from "./pages/WaitlistPage";
 import FloorMap from "./components/layout-tools/FloorMap";
 import ReservationPage from "./pages/ReservationPage";
+
+
+// state management:
+import { useRecoilValue } from "recoil";
+import { userState } from "./recoil/UserState";
 
 const AppContainer = styled.section`
   background-color: ${(props) => props.theme.colors.background};
@@ -73,6 +78,7 @@ const FlexWrapper = styled.div`
 
 const App = ({ ...props }) => {
   const theme = useTheme();
+  const user = useRecoilValue(userState);
 
   useEffect(() => {
     console.log("UE1");
@@ -86,31 +92,31 @@ const App = ({ ...props }) => {
         </Helmet>
 
         <BrowserRouter>
-          {/* <FlexWrapper> */}
-          {/* <Sidebar /> */}
-          <Main>
-            <Switch>
-              <Route exact path="/" component={LandingPagesdfsdfsd} />
-              {/* <Route exact path="/seating-layout" component={SeatingLayout} /> */}
+        {!user &&(
+             <Main>
+             <Switch> 
+                <Route exact path="/" component={LandingPage} />
+                <Route exact path="/reservation" component={ReservationPage} />
+                  /* Added for when reservation is completed and you need to go to
+                  the floor map*/
+                  {/* <Route
+                    exact
+                    path="/reservation-choose-table"
+                    component={FloorMap}
+                  /> */}
+                  <Route exact path="/login_signup" component={Login_Signup} />
+                  <Route exact path="/waitlist" component={Waitlist} />
+                  <Route exact path="/confirmation" component={Confirmation} />
+             </Switch>
+           </Main>
+        )}
+        {user &&(
+          <Switch>
               <Route exact path="/settings" component={Settings} />
-              {/* <Route exact path="/waitlist" component={WaitlistPage} /> */}
-              {/* <Route exact path="/waitlist-complete" component={FloorMap} /> */}
-              <Route exact path="/reservation" component={ReservationPage} />
-              /* Added for when reservation is completed and you need to go to
-              the floor map*/
-              {/* <Route
-                exact
-                path="/reservation-choose-table"
-                component={FloorMap}
-              /> */}
-              <Route exact path="/login_signup" component={Login_Signup} />
-              {/* <Route exact path="/index" component={index} /> */}
-              <Route exact path="/waitlist" component={Waitlist} />
-              <Route exact path="/confirmation" component={Confirmation} />
-              <Route exact path = "/guestlist_floormap" component={Guestlist_Floormap}/>
-            </Switch>
-          </Main>
-          {/* </FlexWrapper> */}
+              <Route exact path = "/guestlist_floormap" component={Guestlist_Floormap}/> 
+          </Switch>
+          
+        )}
         </BrowserRouter>
       </AppContainer>
     </DndProvider>
