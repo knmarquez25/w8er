@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
+import {ReactComponent as QueueGraphic} from "../assets/illustrations/queue.svg";
+
 // styling:
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -17,9 +19,10 @@ const spacing = css`
   margin-bottom: 1rem;
 `;
 
-const WaitlistContainer = styled.form`
-  width: 50%;
+const WaitlistContainer = styled.div`
+  width: 100%;
   height: 100%;
+  //background-color: black;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -35,14 +38,33 @@ const ContainerContainer = styled.div`
   flex-direction: column;
 `;
 */
+const FormContainer = styled.form`
+  width: 50%;
+  height: 80%;
+  //background-color: blue;
 
+  display: flex;
+  justify-conten: center;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+
+  svg {
+    width: 20 rem;
+    height: 20rem;
+  }
+
+  padding: 2rem 3rem;
+  border: 2px white;
+  box-shadow: 3px 5px 10px white;
+  
+`;
 const AddButton = styled(Button)`
   background-color: red;
   width: 50%;
   color: yellow;
 `;
 
-////////////IS THIS HOW YOU WOULD OVERRIDE SOME OF THE STUFF FOR FORM INPUT///////
 
 const InputStuff = styled(FormInput)`
   width: 100%;
@@ -51,10 +73,14 @@ const InputStuff = styled(FormInput)`
     input-color: blue;
     background-color: ${({ theme }) => theme.colors.onBackground};
   }
+  
 `;
 
 const Heading = styled.p`
-  font-weight: bold;
+  font-family: Arial, "Times New Roman";
+  font-weight: 100;
+  text-transform: capitalize;  
+
   font-size: 2rem;
   color: ${({ theme }) => theme.colors.onBackground};
 `;
@@ -64,6 +90,8 @@ const inputStyles = (theme) => css`
   margin-bottom: 1rem;
   input {
     background-color: $theme.colors.onSurf{ace};
+
+    
   }
 `;
 
@@ -92,17 +120,20 @@ const Waitlist = React.forwardRef(({ handleChange, ...props }, ref) => {
   const history = useHistory();
 
   return (
-    <WaitlistContainer
-      onSubmit={(e) => {
-        e.preventDefault();
-        console.log("guest", guest);
-        setGuest(GUEST_VALUES);
-        history.push("/confirmation");
-      }}
-    >
-      <Heading>Waitlist Stuff</Heading>
-
-      <InputStuff
+    <WaitlistContainer>
+      <FormContainer
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log("guest", guest);
+          setGuest(GUEST_VALUES);
+          history.push("/confirmation");
+        }}
+        style={{borderRadius:  20}}
+      >
+        <Heading>waitlist</Heading>
+        <QueueGraphic/>
+        <Heading>please fill to be wailisted</Heading>
+        <InputStuff
         required
         type="text"
         htmlFor="name"
@@ -162,6 +193,11 @@ const Waitlist = React.forwardRef(({ handleChange, ...props }, ref) => {
         css={spacing}
       />
       <AddButton text="confirm guest"></AddButton>
+
+      </FormContainer>
+      
+
+      
     </WaitlistContainer>
   );
 });

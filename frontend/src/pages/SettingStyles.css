@@ -1,0 +1,21 @@
+ /*input[type=submit]{
+    background-color: cyan;
+    color: black;
+    border: none;
+    padding: 0px 0px;
+    text-decoration: none;
+    margin: 0ex 0ex;
+    cursor: pointer;
+ }*/
+
+ input[type=submit]:hover{
+    background-color: red;
+ }
+
+ input[type=submit]{
+     background-color: dodgerblue;
+ }
+ 
+ label{
+     color:black;
+ }

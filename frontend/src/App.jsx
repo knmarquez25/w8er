@@ -11,6 +11,9 @@ import { css, jsx } from "@emotion/core";
 import { useTheme } from "emotion-theming";
 import styled from "@emotion/styled";
 
+// styling from react-bootstrap 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 // custom components:
 import ToggleButton from "./components/buttons/ToggleButton";
 import Button from "./components/buttons/Button";
