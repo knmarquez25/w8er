@@ -44,7 +44,7 @@ const FormContainer = styled.form`
   //background-color: blue;
 
   display: flex;
-  justify-conten: center;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
@@ -70,9 +70,9 @@ const AddButton = styled(Button)`
 const InputStuff = styled(FormInput)`
   width: 100%;
   input {
-    color ${({ theme }) => theme.colors.onBackground};
-    input-color: blue;
-    background-color: ${({ theme }) => theme.colors.onBackground};
+    // color ${({ theme }) => theme.colors.onBackground};
+    // input-color: blue;
+    // background-color: ${({ theme }) => theme.colors.onBackground};
   }
   
 `;
@@ -90,7 +90,7 @@ const inputStyles = (theme) => css`
   margin-top: 0.5rem;
   margin-bottom: 1rem;
   input {
-    background-color: $theme.colors.onSurf{ace};
+    // background-color: $theme.colors.onSurf{ace};
 
     
   }
