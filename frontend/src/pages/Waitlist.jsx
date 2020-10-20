@@ -48,6 +48,7 @@ const FormContainer = styled.form`
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  
 
   svg {
     width: 20 rem;
