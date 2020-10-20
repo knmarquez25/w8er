@@ -30,12 +30,12 @@ const LandingPageContainer = styled.div`
 `;
 
 const Card = styled.div`
+  cursor: pointer;
   margin: 1rem;
   background-color: ${({ theme }) => theme.colors.surface};
-  background-color: white;
   width: 30rem;
   /* min-height: 40rem; */
-  height: 40rem;
+  /* height: 40rem; */
 
   border-radius: 4px;
 
@@ -49,6 +49,10 @@ const Card = styled.div`
   svg {
     width: 15rem;
     height: 15rem;
+  }
+
+  &:hover {
+    border: 2px solid ${({ theme }) => theme.colors.primary};
   }
 `;
 
@@ -82,7 +86,6 @@ const LandingPage = () => {
       >
         <WaitlistGraphic />
         <Heading>Waitlist</Heading>
-        <OverideFormInput />
       </Card>
       <Card
         className="card"
