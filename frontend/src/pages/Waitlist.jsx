@@ -44,7 +44,7 @@ const FormContainer = styled.form`
   //background-color: blue;
 
   display: flex;
-  justify-conten: center;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
   overflow: auto;
