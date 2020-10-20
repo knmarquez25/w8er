@@ -121,7 +121,14 @@ const LandingPage = () => {
         </Text>
         <Text>We can show you how!</Text>
         <ButtonContainer>
-          <LPButton text="Show me how!" />
+          <LPButton
+            onClick={(e) => {
+              e.stopPropagation();
+
+              history.push("/customer-faq");
+            }}
+            text="Show me how!"
+          />
         </ButtonContainer>
       </LPCard>
 

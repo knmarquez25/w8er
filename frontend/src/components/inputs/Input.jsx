@@ -25,6 +25,15 @@ const InputWrapper = styled.div`
   /* cursor: text; */
 
   background-color: ${({ theme }) => theme.colors.background};
+
+  input[type="datetime-local"] {
+    color: ${({ theme, value }) => (value ? "#111" : theme.colors.onSurface)};
+
+    &:focus-within,
+    &:focus {
+      color: #111;
+    }
+  }
 `;
 
 const initialPos = css`
@@ -137,7 +146,7 @@ const Input = React.forwardRef(
     };
 
     return (
-      <InputWrapper className={className}>
+      <InputWrapper className={className} value={inputRef.current.value}>
         {label && (
           <Label
             htmlFor={htmlFor}

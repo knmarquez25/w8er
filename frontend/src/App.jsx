@@ -27,6 +27,7 @@ import Settings from "./pages/Settings";
 import RegisterPage from "./pages/RegisterPage";
 import CustomerFAQPage from "./pages/CustomerFAQPage";
 import FeaturesPage from "./pages/FeaturesPage";
+import WaitListReservePage from "./pages/WaitlistReservePage";
 
 // icons:
 import { MdBrightnessLow } from "react-icons/md";
@@ -115,6 +116,11 @@ const App = ({ ...props }) => {
                 <Route exact path="/register" component={RegisterPage} />
                 <Route exact path="/customer-faq" component={CustomerFAQPage} />
                 <Route exact path="/features" component={FeaturesPage} />
+                <Route
+                  exact
+                  path="/miles-steakhouse"
+                  component={WaitListReservePage}
+                />
               </Switch>
             )}
           </BrowserRouter>
