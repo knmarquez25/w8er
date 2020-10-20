@@ -65,6 +65,21 @@ const table_style = {
   // padding: "5px",
 };
 
+const Tbody = styled.tbody`
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.surface};
+  tr {
+    color: ${({ theme }) => theme.colors.onBackground};
+
+    div {
+      color: ${({ theme }) => theme.colors.onBackground};
+      p {
+        color: ${({ theme }) => theme.colors.onBackground};
+      }
+    }
+  }
+`;
+
 const Guest = () => (
   <div>
     <h1 style={{ color: "#ffffff" }}>Guest List</h1>
@@ -72,36 +87,41 @@ const Guest = () => (
     <ul style={{ listStyle: "none" }}>
       {list.map((item) => {
         return (
-          <li key={item.id}>
+          <li
+            key={item.id}
+            css={css`
+              border-radius: 5px;
+            `}
+          >
             <Table
               striped
               hover
               style={table_style}
-              css={css`
-                background-color: ${({ theme }) => theme.colors.surface};
+              // css={css`
+              //   background-color: ${({ theme }) => theme.colors.surface};
 
-                tbody {
-                  color: ${({ theme }) => theme.colors.onBackground};
+              //   tbody {
+              //     color: ${({ theme }) => theme.colors.onBackground};
 
-                  tr {
-                    color: inherit;
+              //     tr {
+              //       color: inherit;
 
-                    div {
-                      color: inherit;
+              //       div {
+              //         color: inherit;
 
-                      div {
-                        color: inherit;
+              //         div {
+              //           color: inherit;
 
-                        p {
-                          color: inherit;
-                        }
-                      }
-                    }
-                  }
-                }
-              `}
+              //           p {
+              //             color: inherit;
+              //           }
+              //         }
+              //       }
+              //     }
+              //   }
+              // `}
             >
-              <tbody style={{ padding: "15px" }}>
+              <Tbody style={{ padding: "15px" }}>
                 <tr>
                   <div
                     style={{
@@ -131,7 +151,7 @@ const Guest = () => (
                     </div>
                   </div>
                 </tr>
-              </tbody>
+              </Tbody>
             </Table>
           </li>
         );

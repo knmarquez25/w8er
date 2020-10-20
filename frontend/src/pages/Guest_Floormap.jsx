@@ -5,6 +5,8 @@ import React, { useState, useEffect } from "react";
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 
+import FloorMap from "../components/layout-tools/FloorMap";
+
 import Navigation from "../components/Navigation";
 import Guest from "./guest";
 
@@ -30,6 +32,7 @@ const MainContent = styled.div`
 const GuestListContainer = styled.div`
   height: 100%;
   width: 25rem;
+  overflow: auto;
   /* background-color: red; */
 `;
 
@@ -49,7 +52,9 @@ const GuestList_Floormap = () => {
         <GuestListContainer>
           <Guest></Guest>
         </GuestListContainer>
-        <FloorMapContainer></FloorMapContainer>
+        <FloorMapContainer>
+          <FloorMap />
+        </FloorMapContainer>
       </MainContent>
     </GuestFMContainer>
   );
