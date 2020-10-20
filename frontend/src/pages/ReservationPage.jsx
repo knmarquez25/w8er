@@ -8,7 +8,8 @@ import { useTheme } from "emotion-theming";
 import styled from "@emotion/styled";
 import FormInput from "../components/inputs/FormInput";
 import Button from "../components/buttons/Button";
-//import SearchBar2 from "../components/SearchBar2";
+
+import {ReactComponent as ReserveGraphic} from "../assets/illustrations/reservationPageLogo.svg";
 
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -18,16 +19,13 @@ import Select from "react-select";
 
 const partySizeArr = ["1","2","3","4","5","6","7","8","9","10"] 
 
-const restaurantArray = [
-  { restaurant_name: "Dominos" },
-  { restaurant_name: "Papa John's" },
-  { restaurant_name: "Red West" },
-];
-
 const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
+  {value: "Yelpy", label: "Yelpy"},
+  {value: "Musky Burgers", label: "Musky Burgers"},
+  {value: "The Golden Nug", label: "The Golden Nug"},
+  {value: "Burnt Tortilla", label: "Burnt Tortilla"},
+  {value: "Toro Loco", label: "Toro Loco"},
+  {value: "The Hat", label: "The Hat"}
 ];
 
 const Nothing = styled.input`
@@ -71,11 +69,7 @@ const SearchBar = () => {
 
   return (
     <SearchbarContainer>
-      {/* <Select
-        options={options}
-        onClick={handleChange}
-        onChange={handleChange}
-      /> */}
+     
       <Nothing onChange={handleChange} type="text" />
       {searchValue !== "" && (
         <DropdownR>
@@ -145,15 +139,20 @@ const INITIAL = {
 const FormContainer = styled.form`
   background-color: ${({ theme }) => theme.colors.surface};
 
-  width: 40%;
+  width: 50%;
   height: 80%;
 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  /* overflow: hidden; */
+  /*overflow: hidden;*/ 
   overflow: auto;
+
+  svg {
+    width: 20 rem;
+    height: 20rem;
+  }
 `;
 
 const RFormInput = styled(FormInput)`
@@ -163,15 +162,38 @@ const RFormInput = styled(FormInput)`
 `;
 
 const Title = styled.h1`
-  font-size: 1.5em;
-  text-align: center;
+  font-size: 3em;
+  text-align: flex-start;
+  flex-direction: row;
   color: palevioletred;
+`;
+
+const TitleInput = styled.h1`
+  font-size: 2em;
+  text-align: flex-start;
+  flex-direction: row;
+  color: palevioletred;
+`;
+
+const LabelAndInput = styled.div`
+  
+  width: 100%;
+  height: 10%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  
+  overflow: auto;
 `;
 
 const ReservationPage = () => {
   const history = useHistory();
   const [formValues, setFormValues] = useState(INITIAL);
   const [submitted, setSubmitted] = useState(false);
+  const [party, setPartySize] = useState("1");
 
   return (
     <RContainer>
@@ -186,18 +208,16 @@ const ReservationPage = () => {
           history.push("/reservation-choose-table");
         }}
       >
-        <Title>Reservation</Title>
-        {/* <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something</Dropdown.Item>
-            </DropdownButton> */}
-        {/*Dropdown Search for the resturant*/}
-        {/*Input and then a div-loading all of the items in the array ==use the ecosystem props and state*/}
         
-        {/* <SearchBar2 /> */}
-        {/* <MyComponent /> */}
+        <Title>Reservation</Title>
+  
+        <ReserveGraphic/>
+
+        
+        <TitleInput>Restaurant Name</TitleInput>
         <SearchBar />
+        
+      
         <RFormInput
           required
           htmlFor="name"
@@ -219,9 +239,14 @@ const ReservationPage = () => {
           maxLength={12}
         />
         
-        <DropdownButton id="party-size-dropdown" title="Party Size">
-            {partySizeArr.map((item,i) => {return <Dropdown.Item href={item}>{item}</Dropdown.Item>})}
-        </DropdownButton>
+          <TitleInput>Party Size</TitleInput>
+
+          <DropdownButton id="party-size-dropdown" title={party} >
+              {partySizeArr.map((item,i) => {return <Dropdown.Item 
+              onClick = {() => {setPartySize(item)}}
+              >{item}</Dropdown.Item>})}
+          </DropdownButton>
+     
 
         <RFormInput
           required
@@ -235,6 +260,8 @@ const ReservationPage = () => {
           maxLength={10}
         />
         <Button text="Pick table"></Button>
+
+        <Button text="Confirm Reservation"></Button>
       </FormContainer>
     </RContainer>
   );

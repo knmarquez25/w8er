@@ -42,7 +42,7 @@ const MainContent = styled.main`
 const Main = ({ children, ...props }) => {
   const [user, setUser] = useRecoilState(userState);
 
-  return <MainContent {...props}  onClick={() => console.log(user)}>{children}</MainContent>;
+  return <MainContent {...props}  >{children}</MainContent>;
 };
 
 export default Main;

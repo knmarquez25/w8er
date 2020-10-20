@@ -97,13 +97,7 @@ const App = ({ ...props }) => {
              <Switch> 
                 <Route exact path="/" component={LandingPage} />
                 <Route exact path="/reservation" component={ReservationPage} />
-                  /* Added for when reservation is completed and you need to go to
-                  the floor map*/
-                  {/* <Route
-                    exact
-                    path="/reservation-choose-table"
-                    component={FloorMap}
-                  /> */}
+                <Route exact path="/reservation-choose-table" component={FloorMap}/> 
                   <Route exact path="/login_signup" component={Login_Signup} />
                   <Route exact path="/waitlist" component={Waitlist} />
                   <Route exact path="/confirmation" component={Confirmation} />
